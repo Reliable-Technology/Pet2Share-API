@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace Pet2Share_API.Domain
 {
+    class UserType
+    {
+        
+    }
+
     class User
     {
         #region members
@@ -17,6 +22,7 @@ namespace Pet2Share_API.Domain
         public string AlternameEmail { get; set; }
         public int SocialMediaSourceId { get; set; }
         public string SocialMediaId { get; set; }
+        public UserType uType;
         public DateTime DateAdded { get; set; }
         public DateTime DateModified { get; set; }
         public bool IsActive { get; set; }
