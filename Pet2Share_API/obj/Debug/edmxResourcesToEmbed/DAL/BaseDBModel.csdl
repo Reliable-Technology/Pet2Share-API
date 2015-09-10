@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Pet2ShareModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Pet2ShareEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Addresses" EntityType="Pet2ShareModel.Address" />
+    <EntitySet Name="BreedTypes" EntityType="Pet2ShareModel.BreedType" />
+    <EntitySet Name="People" EntityType="Pet2ShareModel.Person" />
+    <EntitySet Name="PetProfiles" EntityType="Pet2ShareModel.PetProfile" />
+    <EntitySet Name="PetTypes" EntityType="Pet2ShareModel.PetType" />
+    <EntitySet Name="SocialMediaSources" EntityType="Pet2ShareModel.SocialMediaSource" />
+    <EntitySet Name="Users" EntityType="Pet2ShareModel.User" />
+    <AssociationSet Name="FK_User_User" Association="Pet2ShareModel.FK_User_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="User1" EntitySet="Users" />
+    </AssociationSet>
+    <FunctionImport Name="ChangeActivePetProfileById">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="Active" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="ChangeActiveStatusbyPersonById">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="Active" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="ChangeActiveStatusbyUserId">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="Active" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteAddressById">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteByPersonById">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeletePetProfileById">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteUserById">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetAddressById" ReturnType="Collection(Pet2ShareModel.GetAddressById_Result)">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetPersonById" ReturnType="Collection(Pet2ShareModel.GetPersonById_Result)">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetPetProfileById" ReturnType="Collection(Pet2ShareModel.GetPetProfileById_Result)">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="InsertUpdateAddress">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="AddressLine1" Mode="In" Type="String" />
+      <Parameter Name="AddressLine2" Mode="In" Type="String" />
+      <Parameter Name="City" Mode="In" Type="String" />
+      <Parameter Name="State" Mode="In" Type="String" />
+      <Parameter Name="Country" Mode="In" Type="String" />
+      <Parameter Name="IsBillingAddress" Mode="In" Type="Boolean" />
+      <Parameter Name="IsShippingAddress" Mode="In" Type="Boolean" />
+      <Parameter Name="ZipCode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertUpdatePerson">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="FirstName" Mode="In" Type="String" />
+      <Parameter Name="LastName" Mode="In" Type="String" />
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="DOB" Mode="In" Type="DateTime" />
+      <Parameter Name="AddressId" Mode="In" Type="Int32" />
+      <Parameter Name="PrimaryPhone" Mode="In" Type="String" />
+      <Parameter Name="SecondaryPhone" Mode="In" Type="String" />
+      <Parameter Name="Avatar" Mode="In" Type="String" />
+      <Parameter Name="AboutMe" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertUpdatePetProfile">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="FamilyName" Mode="In" Type="String" />
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+      <Parameter Name="PetTypeId" Mode="In" Type="Int32" />
+      <Parameter Name="DOB" Mode="In" Type="DateTime" />
+      <Parameter Name="ProfilePicture" Mode="In" Type="String" />
+      <Parameter Name="About" Mode="In" Type="String" />
+      <Parameter Name="CoverPicture" Mode="In" Type="String" />
+      <Parameter Name="FavFood" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertUpdateUser">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="Username" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+      <Parameter Name="PersonId" Mode="In" Type="Int32" />
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="Phone" Mode="In" Type="String" />
+      <Parameter Name="AlternateEmail" Mode="In" Type="String" />
+      <Parameter Name="SocialMediaSourceId" Mode="In" Type="Int32" />
+      <Parameter Name="SocialMediaId" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UserLogin" ReturnType="Collection(Int32)">
+      <Parameter Name="Username" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="DateAdded" />
+      <PropertyRef Name="DateModified" />
+      <PropertyRef Name="IsDeleted" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="AddressLine1" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="AddressLine2" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="City" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="State" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Country" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="IsBillingAddress" Type="Boolean" />
+    <Property Name="IsShippingAddress" Type="Boolean" />
+    <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="BreedType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="PetTypeId" Type="Int32" />
+    <Property Name="DateAdded" Type="DateTime" Precision="3" />
+    <Property Name="DateModified" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="DOB" />
+      <PropertyRef Name="DateAdded" />
+      <PropertyRef Name="DateModified" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="IsDeleted" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="AddressId" Type="Int32" />
+    <Property Name="PrimaryPhone" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="SecondaryPhone" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="Avatar" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="AboutMe" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PetProfile">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="DateAdded" />
+      <PropertyRef Name="DateModified" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="IsDeleted" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="FamilyName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="PetTypeId" Type="Int32" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="ProfilePicture" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="About" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Type="String" Name="CoverPicture" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="FavFood" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="PetType">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="IsDeleted" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="DateAdded" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SocialMediaSource">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Password" Type="Binary" Nullable="false" MaxLength="100" FixedLength="false" />
+    <Property Name="PersonId" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="AlternateEmail" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Phone" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="SocialMediaSourceId" Type="Int32" />
+    <Property Name="SocialMediaId" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="User1" Relationship="Pet2ShareModel.FK_User_User" FromRole="User" ToRole="User1" />
+    <NavigationProperty Name="User2" Relationship="Pet2ShareModel.FK_User_User" FromRole="User1" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_User_User">
+    <End Role="User" Type="Pet2ShareModel.User" Multiplicity="1" />
+    <End Role="User1" Type="Pet2ShareModel.User" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="User1">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="GetAddressById_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="AddressLine1" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="AddressLine2" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="State" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Country" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="IsBillingAddress" Nullable="true" />
+    <Property Type="Boolean" Name="IsShippingAddress" Nullable="true" />
+    <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="23" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <Property Type="String" Name="ZipCode" Nullable="true" MaxLength="10" />
+  </ComplexType>
+  <ComplexType Name="GetPersonById_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="DOB" Nullable="false" />
+    <Property Type="Int32" Name="AddressId" Nullable="true" />
+    <Property Type="String" Name="PrimaryPhone" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="SecondaryPhone" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Avatar" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="AboutMe" Nullable="true" MaxLength="1000" />
+    <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="23" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="GetPetProfileById_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="FamilyName" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="UserId" Nullable="true" />
+    <Property Type="Int32" Name="PetTypeId" Nullable="true" />
+    <Property Type="DateTime" Name="DOB" Nullable="true" />
+    <Property Type="String" Name="ProfilePicture" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="About" Nullable="true" MaxLength="1000" />
+    <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="23" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <Property Type="String" Name="coverpic" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="fevfood" Nullable="true" MaxLength="500" />
+  </ComplexType>
+</Schema>

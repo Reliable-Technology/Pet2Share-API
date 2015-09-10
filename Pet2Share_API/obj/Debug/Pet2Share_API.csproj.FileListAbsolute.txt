@@ -1,0 +1,8 @@
+C:\Users\PS\Desktop\work\Pet2Share-API\Pet2Share_API\bin\Debug\Pet2Share_API.dll.config
+C:\Users\PS\Desktop\work\Pet2Share-API\Pet2Share_API\bin\Debug\Pet2Share_API.dll
+C:\Users\PS\Desktop\work\Pet2Share-API\Pet2Share_API\bin\Debug\Pet2Share_API.pdb
+C:\Users\PS\Desktop\work\Pet2Share-API\Pet2Share_API\bin\Debug\EntityFramework.dll
+C:\Users\PS\Desktop\work\Pet2Share-API\Pet2Share_API\bin\Debug\EntityFramework.xml
+C:\Users\PS\Desktop\work\Pet2Share-API\Pet2Share_API\obj\Debug\Pet2Share_API.csprojResolveAssemblyReference.cache
+C:\Users\PS\Desktop\work\Pet2Share-API\Pet2Share_API\obj\Debug\Pet2Share_API.dll
+C:\Users\PS\Desktop\work\Pet2Share-API\Pet2Share_API\obj\Debug\Pet2Share_API.pdb
