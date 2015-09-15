@@ -8,6 +8,7 @@
     <EntitySet Name="PetType" EntityType="Pet2ShareModel.Store.PetType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SocialMediaSource" EntityType="Pet2ShareModel.Store.SocialMediaSource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="User" EntityType="Pet2ShareModel.Store.User" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserType" EntityType="Pet2ShareModel.Store.UserType" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_User_User" Association="Pet2ShareModel.Store.FK_User_User">
       <End Role="User" EntitySet="User" />
       <End Role="User1" EntitySet="User" />
@@ -111,6 +112,18 @@
     <Property Name="Phone" Type="varchar" MaxLength="10" />
     <Property Name="SocialMediaSourceId" Type="int" />
     <Property Name="SocialMediaId" Type="varchar" MaxLength="100" />
+    <Property Name="UserTypeId" Type="int" />
+    <Property Name="DateAdded" Type="datetime" Nullable="false" />
+    <Property Name="DateModified" Type="datetime" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="DateAdded" Type="datetime" Nullable="false" />
     <Property Name="DateModified" Type="datetime" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />

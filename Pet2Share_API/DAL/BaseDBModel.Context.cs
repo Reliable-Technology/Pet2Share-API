@@ -35,6 +35,7 @@ namespace Pet2Share_API.DAL
         public DbSet<PetType> PetTypes { get; set; }
         public DbSet<SocialMediaSource> SocialMediaSources { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserType> UserTypes { get; set; }
     
         public virtual int ChangeActivePetProfileById(Nullable<int> id, Nullable<bool> active)
         {
@@ -224,7 +225,7 @@ namespace Pet2Share_API.DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdatePerson", idParameter, firstNameParameter, lastNameParameter, emailParameter, dOBParameter, addressIdParameter, primaryPhoneParameter, secondaryPhoneParameter, avatarParameter, aboutMeParameter);
         }
     
-        public virtual int InsertUpdatePetProfile(Nullable<int> id, string name, string familyName, Nullable<int> userId, Nullable<int> petTypeId, Nullable<System.DateTime> dOB, string profilePicture, string about, string coverpic, string fevfood)
+        public virtual int InsertUpdatePetProfile(Nullable<int> id, string name, string familyName, Nullable<int> userId, Nullable<int> petTypeId, Nullable<System.DateTime> dOB, string profilePicture, string about, string coverPicture, string favFood)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("Id", id) :
@@ -258,15 +259,15 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("About", about) :
                 new ObjectParameter("About", typeof(string));
     
-            var coverpicParameter = coverpic != null ?
-                new ObjectParameter("coverpic", coverpic) :
-                new ObjectParameter("coverpic", typeof(string));
+            var coverPictureParameter = coverPicture != null ?
+                new ObjectParameter("CoverPicture", coverPicture) :
+                new ObjectParameter("CoverPicture", typeof(string));
     
-            var fevfoodParameter = fevfood != null ?
-                new ObjectParameter("fevfood", fevfood) :
-                new ObjectParameter("fevfood", typeof(string));
+            var favFoodParameter = favFood != null ?
+                new ObjectParameter("FavFood", favFood) :
+                new ObjectParameter("FavFood", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdatePetProfile", idParameter, nameParameter, familyNameParameter, userIdParameter, petTypeIdParameter, dOBParameter, profilePictureParameter, aboutParameter, coverpicParameter, fevfoodParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdatePetProfile", idParameter, nameParameter, familyNameParameter, userIdParameter, petTypeIdParameter, dOBParameter, profilePictureParameter, aboutParameter, coverPictureParameter, favFoodParameter);
         }
     
         public virtual int InsertUpdateUser(Nullable<int> id, string username, string password, Nullable<int> personId, string email, string phone, string alternateEmail, Nullable<int> socialMediaSourceId, string socialMediaId)

@@ -21,12 +21,12 @@ namespace Pet2Share_API.DAL
         public Nullable<int> PetTypeId { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
         public string ProfilePicture { get; set; }
+        public string CoverPicture { get; set; }
         public string About { get; set; }
+        public string FavFood { get; set; }
         public System.DateTime DateAdded { get; set; }
         public System.DateTime DateModified { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
-        public string coverpic { get; set; }
-        public string fevfood { get; set; }
     }
 }

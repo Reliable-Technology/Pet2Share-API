@@ -5,14 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="9f5afe749fc3455dbf0cbdf1fbf44df2" Name="Diagram1">
-        <EntityTypeShape EntityType="Pet2ShareModel.Address" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Pet2ShareModel.BreedType" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Pet2ShareModel.Person" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Pet2ShareModel.PetProfile" Width="1.5" PointX="5" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Pet2ShareModel.PetType" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Pet2ShareModel.SocialMediaSource" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Pet2ShareModel.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="Pet2ShareModel.FK_User_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Pet2ShareModel.Address" Width="1.5" PointX="2.9664188730374068" PointY="7.9448877759021181" />
+        <EntityTypeShape EntityType="Pet2ShareModel.BreedType" Width="1.5" PointX="9.5788535892864939" PointY="20.118997091482857" />
+        <EntityTypeShape EntityType="Pet2ShareModel.Person" Width="1.5" PointX="11.668816845709838" PointY="21.161483252961879" />
+        <EntityTypeShape EntityType="Pet2ShareModel.PetProfile" Width="1.5" PointX="9.9982413323587931" PointY="20.582474107193981" />
+        <EntityTypeShape EntityType="Pet2ShareModel.PetType" Width="1.5" PointX="2.1016926067423505" PointY="3.7605716901647726" />
+        <EntityTypeShape EntityType="Pet2ShareModel.SocialMediaSource" Width="1.5" PointX="3.8980872034551979" PointY="3.9346338379823762" />
+        <EntityTypeShape EntityType="Pet2ShareModel.User" Width="1.5" PointX="10.712807608168948" PointY="21.780051032910148" />
+        <EntityTypeShape EntityType="Pet2ShareModel.UserType" Width="1.5" PointX="11.20063744075626" PointY="29.871967508397983" />
+        <AssociationConnector Association="Pet2ShareModel.FK_User_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

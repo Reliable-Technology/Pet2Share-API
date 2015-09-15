@@ -23,6 +23,7 @@ namespace Pet2Share_API.DAL
         public string Phone { get; set; }
         public Nullable<int> SocialMediaSourceId { get; set; }
         public string SocialMediaId { get; set; }
+        public Nullable<int> UserTypeId { get; set; }
         public System.DateTime DateAdded { get; set; }
         public System.DateTime DateModified { get; set; }
         public bool IsActive { get; set; }
