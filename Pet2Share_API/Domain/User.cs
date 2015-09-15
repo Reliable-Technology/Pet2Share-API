@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Pet2Share_API.Domain
 {
-    class UserType
+    public class UserType
     {
         
     }
 
-    class User
+    public class User
     {
         #region members
         public int Id { get; set; }

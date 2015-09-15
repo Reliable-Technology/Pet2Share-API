@@ -8,7 +8,7 @@ using Pet2Share_API.Domain;
 
 namespace Pet2Share_API.Service
 {
-    class AccountManagement
+    public class AccountManagement
     {
 
 

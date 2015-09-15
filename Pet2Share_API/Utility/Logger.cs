@@ -8,7 +8,7 @@ namespace Pet2Share_API.Utility
 {
     //The class is used to log errors accross the library
     //Error/Exceptions/SystemCalls/CustomCalls
-    class Logger
+    public class Logger
     {
 
     }
