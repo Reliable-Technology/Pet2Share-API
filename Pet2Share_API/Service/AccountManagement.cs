@@ -58,10 +58,5 @@ namespace Pet2Share_API.Service
         {
             return null;
         }
-
-        public static User RegisterNewUser(User u)
-        {
-            return null;
-        }
     }
 }
