@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Pet2Share_Service.Service1" CodeBehind="Service_Main.svc.cs" %>
