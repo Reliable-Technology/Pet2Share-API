@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pet2Share_API.Utility
+namespace Pet2Share_API.Service
 {
-    public class ErrorHandler
+    public class PetProfileManager
     {
 
     }

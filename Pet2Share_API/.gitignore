@@ -18,5 +18,17 @@ Thumbs.db
 *.cache
 *.ilk
 *.log
+[Bb]in
+[Dd]ebug*/
 *.lib
 *.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+*/Eyefinity/Lists/*.txt
+/Backup/
+/_UpgradeReport_Files/
+UpgradeLog.*
+*.VisualState.xml
+*.config
