@@ -28,8 +28,5 @@ namespace Pet2Share_API.DAL
         public System.DateTime DateModified { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
-    
-        public virtual User User1 { get; set; }
-        public virtual User User2 { get; set; }
     }
 }
