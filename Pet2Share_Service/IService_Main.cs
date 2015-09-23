@@ -1,50 +1,83 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.ServiceModel.Web;
 using System.Text;
 
 namespace Pet2Share_Service
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService1" in both code and config file together.
     [ServiceContract]
     public interface IService_Main
     {
 
-        //[OperationContract]
-        //string GetData(int value);
-
-        //[OperationContract]
-        //CompositeType GetDataUsingDataContract(CompositeType composite);
 
         [OperationContract]
-        string LoginUser(string Username, string Password);
+        [WebInvoke(UriTemplate = "LoginUser", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        Message LoginUser(LoginCL loginDetails);
 
-        // TODO: Add your service operations here
     }
 
-
-    // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
-    public class CompositeType
+    public class ResponseCL
     {
-        bool boolValue = true;
-        string stringValue = "Hello ";
-
         [DataMember]
-        public bool BoolValue
+        public int Total { get; set; }
+        [DataMember]
+        public object[] Results { get; set; }
+        [DataMember]
+        public ErrorMessageCL ErrorMessage { get; set; }
+
+        public ResponseCL(int total, object[] results, ErrorMessageCL errMsg)
         {
-            get { return boolValue; }
-            set { boolValue = value; }
+            Total = total;
+            Results = results;
+            ErrorMessage = errMsg;
+
         }
 
-        [DataMember]
-        public string StringValue
-        {
-            get { return stringValue; }
-            set { stringValue = value; }
-        }
     }
+
+    [DataContract]
+    public class ErrorMessageCL
+    {
+        [DataMember]
+        public int ReasonCode { get; set; }
+
+        [DataMember]
+        public string Msg { get; set; }
+
+        public ErrorMessageCL(int rsnCode, string msg)
+        {
+            ReasonCode = rsnCode;
+            Msg = msg;
+        }
+
+
+    }
+
+
+    public class LoginCL
+    {
+
+        public string UserName { get; set; }
+
+        public string Password { get; set; }
+
+        public string Message { get; set; }
+
+        public ResponseType Resp { get; set; }
+
+    }
+
+    public enum ResponseType
+    {
+        Success,
+        Failed,
+        Exception
+    }
+
 }
