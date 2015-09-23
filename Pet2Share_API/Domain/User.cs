@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pet2Share_API.Domain
 {
+    [Serializable]
     public class UserType
     {
         int id;
@@ -21,6 +22,7 @@ namespace Pet2Share_API.Domain
         #endregion
     }
 
+    [Serializable]
     public class User
     {
         #region members

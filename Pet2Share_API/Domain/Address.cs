@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pet2Share_API.Domain
 {
+    [Serializable]
     public class Address
     {
         #region members
