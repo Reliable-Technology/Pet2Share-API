@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
+using System.ServiceModel.Channels;
 using System.ServiceModel.Web;
 using System.Text;
 using System.Web;
@@ -60,13 +61,13 @@ namespace Pet2Share_Service
         //} 
         #endregion
 
-        public System.ServiceModel.Channels.Message LoginUser(CLLogin LoginDetails)
+        public Message LoginUser(CLLogin LoginDetails)
         {
             string SerializedResult;
             try
             {
                 var LoginResult = AccountManagement.Login(LoginDetails.UserName, LoginDetails.Password);
-                if (LoginResult != null)
+                if (LoginResult != null && LoginResult.IsAuthenticated == true && LoginResult.Id > 0)
                 {
                     SerializedResult = JsonConvert.SerializeObject(new ResponseCL(1, (new object[] { LoginResult }), null));
                     //return SerializedResult;//return LoginResult.Id.ToString();

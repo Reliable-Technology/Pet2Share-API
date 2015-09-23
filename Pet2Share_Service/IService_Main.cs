@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.ServiceModel.Web;
 using System.Text;
 
@@ -27,7 +28,7 @@ namespace Pet2Share_Service
 
         [OperationContract]
         [WebInvoke(UriTemplate = "LoginUser", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        System.ServiceModel.Channels.Message LoginUser(CLLogin LoginDetails);
+        Message LoginUser(CLLogin LoginDetails);
 
 
         // TODO: Add your service operations here
