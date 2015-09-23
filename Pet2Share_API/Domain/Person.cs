@@ -36,6 +36,11 @@ namespace Pet2Share_API.Domain
         {
         }
 
+        public Person(string firstName, string lastName, string email, DateTime? dob, Address addr, string primaryPhone, string secondaryPhone, string avatarURL)
+        {
+
+        }
+
         #endregion
 
         #region methods

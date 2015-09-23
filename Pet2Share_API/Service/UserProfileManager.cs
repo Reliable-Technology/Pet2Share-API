@@ -8,5 +8,6 @@ namespace Pet2Share_API.Service
 {
     public class UserProfileManager
     {
+
     }
 }

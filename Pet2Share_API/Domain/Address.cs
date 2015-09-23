@@ -28,7 +28,7 @@ namespace Pet2Share_API.Domain
 
         }
 
-        public Address(string addressLine1, string addressLine2, string city, string state, string country)
+        public Address(string addressLine1, string addressLine2, string city, string state, string country, string zip)
         {
             
         }

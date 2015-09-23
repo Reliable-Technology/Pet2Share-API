@@ -35,29 +35,40 @@ namespace Pet2Share_API.Service
             , string phone, string alternatePhone, string addressLine1, string addressLine2, string city, string state, string country, string zipCode, int? socialMediaSourceId, string socialMediaId, int? userType)
         {
             //Validations
-            if (username == null || password == null || email == null)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(email))
             {
-                throw new Exception("Register cant have empty fields for username and password");
+                throw new Exception("username or password can not be blank");
             }
-            //Create Address object
 
-            //Create Person object
+            //TODO: Check all params for rogue data
 
-            //Create User Object
+            //TODO: Create Address object
+            Address addr = new Address(addressLine1, addressLine2, city, state, country, zipCode);
 
-            //Save object
-            return null;
+            //TODO: Create Person object
+            Person pers = new Person(firstName, lastName, email, dob, addr, phone, alternatePhone, null);
+
+            //TODO: Create User Object
+            User u = new User();
+
+            return RegisterNewUser(u);
         }
 
         public static User RegisterNewUser(string username, string password, string firstName, string lastName, string email)
         {
             //Call to the most basic method
+            RegisterNewUser(username, password, firstName, lastName, null, email, null, null, null, null, null, null, null, null, null, null, null, null);
             return null;
         }
 
         public static User RegisterNewUser(User u)
         {
-            return null;
+            int result = u.Save();
+            if (result > 0)
+                u.Id = result;
+            else
+                return null;
+            return u;
         }
     }
 }

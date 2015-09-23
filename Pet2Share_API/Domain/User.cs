@@ -17,12 +17,12 @@ namespace Pet2Share_API.Domain
         public int Id { get; set; }
         public string Username { get; set; }
         public bool IsAuthenticated { get; set; }
-        public Person p;
+        public Person P;
         public string Email { get; set; }
         public string AlternameEmail { get; set; }
         public int SocialMediaSourceId { get; set; }
         public string SocialMediaId { get; set; }
-        public UserType uType;
+        public UserType UType;
         public DateTime DateAdded { get; set; }
         public DateTime DateModified { get; set; }
         public bool IsActive { get; set; }
@@ -36,6 +36,11 @@ namespace Pet2Share_API.Domain
         }
 
         public User(int id)
+        {
+
+        }
+
+        public User(string username, Person p, string email, string alternateEmail, int socialMediaSourceId, string socialMediaId, UserType uType)
         {
 
         }
