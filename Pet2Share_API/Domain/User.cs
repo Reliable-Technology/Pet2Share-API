@@ -8,7 +8,17 @@ namespace Pet2Share_API.Domain
 {
     public class UserType
     {
-        
+        int id;
+        string name;
+
+        #region constructors
+
+        public UserType(int id)
+        {
+            //TODO: Implement the method
+        }
+
+        #endregion
     }
 
     public class User
@@ -16,6 +26,7 @@ namespace Pet2Share_API.Domain
         #region members
         public int Id { get; set; }
         public string Username { get; set; }
+        protected string Password { set; }
         public bool IsAuthenticated { get; set; }
         public Person P;
         public string Email { get; set; }
@@ -40,7 +51,7 @@ namespace Pet2Share_API.Domain
 
         }
 
-        public User(string username, Person p, string email, string alternateEmail, int socialMediaSourceId, string socialMediaId, UserType uType)
+        public User(string username, string password, Person p, string email, string alternateEmail, int socialMediaSourceId, string socialMediaId, UserType uType)
         {
 
         }

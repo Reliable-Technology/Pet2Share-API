@@ -42,14 +42,15 @@ namespace Pet2Share_API.Service
 
             //TODO: Check all params for rogue data
 
-            //TODO: Create Address object
+            UserType uType = new UserType(userType.Value);
+
             Address addr = new Address(addressLine1, addressLine2, city, state, country, zipCode);
 
-            //TODO: Create Person object
             Person pers = new Person(firstName, lastName, email, dob, addr, phone, alternatePhone, null);
 
             //TODO: Create User Object
-            User u = new User();
+
+            User u = new User(username, password, pers, email, alternateEmail, socialMediaSourceId.Value, socialMediaId, uType);
 
             return RegisterNewUser(u);
         }
