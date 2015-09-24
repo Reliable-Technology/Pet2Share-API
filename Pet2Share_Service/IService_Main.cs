@@ -17,7 +17,11 @@ namespace Pet2Share_Service
 
         [OperationContract]
         [WebInvoke(UriTemplate = "LoginUser", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        Message LoginUser(LoginCL loginDetails);
+        Stream LoginUser(LoginCL loginDetails);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "Register", Method = "POST", BodyStyle = WebMessageBodyStyle.Bare)]
+        Stream RegisterUser(Pet2Share_API.Domain.User userDetails);
 
     }
 
@@ -79,5 +83,34 @@ namespace Pet2Share_Service
         Failed,
         Exception
     }
+    //public sealed class BLGender
+    //{
+    //    private static readonly BLGender _instance;
+    //    private static CareWriteEntities _context;
+
+    //    // Explicit static constructor to tell C# compiler
+    //    // not to mark type as beforefieldinit
+    //    static BLGender()
+    //    {
+    //        _instance = new BLGender();
+    //    }
+
+    //    private BLGender()
+    //    {
+    //    }
+
+    //    public static BLGender Instance(CareWriteEntities context)
+    //    {
+    //        _context = context;
+    //        return _instance;
+    //    }
+
+    //    public List<Gender> GetGender()
+    //    {
+    //        return _context.Genders.ToList();
+    //    }
+
+
+    //}
 
 }

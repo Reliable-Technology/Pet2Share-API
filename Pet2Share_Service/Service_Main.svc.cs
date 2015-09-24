@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Pet2Share_API.DAL;
 using Pet2Share_API.Service;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Pet2Share_Service
     public class Service_Main : IService_Main
     {
 
-        public Message LoginUser(LoginCL loginDetails)
+        public Stream LoginUser(LoginCL loginDetails)
         {
             string SerializedResult;
             try
@@ -42,8 +43,42 @@ namespace Pet2Share_Service
                 SerializedResult = JsonConvert.SerializeObject(new ResponseCL(0, null, new ErrorMessageCL(3, ex.Message)));
             }
 
-            return WebOperationContext.Current.CreateTextResponse(SerializedResult, "application/json; charset=utf-8", Encoding.UTF8);
+            WebOperationContext.Current.OutgoingResponse.ContentType =
+        "application/json; charset=utf-8";
+            return new MemoryStream(Encoding.UTF8.GetBytes(SerializedResult));
+
+            // return WebOperationContext.Current.CreateTextResponse(SerializedResult, "application/json; charset=utf-8", Encoding.UTF8);
 
         }
+
+        public Stream RegisterUser(Pet2Share_API.Domain.User userDetails)
+        {
+            string SerializedResult;
+            try
+            {
+                var Result = AccountManagement.RegisterNewUser(userDetails);
+                if (Result != null && Result.Id > 0)
+                {
+                    SerializedResult = JsonConvert.SerializeObject(new ResponseCL(1, (new object[] { Result }), null));
+                }
+                else
+                {
+                    SerializedResult = JsonConvert.SerializeObject(new ResponseCL(0, null, new ErrorMessageCL(1, "There was some error while signing you up. Please try again!!")));
+                }
+            }
+            catch (Exception ex)
+            {
+                SerializedResult = JsonConvert.SerializeObject(new ResponseCL(0, null, new ErrorMessageCL(3, ex.Message)));
+            }
+            // return WebOperationContext.Current.CreateTextResponse(SerializedResult, "application/json; charset=utf-8", Encoding.UTF8);
+
+            WebOperationContext.Current.OutgoingResponse.ContentType =
+       "application/json; charset=utf-8";
+            return new MemoryStream(Encoding.UTF8.GetBytes(SerializedResult));
+
+
+        }
+
+
     }
 }
