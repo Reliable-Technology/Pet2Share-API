@@ -39,6 +39,7 @@ namespace Pet2Share_API.Domain
         public bool IsAuthenticated { get; set; }
         [DataMember]
         public Person P;
+        [DataMember]
         public string Email { get; set; }
         [DataMember]
         public string AlternameEmail { get; set; }
@@ -50,6 +51,7 @@ namespace Pet2Share_API.Domain
         public string SocialMediaId { get; set; }
         [DataMember]
         public UserType UType;
+        [DataMember]
         public DateTime DateAdded { get; set; }
         [DataMember]
         public DateTime DateModified { get; set; }
