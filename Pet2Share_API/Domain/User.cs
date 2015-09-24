@@ -33,8 +33,12 @@ namespace Pet2Share_API.Domain
         public int Id { get; set; }
         [DataMember]
         public string Username { get; set; }
+        private string _password;
         [DataMember]
-        public string Password { set; }
+        public string Password
+        {
+            set { _password = value; }
+        }
         [DataMember]
         public bool IsAuthenticated { get; set; }
         [DataMember]
