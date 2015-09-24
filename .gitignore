@@ -31,4 +31,5 @@ _ReSharper*/
 UpgradeLog.*
 *.VisualState.xml
 *.config
+!/packages/*/lib/*.dll
 

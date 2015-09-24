@@ -23,60 +23,52 @@ namespace Pet2Share_Service
     public class Service_Main : IService_Main
     {
 
-        public Stream LoginUser(LoginRequest loginDetails)
+        public LoginResponse LoginUser(LoginRequest loginDetails)
         {
-            string SerializedResult;
+           
+            LoginResponse LoginResultResp;
             try
             {
                 var LoginResult = AccountManagement.Login(loginDetails.UserName, loginDetails.Password);
                 if (LoginResult != null && LoginResult.IsAuthenticated == true && LoginResult.Id > 0)
                 {
-                    SerializedResult = JsonConvert.SerializeObject(new LoginResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { LoginResult }), ErrorMsg = null });
+                    LoginResultResp = new LoginResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { LoginResult }), ErrorMsg = null };
                 }
                 else
                 {
-                    SerializedResult = JsonConvert.SerializeObject(new LoginResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "Invalid Username or Password") });
+                    LoginResultResp = new LoginResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "Invalid Username or Password") };
                 }
             }
             catch (Exception ex)
             {
-                SerializedResult = JsonConvert.SerializeObject(new LoginResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.Message) });
+                LoginResultResp = new LoginResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
             }
 
-            WebOperationContext.Current.OutgoingResponse.ContentType =
-        "application/json; charset=utf-8";
-            return new MemoryStream(Encoding.UTF8.GetBytes(SerializedResult));
-
-            // return WebOperationContext.Current.CreateTextResponse(SerializedResult, "application/json; charset=utf-8", Encoding.UTF8);
+            return LoginResultResp;
 
         }
 
-        public Stream RegisterUser(RegisterRequest userObj)
+        public RegisterResponse RegisterUser(RegisterRequest userObj)
         {
-            string SerializedResult;
+            RegisterResponse RegisterResultResp;
+
             try
             {
                 var Result = AccountManagement.RegisterNewUser(userObj.UserDetails);
                 if (Result != null && Result.Id > 0)
                 {
-                    SerializedResult = JsonConvert.SerializeObject(new RegisterResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { Result }), ErrorMsg = null });
+                    RegisterResultResp = new RegisterResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { Result }), ErrorMsg = null };
                 }
                 else
                 {
-                    SerializedResult = JsonConvert.SerializeObject(new RegisterResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while signing you up. Please try again!!") });
+                    RegisterResultResp = new RegisterResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while signing you up. Please try again!!") };
                 }
             }
             catch (Exception ex)
             {
-                SerializedResult = JsonConvert.SerializeObject(new RegisterResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.Message) });
+                RegisterResultResp = new RegisterResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
             }
-            // return WebOperationContext.Current.CreateTextResponse(SerializedResult, "application/json; charset=utf-8", Encoding.UTF8);
-
-            WebOperationContext.Current.OutgoingResponse.ContentType =
-       "application/json; charset=utf-8";
-            return new MemoryStream(Encoding.UTF8.GetBytes(SerializedResult));
-
-
+            return RegisterResultResp;
         }
 
 
