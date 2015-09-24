@@ -20,6 +20,7 @@ namespace Pet2Share_API.Domain
         public string PrimaryPhone { get; set; }
         public string SecondaryPhone { get; set; }
         public string AvatarURL { get; set; }
+        public string AboutMe { get; set; }
         public DateTime DateAdded { get; set; }
         public DateTime DateModified { get; set; }
         public bool IsActive { get; set; }
@@ -46,9 +47,19 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        public bool Save()
+        public int Save()
         {
-            return false;
+            //TODO: Validate the fields on save
+            this.Addr.Id = this.Addr.Save();
+            int result = -1;
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.InsertUpdatePerson(0, this.FirstName, this.LastName, this.Email, this.DOB, this.Addr.Id, this.PrimaryPhone, this.SecondaryPhone, this.AvatarURL, this.AboutMe);
+                if (result > 0)
+                    this.Id = result;
+            }
+            return result;
         }
 
         public bool Delete()

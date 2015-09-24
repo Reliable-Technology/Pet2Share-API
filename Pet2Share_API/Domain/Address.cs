@@ -16,6 +16,9 @@ namespace Pet2Share_API.Domain
         public string City { get; set; }
         public string State { get; set; }
         public string Country { get; set; }
+        public string ZipCode { get; set; }
+        public bool IsBillingAddress { get; set; }
+        public bool IsShippingAddres { get; set; }
         #endregion
 
         #region constructors
@@ -37,9 +40,17 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        public string Save()
+        public int Save()
         {
-            return "";
+            int result = -1;
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.InsertUpdateAddress(0, this.AddressLine1, this.AddressLine2, this.City, this.State, this.Country, true, true, this.ZipCode);
+                if (result > 0)
+                    this.Id = result;
+            }
+            return result;
         }
 
         #endregion
