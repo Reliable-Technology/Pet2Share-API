@@ -12,7 +12,8 @@ namespace Pet2Share_Service
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string SerializedResult = JsonConvert.SerializeObject(new Pet2Share_API.Domain.Person());
+           // string SerializedResult = JsonConvert.SerializeObject(new Pet2Share_API.Domain.UserType());
+        //    Response.Write(SerializedResult);
         }
     }
 }
