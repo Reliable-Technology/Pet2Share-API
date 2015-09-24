@@ -1,28 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Pet2Share_API.Domain
 {
-    [Serializable]
+    [DataContract]
     public class Person
     {
         #region members
-
+        [DataMember]
         public int Id { get; set; }
+        [DataMember]
         public string FirstName { get; set; }
+        [DataMember]
         public string LastName { get; set; }
+        [DataMember]
         public string Email { get; set; }
+        [DataMember]
         public DateTime DOB { get; set; }
+        [DataMember]
         public Address Addr { get; set; }
-        public string PrimaryPhone { get; set; }
+        [DataMember]
+        public string PrimaryPhone { get; set; 
+        }[DataMember]
         public string SecondaryPhone { get; set; }
+        [DataMember]
         public string AvatarURL { get; set; }
+        [DataMember]
         public string AboutMe { get; set; }
+        [DataMember]
         public DateTime DateAdded { get; set; }
+        [DataMember]
         public DateTime DateModified { get; set; }
+        [DataMember]
         public bool IsActive { get; set; }
 
         #endregion

@@ -1,23 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Pet2Share_API.Domain
 {
-    [Serializable]
+    [DataContract]
     public class Address
     {
         #region members
+        [DataMember]
         public int Id { get; set; }
+        [DataMember]
         public string AddressLine1 { get; set; }
+        [DataMember]
         public string AddressLine2 { get; set; }
+        [DataMember]
         public string City { get; set; }
+        [DataMember]
         public string State { get; set; }
+        [DataMember]
         public string Country { get; set; }
+        [DataMember]
         public string ZipCode { get; set; }
+        [DataMember]
         public bool IsBillingAddress { get; set; }
+        [DataMember]
         public bool IsShippingAddres { get; set; }
         #endregion
 
