@@ -33,12 +33,8 @@ namespace Pet2Share_API.Domain
         public int Id { get; set; }
         [DataMember]
         public string Username { get; set; }
-        private string _password;
         [DataMember]
-        public string Password
-        {
-            set { _password = value; }
-        }
+        public string Password { get; set; }
         [DataMember]
         public bool IsAuthenticated { get; set; }
         [DataMember]
@@ -92,7 +88,7 @@ namespace Pet2Share_API.Domain
             //TODO: Save User
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.InsertUpdateUser(0, this.Username, this._password, this.P.Id, this.Email, this.Phone, this.AlternameEmail, this.SocialMediaSourceId, this.SocialMediaId);
+                result = context.InsertUpdateUser(0, this.Username, this.Password, this.P.Id, this.Email, this.Phone, this.AlternameEmail, this.SocialMediaSourceId, this.SocialMediaId);
                 if (result > 0)
                     this.Id = result;
             }
