@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Pet2Share_API.Domain;
+using Pet2Share_API.Utility;
 
 namespace Pet2Share_API.Service
 {
@@ -12,7 +13,7 @@ namespace Pet2Share_API.Service
     {
         public User user { get; set; }
 
-        public UserProfileManager()
+        private UserProfileManager()
         {
 
         }
@@ -27,51 +28,51 @@ namespace Pet2Share_API.Service
             this.user = u;
         }
 
-        public bool UpdateAvatar(string avatarURL)
+        public BoolExt UpdateAvatar(string avatarURL)
         {
-            return false;
+            return new BoolExt(false);
         }
 
-        public bool ActivateProfile()
+        public BoolExt ActivateProfile()
         {
-            return false;
+            return new BoolExt(false);
         }
 
-        public bool DeactivateProfile(string reason)
+        public BoolExt DeactivateProfile(string reason)
         {
-            return false;
+            return new BoolExt(false);
         }
 
-        public bool AddProfile()
+        public BoolExt AddProfile()
         {
-            return false;
+            return new BoolExt(false);
         }
 
-        public static bool AddProfile(User u)
+        public static BoolExt AddProfile(User u)
         {
-            return false;
+            return new BoolExt(false);
         }
 
-        public bool AddProfile(int userId, string firstname, string lastname, string email, string alternateEmail, DateTime dob, string primaryPhone, string secondaryPhone, string avatarURL, string aboutMe
+        public BoolExt AddProfile(string firstname, string lastname, string email, string alternateEmail, DateTime dob, string primaryPhone, string secondaryPhone, string avatarURL, string aboutMe
             , string addressLine1, string addressLine2, string city, string state, string country, string zipCode)
         {
-            return false;
+            return new BoolExt(false);
         }
 
-        public bool UpdateProfile()
+        public BoolExt UpdateProfile()
         {
-            return false;
+            return new BoolExt(false);
         }
 
-        public static bool UpdateProfile(User u)
+        public static BoolExt UpdateProfile(User u)
         {
-            return false;
+            return new BoolExt(false);
         }
 
-        public bool UpdateProfile(int userId, string firstname, string lastname, string email, string alternateEmail, DateTime dob, string primaryPhone, string secondaryPhone, string avatarURL, string aboutMe
+        public BoolExt UpdateProfile(int userId, string firstname, string lastname, string email, string alternateEmail, DateTime dob, string primaryPhone, string secondaryPhone, string avatarURL, string aboutMe
             , string addressLine1, string addressLine2, string city, string state, string country, string zipCode)
         {
-            return false;
+            return new BoolExt(false);
         }
     }
 }
