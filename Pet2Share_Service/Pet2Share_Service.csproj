@@ -63,14 +63,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Service_Main.svc" />
-    <Content Include="Web.config" />
+    <Content Include="Test.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLResponseRequest.cs" />
     <Compile Include="Service_Main.svc.cs">
       <DependentUpon>Service_Main.svc</DependentUpon>
     </Compile>
     <Compile Include="IService_Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test.aspx.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Test.aspx.designer.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
