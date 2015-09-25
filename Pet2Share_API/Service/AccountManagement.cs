@@ -32,7 +32,8 @@ namespace Pet2Share_API.Service
         }
 
         public static User RegisterNewUser(string username, string password, string firstName, string lastName, DateTime? dob, string email, string alternateEmail
-            , string phone, string alternatePhone, string addressLine1, string addressLine2, string city, string state, string country, string zipCode, int? socialMediaSourceId, string socialMediaId, int? userType)
+            , string phone, string alternatePhone, string addressLine1, string addressLine2, string city, string state, string country, string zipCode, int? socialMediaSourceId,
+            string socialMediaId, int? userType)
         {
             //Validations
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(email))

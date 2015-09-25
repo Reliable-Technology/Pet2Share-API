@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Pet2Share_API.DAL;
 using Pet2Share_API.Service;
 using System;
 using System.Collections.Generic;
@@ -22,28 +23,54 @@ namespace Pet2Share_Service
     public class Service_Main : IService_Main
     {
 
-        public Message LoginUser(LoginCL loginDetails)
+        public LoginResponse LoginUser(LoginRequest loginDetails)
         {
-            string SerializedResult;
+           
+            LoginResponse LoginResultResp;
             try
             {
                 var LoginResult = AccountManagement.Login(loginDetails.UserName, loginDetails.Password);
                 if (LoginResult != null && LoginResult.IsAuthenticated == true && LoginResult.Id > 0)
                 {
-                    SerializedResult = JsonConvert.SerializeObject(new ResponseCL(1, (new object[] { LoginResult }), null));
+                    LoginResultResp = new LoginResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { LoginResult }), ErrorMsg = null };
                 }
                 else
                 {
-                    SerializedResult = JsonConvert.SerializeObject(new ResponseCL(0, null, new ErrorMessageCL(1, "Invalid Username or Password")));
+                    LoginResultResp = new LoginResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "Invalid Username or Password") };
                 }
             }
             catch (Exception ex)
             {
-                SerializedResult = JsonConvert.SerializeObject(new ResponseCL(0, null, new ErrorMessageCL(3, ex.Message)));
+                LoginResultResp = new LoginResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
             }
 
-            return WebOperationContext.Current.CreateTextResponse(SerializedResult, "application/json; charset=utf-8", Encoding.UTF8);
+            return LoginResultResp;
 
         }
+
+        public RegisterResponse RegisterUser(RegisterRequest userObj)
+        {
+            RegisterResponse RegisterResultResp;
+
+            try
+            {
+                var Result = AccountManagement.RegisterNewUser(userObj.UserDetails);
+                if (Result != null && Result.Id > 0)
+                {
+                    RegisterResultResp = new RegisterResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { Result }), ErrorMsg = null };
+                }
+                else
+                {
+                    RegisterResultResp = new RegisterResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while signing you up. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                RegisterResultResp = new RegisterResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return RegisterResultResp;
+        }
+
+
     }
 }
