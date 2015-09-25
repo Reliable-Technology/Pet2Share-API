@@ -64,22 +64,91 @@ namespace Pet2Share_API.Domain
 
         public User()
         {
-
+            this.Id = -1;
+            this.IsAuthenticated = false;
+            this.Username = "Guest";
         }
 
         public User(int id)
         {
+            User u = User.GetById(id);
+            this.Id = u.Id;
+            this.Username = u.Username;
+            this.P = u.P;
+            this.Email = u.Email;
+            this.AlternameEmail = u.AlternameEmail;
+            this.SocialMediaSourceId = u.SocialMediaSourceId;
+            this.SocialMediaId = u.SocialMediaId;
+            this.Phone = u.Phone;
+            this.DateAdded = u.DateAdded;
+            this.DateModified = u.DateModified;
+            this.IsActive = u.IsActive;
 
+            this.IsAuthenticated = this.Id > 0 ? true : false;
+        }
+
+        public User(User u)
+        {
+            this.Id = u.Id;
+            this.Username = u.Username;
+            this.P = u.P;
+            this.Email = u.Email;
+            this.AlternameEmail = u.AlternameEmail;
+            this.SocialMediaSourceId = u.SocialMediaSourceId;
+            this.SocialMediaId = u.SocialMediaId;
+            this.Phone = u.Phone;
+            this.DateAdded = u.DateAdded;
+            this.DateModified = u.DateModified;
+            this.IsActive = u.IsActive;
+
+            this.IsAuthenticated = this.Id > 0 ? true : false;
+        }
+
+        public User(DAL.User u)
+        {
+            this.Id = u.Id;
+            this.Username = u.Username;
+            this.P = new Person(u.PersonId);
+            this.Email = u.Email;
+            this.AlternameEmail = u.AlternateEmail;
+            this.SocialMediaSourceId = Convert.ToInt32(u.SocialMediaSourceId);
+            this.SocialMediaId = u.SocialMediaId;
+            this.Phone = u.Phone;
+            this.DateAdded = u.DateAdded;
+            this.DateModified = u.DateModified;
+            this.IsActive = u.IsActive;
+
+            this.IsAuthenticated = this.Id > 0 ? true : false;
         }
 
         public User(string username, string password, Person p, string email, string alternateEmail, int socialMediaSourceId, string socialMediaId, UserType uType)
         {
-
+            this.Username = username;
+            this.Password = password;
+            this.P = p;
+            this.Email = email;
+            this.AlternameEmail = alternateEmail;
+            this.SocialMediaSourceId = socialMediaSourceId;
+            this.SocialMediaId = socialMediaId;
         }
 
         #endregion
 
         #region methods
+
+        public static User GetById(int id)
+        {
+            using(DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                DAL.User userObj = context.Users.Where(p => p.Id == id).FirstOrDefault();
+                if (userObj != null)
+                {
+                    User u = new User();
+
+                }
+                return new User();
+            }
+        }
 
         
         public int Save()
