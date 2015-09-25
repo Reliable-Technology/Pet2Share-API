@@ -11,11 +11,17 @@ namespace Pet2Share_API.Domain
     public class UserType
     {
         [DataMember]
-        int id;
+        public int id;
         [DataMember]
-        string name;
+        public string name;
 
         #region constructors
+
+        public UserType()
+        {
+            this.id = 0;
+            this.name = "Default User Type";
+        }
 
         public UserType(int id)
         {
@@ -64,33 +70,103 @@ namespace Pet2Share_API.Domain
 
         public User()
         {
-
+            this.Id = -1;
+            this.IsAuthenticated = false;
+            this.Username = "Guest";
         }
 
-        public User(int id)
+        public User(int id) : base()
         {
+            User u = User.GetById(id);
+            this.Id = u.Id;
+            this.Username = u.Username;
+            this.P = u.P;
+            this.Email = u.Email;
+            this.AlternameEmail = u.AlternameEmail;
+            this.SocialMediaSourceId = u.SocialMediaSourceId;
+            this.SocialMediaId = u.SocialMediaId;
+            this.Phone = u.Phone;
+            this.DateAdded = u.DateAdded;
+            this.DateModified = u.DateModified;
+            this.IsActive = u.IsActive;
 
+            this.IsAuthenticated = this.Id > 0 ? true : false;
         }
 
-        public User(string username, string password, Person p, string email, string alternateEmail, int socialMediaSourceId, string socialMediaId, UserType uType)
+        public User(User u) : base()
         {
+            this.Id = u.Id;
+            this.Username = u.Username;
+            this.P = u.P;
+            this.Email = u.Email;
+            this.AlternameEmail = u.AlternameEmail;
+            this.SocialMediaSourceId = u.SocialMediaSourceId;
+            this.SocialMediaId = u.SocialMediaId;
+            this.Phone = u.Phone;
+            this.DateAdded = u.DateAdded;
+            this.DateModified = u.DateModified;
+            this.IsActive = u.IsActive;
 
+            this.IsAuthenticated = this.Id > 0 ? true : false;
+        }
+
+        public User(DAL.User u) : base()
+        {
+            this.Id = u.Id;
+            this.Username = u.Username;
+            this.P = new Person(u.PersonId);
+            this.Email = u.Email;
+            this.AlternameEmail = u.AlternateEmail;
+            this.SocialMediaSourceId = Convert.ToInt32(u.SocialMediaSourceId);
+            this.SocialMediaId = u.SocialMediaId;
+            this.Phone = u.Phone;
+            this.DateAdded = u.DateAdded;
+            this.DateModified = u.DateModified;
+            this.IsActive = u.IsActive;
+
+            this.IsAuthenticated = this.Id > 0 ? true : false;
+        }
+
+        public User(string username, string password, Person p, string email, string alternateEmail, int socialMediaSourceId, string socialMediaId, UserType uType) : base()
+        {
+            this.Id = 0;
+            this.Username = username;
+            this.Password = password;
+            this.P = p;
+            this.Email = email;
+            this.AlternameEmail = alternateEmail;
+            this.SocialMediaSourceId = socialMediaSourceId;
+            this.SocialMediaId = socialMediaId;
         }
 
         #endregion
 
         #region methods
 
-        
+        public static User GetById(int id)
+        {
+            DAL.User userObj;
+            using(DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                userObj = context.Users.Where(p => p.Id == id).FirstOrDefault();
+            }
+            if (userObj != null)
+            {
+                User u = new User(userObj);
+                return u;
+            }
+            return new User();
+        }
+
         public int Save()
         {
             //Check if all the objects in User's object is saved
             int result = -1;
             this.P.Id = this.P.Save();
-            //TODO: Save User
+            
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.InsertUpdateUser(0, this.Username, this.Password, this.P.Id, this.Email, this.Phone, this.AlternameEmail, this.SocialMediaSourceId, this.SocialMediaId);
+                result = context.InsertUpdateUser(this.Id, this.Username, this.Password, this.P.Id, this.Email, this.Phone, this.AlternameEmail, this.SocialMediaSourceId, this.SocialMediaId);
                 if (result > 0)
                     this.Id = result;
             }
@@ -99,17 +175,44 @@ namespace Pet2Share_API.Domain
 
         public static int Save(User u)
         {
-            return -1;
+            int result = -1;
+            u.P.Id = u.P.Save();
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.InsertUpdateUser(u.Id, u.Username, u.Password, u.P.Id, u.Email, u.Phone, u.AlternameEmail, u.SocialMediaSourceId, u.SocialMediaId);
+                if (result > 0)
+                    u.Id = result;
+            }
+            return result;
         }
 
         public bool Delete()
         {
-            return false;
+            int result = -1;
+            if (this.Id <= 0) return false;
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.DeleteUserById(this.Id);
+                if (result > 0)
+                    this.Id = result;
+            }
+            return result > 0 ? true : false ;
         }
 
-        public bool DeleteById(int id)
+        public static bool DeleteById(int id)
         {
-            return false;
+            int result = -1;
+            if (id <= 0) return false;
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.DeleteUserById(id);
+                if (result > 0)
+                    id = result;
+            }
+            return result > 0 ? true : false;
         }
 
         #endregion
