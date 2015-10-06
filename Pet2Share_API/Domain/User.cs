@@ -11,16 +11,18 @@ namespace Pet2Share_API.Domain
     public class UserType
     {
         [DataMember]
-        public int id;
+        public int Id { get; set; }
         [DataMember]
-        public string name;
+        public string Name { get; set; }
+        [DataMember]
+        public string Description { get; set; }
 
         #region constructors
 
         public UserType()
         {
-            this.id = 0;
-            this.name = "Default User Type";
+            this.Id = 0;
+            this.Name = "Default User Type";
         }
 
         public UserType(int id)
@@ -48,13 +50,11 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public string Email { get; set; }
         [DataMember]
-        public string AlternameEmail { get; set; }
-        [DataMember]
         public int SocialMediaSourceId { get; set; }
         [DataMember]
-        public string Phone { get; set; }
-        [DataMember]
         public string SocialMediaId { get; set; }
+        [DataMember]
+        public string Phone { get; set; }
         [DataMember]
         public UserType UType;
         [DataMember]
@@ -73,6 +73,8 @@ namespace Pet2Share_API.Domain
             this.Id = -1;
             this.IsAuthenticated = false;
             this.Username = "Guest";
+            this.P = new Person();
+            this.UType = new UserType();
         }
 
         public User(int id) : base()
@@ -82,7 +84,6 @@ namespace Pet2Share_API.Domain
             this.Username = u.Username;
             this.P = u.P;
             this.Email = u.Email;
-            this.AlternameEmail = u.AlternameEmail;
             this.SocialMediaSourceId = u.SocialMediaSourceId;
             this.SocialMediaId = u.SocialMediaId;
             this.Phone = u.Phone;
@@ -99,7 +100,6 @@ namespace Pet2Share_API.Domain
             this.Username = u.Username;
             this.P = u.P;
             this.Email = u.Email;
-            this.AlternameEmail = u.AlternameEmail;
             this.SocialMediaSourceId = u.SocialMediaSourceId;
             this.SocialMediaId = u.SocialMediaId;
             this.Phone = u.Phone;
@@ -116,7 +116,6 @@ namespace Pet2Share_API.Domain
             this.Username = u.Username;
             this.P = new Person(u.PersonId);
             this.Email = u.Email;
-            this.AlternameEmail = u.AlternateEmail;
             this.SocialMediaSourceId = Convert.ToInt32(u.SocialMediaSourceId);
             this.SocialMediaId = u.SocialMediaId;
             this.Phone = u.Phone;
@@ -134,7 +133,6 @@ namespace Pet2Share_API.Domain
             this.Password = password;
             this.P = p;
             this.Email = email;
-            this.AlternameEmail = alternateEmail;
             this.SocialMediaSourceId = socialMediaSourceId;
             this.SocialMediaId = socialMediaId;
         }
@@ -166,7 +164,7 @@ namespace Pet2Share_API.Domain
             
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.InsertUpdateUser(this.Id, this.Username, this.Password, this.P.Id, this.Email, this.Phone, this.AlternameEmail, this.SocialMediaSourceId, this.SocialMediaId);
+                result = context.InsertUpdateUser(this.Id, this.Username, this.Password, this.P.Id, this.Email, this.Phone, this.SocialMediaSourceId, this.SocialMediaId);
                 if (result > 0)
                     this.Id = result;
             }
@@ -180,7 +178,7 @@ namespace Pet2Share_API.Domain
 
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.InsertUpdateUser(u.Id, u.Username, u.Password, u.P.Id, u.Email, u.Phone, u.AlternameEmail, u.SocialMediaSourceId, u.SocialMediaId);
+                result = context.InsertUpdateUser(u.Id, u.Username, u.Password, u.P.Id, u.Email, u.Phone, u.SocialMediaSourceId, u.SocialMediaId);
                 if (result > 0)
                     u.Id = result;
             }

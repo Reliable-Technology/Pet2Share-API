@@ -46,6 +46,7 @@ namespace Pet2Share_API.Domain
         {
             this.Id = -1;
             this.FirstName = "Guest";
+            Addr = new Address();
         }
 
         public Person(int personId) : base()
