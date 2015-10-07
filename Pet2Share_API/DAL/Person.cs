@@ -37,6 +37,7 @@ namespace Pet2Share_API.DAL
         public System.DateTime DateModified { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
+        public string AlternateEmail { get; set; }
     
         public virtual Address Address { get; set; }
         public virtual ICollection<Album> Albums { get; set; }

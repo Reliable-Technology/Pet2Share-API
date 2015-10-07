@@ -25,7 +25,7 @@ namespace Pet2Share_Service
 
         public LoginResponse LoginUser(LoginRequest loginDetails)
         {
-           
+
             LoginResponse LoginResultResp;
             try
             {
@@ -61,11 +61,14 @@ namespace Pet2Share_Service
                 UserDetails.P.LastName = userObj.LastName;
                 UserDetails.Phone = userObj.PhoneNumber;
                 UserDetails.P.DOB = userObj.DateOfBirth;
+                UserDetails.Email = userObj.UserName;
                 UserDetails.Id = 0;
                 UserDetails.SocialMediaSourceId = 1;
                 var Result = AccountManagement.RegisterNewUser(UserDetails);
+
                 if (Result != null && Result.Id > 0)
                 {
+                    Result.Password = null;
                     RegisterResultResp = new RegisterResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { Result }), ErrorMsg = null };
                 }
                 else

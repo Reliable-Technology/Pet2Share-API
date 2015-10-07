@@ -280,7 +280,7 @@ namespace Pet2Share_API.DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("UserLogin", usernameParameter, passwordParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePerson(Nullable<int> id, string firstName, string lastName, string email, Nullable<System.DateTime> dOB, Nullable<int> addressId, string primaryPhone, string secondaryPhone, string avatar, string aboutMe)
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePerson(Nullable<int> id, string firstName, string lastName, string email, string alternateEmail, Nullable<System.DateTime> dOB, Nullable<int> addressId, string primaryPhone, string secondaryPhone, string avatar, string aboutMe)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("Id", id) :
@@ -297,6 +297,10 @@ namespace Pet2Share_API.DAL
             var emailParameter = email != null ?
                 new ObjectParameter("Email", email) :
                 new ObjectParameter("Email", typeof(string));
+    
+            var alternateEmailParameter = alternateEmail != null ?
+                new ObjectParameter("AlternateEmail", alternateEmail) :
+                new ObjectParameter("AlternateEmail", typeof(string));
     
             var dOBParameter = dOB.HasValue ?
                 new ObjectParameter("DOB", dOB) :
@@ -322,7 +326,7 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("AboutMe", aboutMe) :
                 new ObjectParameter("AboutMe", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePerson", idParameter, firstNameParameter, lastNameParameter, emailParameter, dOBParameter, addressIdParameter, primaryPhoneParameter, secondaryPhoneParameter, avatarParameter, aboutMeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePerson", idParameter, firstNameParameter, lastNameParameter, emailParameter, alternateEmailParameter, dOBParameter, addressIdParameter, primaryPhoneParameter, secondaryPhoneParameter, avatarParameter, aboutMeParameter);
         }
     }
 }
