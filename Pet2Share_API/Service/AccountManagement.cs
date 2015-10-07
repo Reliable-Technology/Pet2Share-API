@@ -56,7 +56,7 @@ namespace Pet2Share_API.Service
             return RegisterNewUser(u);
         }
 
-        public static User RegisterNewUser(string username, string password, string firstName, string lastName, string email, DateTime dob)
+        public static User RegisterNewUser(string username, string password, string firstName, string lastName, string email, DateTime? dob)
         {
             //Call to the most basic method
             return RegisterNewUser(username, password, firstName, lastName, dob, email, null, null, null, null, null, null, null, null, null, null, null, null);
