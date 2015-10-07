@@ -54,18 +54,9 @@ namespace Pet2Share_Service
 
             try
             {
-                Pet2Share_API.Domain.User UserDetails = new Pet2Share_API.Domain.User();
-                UserDetails.Username = userObj.UserName;
-                UserDetails.Password = userObj.Password;
-                UserDetails.P.FirstName = userObj.FirstName;
-                UserDetails.P.LastName = userObj.LastName;
-                UserDetails.Phone = userObj.PhoneNumber;
-                UserDetails.P.DOB = userObj.DateOfBirth;
-                UserDetails.Email = userObj.UserName;
-                UserDetails.Id = 0;
-                UserDetails.SocialMediaSourceId = 1;
-                var Result = AccountManagement.RegisterNewUser(UserDetails);
-
+               
+                var Result = AccountManagement.RegisterNewUser(userObj.UserName, userObj.Password, userObj.FirstName, userObj.LastName, userObj.UserName);
+                 
                 if (Result != null && Result.Id > 0)
                 {
                     Result.Password = null;
