@@ -144,7 +144,7 @@ namespace Pet2Share_API.DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPetProfileById_Result>("GetPetProfileById", idParameter);
         }
     
-        public virtual int InsertUpdateAddress(Nullable<int> id, string addressLine1, string addressLine2, string city, string state, string country, Nullable<bool> isBillingAddress, Nullable<bool> isShippingAddress, string zipCode)
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdateAddress(Nullable<int> id, string addressLine1, string addressLine2, string city, string state, string country, Nullable<bool> isBillingAddress, Nullable<bool> isShippingAddress, string zipCode)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("Id", id) :
@@ -182,55 +182,10 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("ZipCode", zipCode) :
                 new ObjectParameter("ZipCode", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdateAddress", idParameter, addressLine1Parameter, addressLine2Parameter, cityParameter, stateParameter, countryParameter, isBillingAddressParameter, isShippingAddressParameter, zipCodeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdateAddress", idParameter, addressLine1Parameter, addressLine2Parameter, cityParameter, stateParameter, countryParameter, isBillingAddressParameter, isShippingAddressParameter, zipCodeParameter);
         }
     
-        public virtual int InsertUpdatePerson(Nullable<int> id, string firstName, string lastName, string email, Nullable<System.DateTime> dOB, Nullable<int> addressId, string primaryPhone, string secondaryPhone, string avatar, string aboutMe)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(int));
-    
-            var firstNameParameter = firstName != null ?
-                new ObjectParameter("FirstName", firstName) :
-                new ObjectParameter("FirstName", typeof(string));
-    
-            var lastNameParameter = lastName != null ?
-                new ObjectParameter("LastName", lastName) :
-                new ObjectParameter("LastName", typeof(string));
-    
-            var emailParameter = email != null ?
-                new ObjectParameter("Email", email) :
-                new ObjectParameter("Email", typeof(string));
-    
-            var dOBParameter = dOB.HasValue ?
-                new ObjectParameter("DOB", dOB) :
-                new ObjectParameter("DOB", typeof(System.DateTime));
-    
-            var addressIdParameter = addressId.HasValue ?
-                new ObjectParameter("AddressId", addressId) :
-                new ObjectParameter("AddressId", typeof(int));
-    
-            var primaryPhoneParameter = primaryPhone != null ?
-                new ObjectParameter("PrimaryPhone", primaryPhone) :
-                new ObjectParameter("PrimaryPhone", typeof(string));
-    
-            var secondaryPhoneParameter = secondaryPhone != null ?
-                new ObjectParameter("SecondaryPhone", secondaryPhone) :
-                new ObjectParameter("SecondaryPhone", typeof(string));
-    
-            var avatarParameter = avatar != null ?
-                new ObjectParameter("Avatar", avatar) :
-                new ObjectParameter("Avatar", typeof(string));
-    
-            var aboutMeParameter = aboutMe != null ?
-                new ObjectParameter("AboutMe", aboutMe) :
-                new ObjectParameter("AboutMe", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdatePerson", idParameter, firstNameParameter, lastNameParameter, emailParameter, dOBParameter, addressIdParameter, primaryPhoneParameter, secondaryPhoneParameter, avatarParameter, aboutMeParameter);
-        }
-    
-        public virtual int InsertUpdatePetProfile(Nullable<int> id, string name, string familyName, Nullable<int> userId, Nullable<int> petTypeId, Nullable<System.DateTime> dOB, string profilePicture, string about, string coverPicture, string favFood)
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePetProfile(Nullable<int> id, string name, string familyName, Nullable<int> userId, Nullable<int> petTypeId, Nullable<System.DateTime> dOB, string profilePicture, string about, string coverPicture, string favFood)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("Id", id) :
@@ -272,10 +227,10 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("FavFood", favFood) :
                 new ObjectParameter("FavFood", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdatePetProfile", idParameter, nameParameter, familyNameParameter, userIdParameter, petTypeIdParameter, dOBParameter, profilePictureParameter, aboutParameter, coverPictureParameter, favFoodParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePetProfile", idParameter, nameParameter, familyNameParameter, userIdParameter, petTypeIdParameter, dOBParameter, profilePictureParameter, aboutParameter, coverPictureParameter, favFoodParameter);
         }
     
-        public virtual int InsertUpdateUser(Nullable<int> id, string username, string password, Nullable<int> primaryPersonId, string email, string phone, Nullable<int> socialMediaSourceId, string socialMediaUsername)
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdateUser(Nullable<int> id, string username, string password, Nullable<int> primaryPersonId, string email, string phone, Nullable<int> socialMediaSourceId, string socialMediaUsername)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("Id", id) :
@@ -309,7 +264,7 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("SocialMediaUsername", socialMediaUsername) :
                 new ObjectParameter("SocialMediaUsername", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdateUser", idParameter, usernameParameter, passwordParameter, primaryPersonIdParameter, emailParameter, phoneParameter, socialMediaSourceIdParameter, socialMediaUsernameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdateUser", idParameter, usernameParameter, passwordParameter, primaryPersonIdParameter, emailParameter, phoneParameter, socialMediaSourceIdParameter, socialMediaUsernameParameter);
         }
     
         public virtual ObjectResult<Nullable<int>> UserLogin(string username, string password)
@@ -323,6 +278,51 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("Password", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("UserLogin", usernameParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePerson(Nullable<int> id, string firstName, string lastName, string email, Nullable<System.DateTime> dOB, Nullable<int> addressId, string primaryPhone, string secondaryPhone, string avatar, string aboutMe)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var firstNameParameter = firstName != null ?
+                new ObjectParameter("FirstName", firstName) :
+                new ObjectParameter("FirstName", typeof(string));
+    
+            var lastNameParameter = lastName != null ?
+                new ObjectParameter("LastName", lastName) :
+                new ObjectParameter("LastName", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var dOBParameter = dOB.HasValue ?
+                new ObjectParameter("DOB", dOB) :
+                new ObjectParameter("DOB", typeof(System.DateTime));
+    
+            var addressIdParameter = addressId.HasValue ?
+                new ObjectParameter("AddressId", addressId) :
+                new ObjectParameter("AddressId", typeof(int));
+    
+            var primaryPhoneParameter = primaryPhone != null ?
+                new ObjectParameter("PrimaryPhone", primaryPhone) :
+                new ObjectParameter("PrimaryPhone", typeof(string));
+    
+            var secondaryPhoneParameter = secondaryPhone != null ?
+                new ObjectParameter("SecondaryPhone", secondaryPhone) :
+                new ObjectParameter("SecondaryPhone", typeof(string));
+    
+            var avatarParameter = avatar != null ?
+                new ObjectParameter("Avatar", avatar) :
+                new ObjectParameter("Avatar", typeof(string));
+    
+            var aboutMeParameter = aboutMe != null ?
+                new ObjectParameter("AboutMe", aboutMe) :
+                new ObjectParameter("AboutMe", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePerson", idParameter, firstNameParameter, lastNameParameter, emailParameter, dOBParameter, addressIdParameter, primaryPhoneParameter, secondaryPhoneParameter, avatarParameter, aboutMeParameter);
         }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Pet2ShareModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Pet2ShareModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Id" />
@@ -539,8 +539,7 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Pet2ShareModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1038,27 +1037,27 @@
             <Parameter Name="Active" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="DeleteAddressById">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePersonById">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePetProfileById">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteUserById">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAddressById" ReturnType="Collection(Pet2ShareModel.GetAddressById_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPersonById" ReturnType="Collection(Pet2ShareModel.GetPersonById_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPetProfileById" ReturnType="Collection(Pet2ShareModel.GetPetProfileById_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="InsertUpdateAddress">
+          <FunctionImport Name="InsertUpdateAddress" ReturnType="Collection(Decimal)">
             <Parameter Name="Id" Mode="In" Type="Int32" />
             <Parameter Name="AddressLine1" Mode="In" Type="String" />
             <Parameter Name="AddressLine2" Mode="In" Type="String" />
@@ -1069,19 +1068,7 @@
             <Parameter Name="IsShippingAddress" Mode="In" Type="Boolean" />
             <Parameter Name="ZipCode" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="InsertUpdatePerson">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
-            <Parameter Name="FirstName" Mode="In" Type="String" />
-            <Parameter Name="LastName" Mode="In" Type="String" />
-            <Parameter Name="Email" Mode="In" Type="String" />
-            <Parameter Name="DOB" Mode="In" Type="DateTime" />
-            <Parameter Name="AddressId" Mode="In" Type="Int32" />
-            <Parameter Name="PrimaryPhone" Mode="In" Type="String" />
-            <Parameter Name="SecondaryPhone" Mode="In" Type="String" />
-            <Parameter Name="Avatar" Mode="In" Type="String" />
-            <Parameter Name="AboutMe" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="InsertUpdatePetProfile">
+          <FunctionImport Name="InsertUpdatePetProfile" ReturnType="Collection(Decimal)">
             <Parameter Name="Id" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="FamilyName" Mode="In" Type="String" />
@@ -1093,7 +1080,7 @@
             <Parameter Name="CoverPicture" Mode="In" Type="String" />
             <Parameter Name="FavFood" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="InsertUpdateUser">
+          <FunctionImport Name="InsertUpdateUser" ReturnType="Collection(Decimal)">
             <Parameter Name="Id" Mode="In" Type="Int32" />
             <Parameter Name="Username" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
@@ -1106,6 +1093,18 @@
           <FunctionImport Name="UserLogin" ReturnType="Collection(Int32)">
             <Parameter Name="Username" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUpdatePerson" ReturnType="Collection(Decimal)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="DOB" Mode="In" Type="DateTime" />
+            <Parameter Name="AddressId" Mode="In" Type="Int32" />
+            <Parameter Name="PrimaryPhone" Mode="In" Type="String" />
+            <Parameter Name="SecondaryPhone" Mode="In" Type="String" />
+            <Parameter Name="Avatar" Mode="In" Type="String" />
+            <Parameter Name="AboutMe" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
@@ -1436,10 +1435,10 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertUpdateAddress" FunctionName="Pet2ShareModel.Store.InsertUpdateAddress" />
-          <FunctionImportMapping FunctionImportName="InsertUpdatePerson" FunctionName="Pet2ShareModel.Store.InsertUpdatePerson" />
           <FunctionImportMapping FunctionImportName="InsertUpdatePetProfile" FunctionName="Pet2ShareModel.Store.InsertUpdatePetProfile" />
           <FunctionImportMapping FunctionImportName="InsertUpdateUser" FunctionName="Pet2ShareModel.Store.InsertUpdateUser" />
           <FunctionImportMapping FunctionImportName="UserLogin" FunctionName="Pet2ShareModel.Store.UserLogin" />
+          <FunctionImportMapping FunctionImportName="InsertUpdatePerson" FunctionName="Pet2ShareModel.Store.InsertUpdatePerson" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

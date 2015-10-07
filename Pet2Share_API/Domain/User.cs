@@ -164,7 +164,7 @@ namespace Pet2Share_API.Domain
             
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.InsertUpdateUser(this.Id, this.Username, this.Password, this.P.Id, this.Email, this.Phone, this.SocialMediaSourceId, this.SocialMediaId);
+                result = Convert.ToInt32(context.InsertUpdateUser(this.Id, this.Username, this.Password, this.P.Id, this.Email, this.Phone, this.SocialMediaSourceId, this.SocialMediaId).FirstOrDefault());
                 if (result > 0)
                     this.Id = result;
             }
@@ -178,7 +178,7 @@ namespace Pet2Share_API.Domain
 
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.InsertUpdateUser(u.Id, u.Username, u.Password, u.P.Id, u.Email, u.Phone, u.SocialMediaSourceId, u.SocialMediaId);
+                result = Convert.ToInt32(context.InsertUpdateUser(u.Id, u.Username, u.Password, u.P.Id, u.Email, u.Phone, u.SocialMediaSourceId, u.SocialMediaId).FirstOrDefault());
                 if (result > 0)
                     u.Id = result;
             }

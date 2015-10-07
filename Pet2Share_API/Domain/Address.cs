@@ -100,7 +100,7 @@ namespace Pet2Share_API.Domain
 
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.InsertUpdateAddress(this.Id, this.AddressLine1, this.AddressLine2, this.City, this.State, this.Country, this.IsBillingAddress, this.IsShippingAddress, this.ZipCode);
+                result = Convert.ToInt32(context.InsertUpdateAddress(this.Id, this.AddressLine1, this.AddressLine2, this.City, this.State, this.Country, this.IsBillingAddress, this.IsShippingAddress, this.ZipCode).FirstOrDefault());
                 if (result > 0)
                     this.Id = result;
             }
@@ -113,7 +113,7 @@ namespace Pet2Share_API.Domain
 
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.InsertUpdateAddress(addr.Id, addr.AddressLine1, addr.AddressLine2, addr.City, addr.State, addr.Country, addr.IsBillingAddress, addr.IsShippingAddress, addr.ZipCode);
+                result = Convert.ToInt32(context.InsertUpdateAddress(addr.Id, addr.AddressLine1, addr.AddressLine2, addr.City, addr.State, addr.Country, addr.IsBillingAddress, addr.IsShippingAddress, addr.ZipCode).FirstOrDefault());
                 if (result > 0)
                     addr.Id = result;
             }
