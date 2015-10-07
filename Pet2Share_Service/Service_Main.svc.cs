@@ -54,7 +54,16 @@ namespace Pet2Share_Service
 
             try
             {
-                var Result = AccountManagement.RegisterNewUser(userObj.UserDetails);
+                Pet2Share_API.Domain.User UserDetails = new Pet2Share_API.Domain.User();
+                UserDetails.Username = userObj.UserName;
+                UserDetails.Password = userObj.Password;
+                UserDetails.P.FirstName = userObj.FirstName;
+                UserDetails.P.LastName = userObj.LastName;
+                UserDetails.Phone = userObj.PhoneNumber;
+                UserDetails.P.DOB = userObj.DateOfBirth;
+                UserDetails.Id = 0;
+                UserDetails.SocialMediaSourceId = 1;
+                var Result = AccountManagement.RegisterNewUser(UserDetails);
                 if (Result != null && Result.Id > 0)
                 {
                     RegisterResultResp = new RegisterResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { Result }), ErrorMsg = null };
@@ -71,6 +80,51 @@ namespace Pet2Share_Service
             return RegisterResultResp;
         }
 
+        public UserProfileResponse UpdateProfile(UserProfileRequest userObj)
+        {
+            UserProfileResponse UserProfileResultResp;
+
+            try
+            {
+                var Result = UserProfileManager.UpdateProfile(userObj.UserDetails);
+                if (Result.IsSuccessful)
+                {
+                    UserProfileResultResp = new UserProfileResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { userObj.UserDetails }), ErrorMsg = null };
+                }
+                else
+                {
+                    UserProfileResultResp = new UserProfileResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error updating profile. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                UserProfileResultResp = new UserProfileResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return UserProfileResultResp;
+        }
+
+        public UserProfileResponse GetUserProfile(int UserId)
+        {
+            UserProfileResponse UserProfileResultResp;
+
+            try
+            {
+                UserProfileManager userObj = new UserProfileManager(UserId);
+                if (userObj.user.Id == UserId)
+                {
+                    UserProfileResultResp = new UserProfileResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { userObj.user }), ErrorMsg = null };
+                }
+                else
+                {
+                    UserProfileResultResp = new UserProfileResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while fetching your profile. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                UserProfileResultResp = new UserProfileResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return UserProfileResultResp;
+        }
 
     }
 }

@@ -66,8 +66,26 @@ namespace Pet2Share_Service
     [DataContract]
     public class RegisterRequest : RequestObject
     {
+        //[DataMember]
+        //public User UserDetails { get; set; }
+
         [DataMember]
-        public User UserDetails { get; set; }
+        public string UserName { get; set; }
+
+        [DataMember]
+        public string Password { get; set; }
+
+        [DataMember]
+        public string FirstName { get; set; }
+
+        [DataMember]
+        public string LastName { get; set; }
+
+        [DataMember]
+        public string PhoneNumber { get; set; }
+
+        [DataMember]
+        public DateTime DateOfBirth { get; set; }
 
     }
 
@@ -77,5 +95,26 @@ namespace Pet2Share_Service
         [DataMember]
         public User[] Results { get; set; }
     }
+
+    [DataContract]
+    public class UserProfileRequest : RequestObject
+    {
+        [DataMember]
+        public User UserDetails { get; set; }
+
+        //TODO: Need to add more fields later
+    }
+
+    [DataContract]
+    public class UserProfileResponse : ResponseObject
+    {
+        [DataMember]
+        public User[] Results { get; set; }
+
+        //TODO: Need to add more fields later
+    }
+
+
+
 
 }
