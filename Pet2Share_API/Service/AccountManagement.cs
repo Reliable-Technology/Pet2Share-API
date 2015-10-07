@@ -18,7 +18,7 @@ namespace Pet2Share_API.Service
 
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                System.Data.Objects.ObjectResult<int?> uid = context.UserLogin(username, password);
+                System.Data.Entity.Core.Objects.ObjectResult<int?> uid = context.UserLogin(username, password);
                 userId = uid.FirstOrDefault();
             }
 

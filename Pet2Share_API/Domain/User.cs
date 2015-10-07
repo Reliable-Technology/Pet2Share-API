@@ -114,10 +114,10 @@ namespace Pet2Share_API.Domain
         {
             this.Id = u.Id;
             this.Username = u.Username;
-            this.P = new Person(u.PersonId);
+            this.P = new Person(u.PrimaryPersonId);
             this.Email = u.Email;
             this.SocialMediaSourceId = Convert.ToInt32(u.SocialMediaSourceId);
-            this.SocialMediaId = u.SocialMediaId;
+            this.SocialMediaId = u.SocialMediaUsername;
             this.Phone = u.Phone;
             this.DateAdded = u.DateAdded;
             this.DateModified = u.DateModified;

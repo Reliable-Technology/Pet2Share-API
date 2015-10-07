@@ -4,26 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Pet2ShareModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="Pet2ShareModelStoreContainer">
-          <EntitySet Name="Address" EntityType="Pet2ShareModel.Store.Address" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="BreedType" EntityType="Pet2ShareModel.Store.BreedType" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Person" EntityType="Pet2ShareModel.Store.Person" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PetProfile" EntityType="Pet2ShareModel.Store.PetProfile" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PetType" EntityType="Pet2ShareModel.Store.PetType" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="SocialMediaSource" EntityType="Pet2ShareModel.Store.SocialMediaSource" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="User" EntityType="Pet2ShareModel.Store.User" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="UserType" EntityType="Pet2ShareModel.Store.UserType" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_User_User" Association="Pet2ShareModel.Store.FK_User_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="User1" EntitySet="User" />
-          </AssociationSet>
-        </EntityContainer>
+      <Schema Namespace="Pet2ShareModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AddressLine1" Type="varchar" MaxLength="100" />
           <Property Name="AddressLine2" Type="varchar" MaxLength="100" />
           <Property Name="City" Type="varchar" MaxLength="50" />
@@ -34,14 +20,27 @@
           <Property Name="ZipCode" Type="varchar" MaxLength="10" />
           <Property Name="DateAdded" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BreedType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="PetTypeId" Type="int" />
           <Property Name="DateAdded" Type="datetime" />
           <Property Name="DateModified" Type="datetime" />
@@ -52,7 +51,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" />
           <Property Name="LastName" Type="varchar" MaxLength="50" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
@@ -62,6 +61,7 @@
           <Property Name="SecondaryPhone" Type="varchar" MaxLength="10" />
           <Property Name="Avatar" Type="varchar" MaxLength="200" />
           <Property Name="AboutMe" Type="varchar" MaxLength="1000" />
+          <Property Name="UserID" Type="int" />
           <Property Name="DateAdded" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -71,7 +71,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="FamilyName" Type="varchar" MaxLength="50" />
           <Property Name="UserId" Type="int" />
@@ -90,9 +90,73 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
           <Property Name="DateAdded" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostTypeID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="PostedBy" Type="int" Nullable="false" />
+          <Property Name="IsPostByPet" Type="bit" Nullable="false" />
+          <Property Name="PostLikeCount" Type="int" Nullable="false" />
+          <Property Name="PostCommentCount" Type="int" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post Uploads">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostID" Type="int" Nullable="false" />
+          <Property Name="UploadedFilePath" Type="varchar" MaxLength="2000" Nullable="false" />
+          <Property Name="FileMimeType" Type="varchar" MaxLength="200" />
+          <Property Name="FileExtension" Type="varchar" MaxLength="50" />
+          <Property Name="AlbumID" Type="int" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="PostComments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Comment" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PostID" Type="int" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostLikes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostID" Type="int" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
@@ -100,23 +164,26 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="varchar" MaxLength="100" />
-          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
-            <PropertyRef Name="Username" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="Password" Type="varbinary" Nullable="false" MaxLength="100" />
-          <Property Name="PersonId" Type="int" Nullable="false" />
-          <Property Name="Email" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varbinary" MaxLength="100" Nullable="false" />
+          <Property Name="PrimaryPersonId" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="AlternateEmail" Type="varchar" MaxLength="100" />
           <Property Name="Phone" Type="varchar" MaxLength="10" />
           <Property Name="SocialMediaSourceId" Type="int" />
-          <Property Name="SocialMediaId" Type="varchar" MaxLength="100" />
+          <Property Name="SocialMediaUsername" Type="varchar" MaxLength="100" />
           <Property Name="UserTypeId" Type="int" />
           <Property Name="DateAdded" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" Nullable="false" />
@@ -127,22 +194,190 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="DateAdded" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
-        <Association Name="FK_User_User">
-          <End Role="User" Type="Pet2ShareModel.Store.User" Multiplicity="1" />
-          <End Role="User1" Type="Pet2ShareModel.Store.User" Multiplicity="0..1" />
+        <Association Name="FK_Album_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Album" Type="Self.Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BreedType_PetType">
+          <End Role="PetType" Type="Self.PetType" Multiplicity="0..1" />
+          <End Role="BreedType" Type="Self.BreedType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PetType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BreedType">
+              <PropertyRef Name="PetTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_Address">
+          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="User1">
-              <PropertyRef Name="Username" />
+            <Dependent Role="Person">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PetProfile_PetType">
+          <End Role="PetType" Type="Self.PetType" Multiplicity="0..1" />
+          <End Role="PetProfile" Type="Self.PetProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PetType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PetProfile">
+              <PropertyRef Name="PetTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PetProfile_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="PetProfile" Type="Self.PetProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PetProfile">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post Uploads_Album">
+          <End Role="Album" Type="Self.Album" Multiplicity="0..1" />
+          <End Role="Post Uploads" Type="Self.Post Uploads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Post Uploads">
+              <PropertyRef Name="AlbumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post Uploads_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Post Uploads" Type="Self.Post Uploads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Post Uploads">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="PostedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_PostType">
+          <End Role="PostType" Type="Self.PostType" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="PostTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostLikes_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="PostLikes" Type="Self.PostLikes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostLikes">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostLikes_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
+          <End Role="PostLikes" Type="Self.PostLikes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostLikes">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="PrimaryPersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_SocialMediaSource">
+          <End Role="SocialMediaSource" Type="Self.SocialMediaSource" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SocialMediaSource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="SocialMediaSourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_UserType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -161,7 +396,7 @@
         <Function Name="DeleteAddressById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
-        <Function Name="DeleteByPersonById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="DeletePersonById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
         <Function Name="DeletePetProfileById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -218,22 +453,578 @@
           <Parameter Name="Id" Type="int" Mode="In" />
           <Parameter Name="Username" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
-          <Parameter Name="PersonId" Type="int" Mode="In" />
+          <Parameter Name="PrimaryPersonId" Type="int" Mode="In" />
           <Parameter Name="Email" Type="varchar" Mode="In" />
           <Parameter Name="Phone" Type="varchar" Mode="In" />
-          <Parameter Name="AlternateEmail" Type="varchar" Mode="In" />
           <Parameter Name="SocialMediaSourceId" Type="int" Mode="In" />
-          <Parameter Name="SocialMediaId" Type="varchar" Mode="In" />
+          <Parameter Name="SocialMediaUsername" Type="varchar" Mode="In" />
         </Function>
         <Function Name="UserLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Username" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
         </Function>
-      </Schema></edmx:StorageModels>
+        <EntityContainer Name="Pet2ShareModelStoreContainer">
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BreedType" EntityType="Self.BreedType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PetProfile" EntityType="Self.PetProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PetType" EntityType="Self.PetType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post Uploads" EntityType="Self.Post Uploads" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostComments" EntityType="Self.PostComments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostLikes" EntityType="Self.PostLikes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostType" EntityType="Self.PostType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SocialMediaSource" EntityType="Self.SocialMediaSource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Album_Person" Association="Self.FK_Album_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BreedType_PetType" Association="Self.FK_BreedType_PetType">
+            <End Role="PetType" EntitySet="PetType" />
+            <End Role="BreedType" EntitySet="BreedType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_Address" Association="Self.FK_Person_Address">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_User" Association="Self.FK_Person_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PetProfile_PetType" Association="Self.FK_PetProfile_PetType">
+            <End Role="PetType" EntitySet="PetType" />
+            <End Role="PetProfile" EntitySet="PetProfile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PetProfile_User" Association="Self.FK_PetProfile_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="PetProfile" EntitySet="PetProfile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post Uploads_Album" Association="Self.FK_Post Uploads_Album">
+            <End Role="Album" EntitySet="Album" />
+            <End Role="Post Uploads" EntitySet="Post Uploads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post Uploads_Post" Association="Self.FK_Post Uploads_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Post Uploads" EntitySet="Post Uploads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Person" Association="Self.FK_Post_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_PostType" Association="Self.FK_Post_PostType">
+            <End Role="PostType" EntitySet="PostType" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostLikes_Person" Association="Self.FK_PostLikes_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="PostLikes" EntitySet="PostLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostLikes_Post" Association="Self.FK_PostLikes_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="PostLikes" EntitySet="PostLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Person" Association="Self.FK_User_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_SocialMediaSource" Association="Self.FK_User_SocialMediaSource">
+            <End Role="SocialMediaSource" EntitySet="SocialMediaSource" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserType" Association="Self.FK_User_UserType">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Pet2ShareModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="Pet2ShareEntities" p1:LazyLoadingEnabled="true">
+      <Schema Namespace="Pet2ShareModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsBillingAddress" Type="Boolean" />
+          <Property Name="IsShippingAddress" Type="Boolean" />
+          <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="People" Relationship="Self.FK_Person_Address" FromRole="Address" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Album_Person" FromRole="Album" ToRole="Person" />
+          <NavigationProperty Name="Post_Uploads" Relationship="Self.FK_Post_Uploads_Album" FromRole="Album" ToRole="Post_Uploads" />
+        </EntityType>
+        <EntityType Name="BreedType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PetTypeId" Type="Int32" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PetType" Relationship="Self.FK_BreedType_PetType" FromRole="BreedType" ToRole="PetType" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AddressId" Type="Int32" />
+          <Property Name="PrimaryPhone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SecondaryPhone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Avatar" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="AboutMe" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.FK_Person_Address" FromRole="Person" ToRole="Address" />
+          <NavigationProperty Name="Albums" Relationship="Self.FK_Album_Person" FromRole="Person" ToRole="Album" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Person_User" FromRole="Person" ToRole="User" />
+          <NavigationProperty Name="Posts" Relationship="Self.FK_Post_Person" FromRole="Person" ToRole="Post" />
+          <NavigationProperty Name="PostLikes" Relationship="Self.FK_PostLikes_Person" FromRole="Person" ToRole="PostLikes" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_Person" FromRole="Person" ToRole="User" />
+        </EntityType>
+        <EntityType Name="PetProfile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FamilyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="PetTypeId" Type="Int32" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="ProfilePicture" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CoverPicture" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="About" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="FavFood" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PetType" Relationship="Self.FK_PetProfile_PetType" FromRole="PetProfile" ToRole="PetType" />
+          <NavigationProperty Name="User" Relationship="Self.FK_PetProfile_User" FromRole="PetProfile" ToRole="User" />
+        </EntityType>
+        <EntityType Name="PetType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BreedTypes" Relationship="Self.FK_BreedType_PetType" FromRole="PetType" ToRole="BreedType" />
+          <NavigationProperty Name="PetProfiles" Relationship="Self.FK_PetProfile_PetType" FromRole="PetType" ToRole="PetProfile" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PostedBy" Type="Int32" Nullable="false" />
+          <Property Name="IsPostByPet" Type="Boolean" Nullable="false" />
+          <Property Name="PostLikeCount" Type="Int32" Nullable="false" />
+          <Property Name="PostCommentCount" Type="Int32" Nullable="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Post_Person" FromRole="Post" ToRole="Person" />
+          <NavigationProperty Name="Post_Uploads" Relationship="Self.FK_Post_Uploads_Post" FromRole="Post" ToRole="Post_Uploads" />
+          <NavigationProperty Name="PostType" Relationship="Self.FK_Post_PostType" FromRole="Post" ToRole="PostType" />
+          <NavigationProperty Name="PostLikes" Relationship="Self.FK_PostLikes_Post" FromRole="Post" ToRole="PostLikes" />
+        </EntityType>
+        <EntityType Name="Post_Upload">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostID" Type="Int32" Nullable="false" />
+          <Property Name="UploadedFilePath" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FileMimeType" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FileExtension" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AlbumID" Type="Int32" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Album" Relationship="Self.FK_Post_Uploads_Album" FromRole="Post_Uploads" ToRole="Album" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Post_Uploads_Post" FromRole="Post_Uploads" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="PostComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Comment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PostID" Type="Int32" Nullable="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostLike">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostID" Type="Int32" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_PostLikes_Person" FromRole="PostLikes" ToRole="Person" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_PostLikes_Post" FromRole="PostLikes" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="PostType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Posts" Relationship="Self.FK_Post_PostType" FromRole="PostType" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="SocialMediaSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_SocialMediaSource" FromRole="SocialMediaSource" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="Binary" MaxLength="100" FixedLength="false" Nullable="false" />
+          <Property Name="PrimaryPersonId" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AlternateEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SocialMediaSourceId" Type="Int32" />
+          <Property Name="SocialMediaUsername" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserTypeId" Type="Int32" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="People" Relationship="Self.FK_Person_User" FromRole="User" ToRole="Person" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_User_Person" FromRole="User" ToRole="Person" />
+          <NavigationProperty Name="PetProfiles" Relationship="Self.FK_PetProfile_User" FromRole="User" ToRole="PetProfile" />
+          <NavigationProperty Name="SocialMediaSource" Relationship="Self.FK_User_SocialMediaSource" FromRole="User" ToRole="SocialMediaSource" />
+          <NavigationProperty Name="UserType" Relationship="Self.FK_User_UserType" FromRole="User" ToRole="UserType" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_UserType" FromRole="UserType" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Person_Address">
+          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Album_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Album" Type="Self.Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Uploads_Album">
+          <End Role="Album" Type="Self.Album" Multiplicity="0..1" />
+          <End Role="Post_Uploads" Type="Self.Post_Upload" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Post_Uploads">
+              <PropertyRef Name="AlbumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BreedType_PetType">
+          <End Role="PetType" Type="Self.PetType" Multiplicity="0..1" />
+          <End Role="BreedType" Type="Self.BreedType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PetType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BreedType">
+              <PropertyRef Name="PetTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="PostedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostLikes_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="PostLikes" Type="Self.PostLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostLikes">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="PrimaryPersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PetProfile_PetType">
+          <End Role="PetType" Type="Self.PetType" Multiplicity="0..1" />
+          <End Role="PetProfile" Type="Self.PetProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PetType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PetProfile">
+              <PropertyRef Name="PetTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PetProfile_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="PetProfile" Type="Self.PetProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PetProfile">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Uploads_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Post_Uploads" Type="Self.Post_Upload" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Post_Uploads">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_PostType">
+          <End Role="PostType" Type="Self.PostType" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="PostTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostLikes_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
+          <End Role="PostLikes" Type="Self.PostLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostLikes">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_SocialMediaSource">
+          <End Role="SocialMediaSource" Type="Self.SocialMediaSource" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SocialMediaSource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="SocialMediaSourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_UserType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Pet2ShareEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="Albums" EntityType="Self.Album" />
+          <EntitySet Name="BreedTypes" EntityType="Self.BreedType" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="PetProfiles" EntityType="Self.PetProfile" />
+          <EntitySet Name="PetTypes" EntityType="Self.PetType" />
+          <EntitySet Name="Posts" EntityType="Self.Post" />
+          <EntitySet Name="Post_Uploads" EntityType="Self.Post_Upload" />
+          <EntitySet Name="PostComments" EntityType="Self.PostComment" />
+          <EntitySet Name="PostLikes" EntityType="Self.PostLike" />
+          <EntitySet Name="PostTypes" EntityType="Self.PostType" />
+          <EntitySet Name="SocialMediaSources" EntityType="Self.SocialMediaSource" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserTypes" EntityType="Self.UserType" />
+          <AssociationSet Name="FK_Person_Address" Association="Self.FK_Person_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Album_Person" Association="Self.FK_Album_Person">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Album" EntitySet="Albums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Uploads_Album" Association="Self.FK_Post_Uploads_Album">
+            <End Role="Album" EntitySet="Albums" />
+            <End Role="Post_Uploads" EntitySet="Post_Uploads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BreedType_PetType" Association="Self.FK_BreedType_PetType">
+            <End Role="PetType" EntitySet="PetTypes" />
+            <End Role="BreedType" EntitySet="BreedTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_User" Association="Self.FK_Person_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Person" Association="Self.FK_Post_Person">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostLikes_Person" Association="Self.FK_PostLikes_Person">
+            <End Role="Person" EntitySet="People" />
+            <End Role="PostLikes" EntitySet="PostLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Person" Association="Self.FK_User_Person">
+            <End Role="Person" EntitySet="People" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PetProfile_PetType" Association="Self.FK_PetProfile_PetType">
+            <End Role="PetType" EntitySet="PetTypes" />
+            <End Role="PetProfile" EntitySet="PetProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PetProfile_User" Association="Self.FK_PetProfile_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PetProfile" EntitySet="PetProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Uploads_Post" Association="Self.FK_Post_Uploads_Post">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Post_Uploads" EntitySet="Post_Uploads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_PostType" Association="Self.FK_Post_PostType">
+            <End Role="PostType" EntitySet="PostTypes" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostLikes_Post" Association="Self.FK_PostLikes_Post">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="PostLikes" EntitySet="PostLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_SocialMediaSource" Association="Self.FK_User_SocialMediaSource">
+            <End Role="SocialMediaSource" EntitySet="SocialMediaSources" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserType" Association="Self.FK_User_UserType">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
           <FunctionImport Name="ChangeActivePetProfileById">
             <Parameter Name="Id" Mode="In" Type="Int32" />
             <Parameter Name="Active" Mode="In" Type="Boolean" />
@@ -247,25 +1038,25 @@
             <Parameter Name="Active" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="DeleteAddressById">
-          <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="DeleteByPersonById">
-          <Parameter Name="Id" Mode="In" Type="Int32" />
+          <FunctionImport Name="DeletePersonById">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePetProfileById">
-          <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteUserById">
-          <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAddressById" ReturnType="Collection(Pet2ShareModel.GetAddressById_Result)">
-          <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPersonById" ReturnType="Collection(Pet2ShareModel.GetPersonById_Result)">
-          <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPetProfileById" ReturnType="Collection(Pet2ShareModel.GetPetProfileById_Result)">
-          <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertUpdateAddress">
             <Parameter Name="Id" Mode="In" Type="Int32" />
@@ -306,29 +1097,16 @@
             <Parameter Name="Id" Mode="In" Type="Int32" />
             <Parameter Name="Username" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
-            <Parameter Name="PersonId" Mode="In" Type="Int32" />
+            <Parameter Name="PrimaryPersonId" Mode="In" Type="Int32" />
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Phone" Mode="In" Type="String" />
-            <Parameter Name="AlternateEmail" Mode="In" Type="String" />
             <Parameter Name="SocialMediaSourceId" Mode="In" Type="Int32" />
-            <Parameter Name="SocialMediaId" Mode="In" Type="String" />
+            <Parameter Name="SocialMediaUsername" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UserLogin" ReturnType="Collection(Int32)">
             <Parameter Name="Username" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Addresses" EntityType="Pet2ShareModel.Address" />
-          <EntitySet Name="BreedTypes" EntityType="Pet2ShareModel.BreedType" />
-          <EntitySet Name="People" EntityType="Pet2ShareModel.Person" />
-          <EntitySet Name="PetProfiles" EntityType="Pet2ShareModel.PetProfile" />
-          <EntitySet Name="PetTypes" EntityType="Pet2ShareModel.PetType" />
-          <EntitySet Name="SocialMediaSources" EntityType="Pet2ShareModel.SocialMediaSource" />
-          <EntitySet Name="Users" EntityType="Pet2ShareModel.User" />
-          <EntitySet Name="UserTypes" EntityType="Pet2ShareModel.UserType" />
-          <AssociationSet Name="FK_User_User" Association="Pet2ShareModel.FK_User_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="User1" EntitySet="Users" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -373,149 +1151,230 @@
           <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="23" />
           <Property Type="Boolean" Name="IsActive" Nullable="false" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="String" Name="coverpic" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="fevfood" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="CoverPicture" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="FavFood" Nullable="true" MaxLength="500" />
         </ComplexType>
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="AddressLine1" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="AddressLine2" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="City" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="State" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Country" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Boolean" Name="IsBillingAddress" />
-          <Property Type="Boolean" Name="IsShippingAddress" />
-          <Property Type="String" Name="ZipCode" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="3" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-        </EntityType>
-        <EntityType Name="BreedType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="PetTypeId" />
-          <Property Type="DateTime" Name="DateAdded" Precision="3" />
-          <Property Type="DateTime" Name="DateModified" Precision="3" />
-          <Property Type="Boolean" Name="IsActive" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Person">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="FirstName" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="LastName" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Email" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="DOB" Nullable="false" Precision="0" />
-          <Property Type="Int32" Name="AddressId" />
-          <Property Type="String" Name="PrimaryPhone" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SecondaryPhone" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Avatar" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="AboutMe" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="3" />
-          <Property Type="Boolean" Name="IsActive" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PetProfile">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="FamilyName" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="UserId" />
-          <Property Type="Int32" Name="PetTypeId" />
-          <Property Type="DateTime" Name="DOB" Precision="0" />
-          <Property Type="String" Name="ProfilePicture" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CoverPicture" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="About" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="FavFood" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="3" />
-          <Property Type="Boolean" Name="IsActive" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PetType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="DateAdded" Precision="3" />
-          <Property Type="Boolean" Name="IsActive" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SocialMediaSource">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="Boolean" Name="IsDeleted" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Username" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Binary" Name="Password" Nullable="false" MaxLength="100" FixedLength="false" />
-          <Property Type="Int32" Name="PersonId" Nullable="false" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="AlternateEmail" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Phone" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="SocialMediaSourceId" />
-          <Property Type="String" Name="SocialMediaId" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="UserTypeId" />
-          <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="3" />
-          <Property Type="Boolean" Name="IsActive" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <NavigationProperty Name="User1" Relationship="Pet2ShareModel.FK_User_User" FromRole="User" ToRole="User1" />
-          <NavigationProperty Name="User2" Relationship="Pet2ShareModel.FK_User_User" FromRole="User1" ToRole="User" />
-        </EntityType>
-        <EntityType Name="UserType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="3" />
-          <Property Type="Boolean" Name="IsActive" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_User_User">
-          <End Type="Pet2ShareModel.User" Role="User" Multiplicity="1" />
-          <End Type="Pet2ShareModel.User" Role="User1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Username" />
-            </Principal>
-            <Dependent Role="User1">
-              <PropertyRef Name="Username" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Pet2ShareModelStoreContainer" CdmEntityContainer="Pet2ShareEntities">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="Pet2ShareModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="IsBillingAddress" ColumnName="IsBillingAddress" />
+                <ScalarProperty Name="IsShippingAddress" ColumnName="IsShippingAddress" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Albums">
+            <EntityTypeMapping TypeName="Pet2ShareModel.Album">
+              <MappingFragment StoreEntitySet="Album">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BreedTypes">
+            <EntityTypeMapping TypeName="Pet2ShareModel.BreedType">
+              <MappingFragment StoreEntitySet="BreedType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PetTypeId" ColumnName="PetTypeId" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="Pet2ShareModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="PrimaryPhone" ColumnName="PrimaryPhone" />
+                <ScalarProperty Name="SecondaryPhone" ColumnName="SecondaryPhone" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="AboutMe" ColumnName="AboutMe" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PetProfiles">
+            <EntityTypeMapping TypeName="Pet2ShareModel.PetProfile">
+              <MappingFragment StoreEntitySet="PetProfile">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FamilyName" ColumnName="FamilyName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PetTypeId" ColumnName="PetTypeId" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
+                <ScalarProperty Name="CoverPicture" ColumnName="CoverPicture" />
+                <ScalarProperty Name="About" ColumnName="About" />
+                <ScalarProperty Name="FavFood" ColumnName="FavFood" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PetTypes">
+            <EntityTypeMapping TypeName="Pet2ShareModel.PetType">
+              <MappingFragment StoreEntitySet="PetType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="Pet2ShareModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PostTypeID" ColumnName="PostTypeID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PostedBy" ColumnName="PostedBy" />
+                <ScalarProperty Name="IsPostByPet" ColumnName="IsPostByPet" />
+                <ScalarProperty Name="PostLikeCount" ColumnName="PostLikeCount" />
+                <ScalarProperty Name="PostCommentCount" ColumnName="PostCommentCount" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post_Uploads">
+            <EntityTypeMapping TypeName="Pet2ShareModel.Post_Upload">
+              <MappingFragment StoreEntitySet="Post Uploads">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="UploadedFilePath" ColumnName="UploadedFilePath" />
+                <ScalarProperty Name="FileMimeType" ColumnName="FileMimeType" />
+                <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
+                <ScalarProperty Name="AlbumID" ColumnName="AlbumID" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostComments">
+            <EntityTypeMapping TypeName="Pet2ShareModel.PostComment">
+              <MappingFragment StoreEntitySet="PostComments">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostLikes">
+            <EntityTypeMapping TypeName="Pet2ShareModel.PostLike">
+              <MappingFragment StoreEntitySet="PostLikes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostTypes">
+            <EntityTypeMapping TypeName="Pet2ShareModel.PostType">
+              <MappingFragment StoreEntitySet="PostType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SocialMediaSources">
+            <EntityTypeMapping TypeName="Pet2ShareModel.SocialMediaSource">
+              <MappingFragment StoreEntitySet="SocialMediaSource">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Pet2ShareModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PrimaryPersonId" ColumnName="PrimaryPersonId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AlternateEmail" ColumnName="AlternateEmail" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="SocialMediaSourceId" ColumnName="SocialMediaSourceId" />
+                <ScalarProperty Name="SocialMediaUsername" ColumnName="SocialMediaUsername" />
+                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypes">
+            <EntityTypeMapping TypeName="Pet2ShareModel.UserType">
+              <MappingFragment StoreEntitySet="UserType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="ChangeActivePetProfileById" FunctionName="Pet2ShareModel.Store.ChangeActivePetProfileById" />
           <FunctionImportMapping FunctionImportName="ChangeActiveStatusbyPersonById" FunctionName="Pet2ShareModel.Store.ChangeActiveStatusbyPersonById" />
           <FunctionImportMapping FunctionImportName="ChangeActiveStatusbyUserId" FunctionName="Pet2ShareModel.Store.ChangeActiveStatusbyUserId" />
           <FunctionImportMapping FunctionImportName="DeleteAddressById" FunctionName="Pet2ShareModel.Store.DeleteAddressById" />
-          <FunctionImportMapping FunctionImportName="DeleteByPersonById" FunctionName="Pet2ShareModel.Store.DeleteByPersonById" />
+          <FunctionImportMapping FunctionImportName="DeletePersonById" FunctionName="Pet2ShareModel.Store.DeletePersonById" />
           <FunctionImportMapping FunctionImportName="DeletePetProfileById" FunctionName="Pet2ShareModel.Store.DeletePetProfileById" />
           <FunctionImportMapping FunctionImportName="DeleteUserById" FunctionName="Pet2ShareModel.Store.DeleteUserById" />
           <FunctionImportMapping FunctionImportName="GetAddressById" FunctionName="Pet2ShareModel.Store.GetAddressById">
@@ -571,8 +1430,8 @@
                 <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="coverpic" ColumnName="coverpic" />
-                <ScalarProperty Name="fevfood" ColumnName="fevfood" />
+                <ScalarProperty Name="CoverPicture" ColumnName="CoverPicture" />
+                <ScalarProperty Name="FavFood" ColumnName="FavFood" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -581,129 +1440,6 @@
           <FunctionImportMapping FunctionImportName="InsertUpdatePetProfile" FunctionName="Pet2ShareModel.Store.InsertUpdatePetProfile" />
           <FunctionImportMapping FunctionImportName="InsertUpdateUser" FunctionName="Pet2ShareModel.Store.InsertUpdateUser" />
           <FunctionImportMapping FunctionImportName="UserLogin" FunctionName="Pet2ShareModel.Store.UserLogin" />
-          <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="Pet2ShareModel.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="IsShippingAddress" ColumnName="IsShippingAddress" />
-                <ScalarProperty Name="IsBillingAddress" ColumnName="IsBillingAddress" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
-                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BreedTypes">
-            <EntityTypeMapping TypeName="Pet2ShareModel.BreedType">
-              <MappingFragment StoreEntitySet="BreedType">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="PetTypeId" ColumnName="PetTypeId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="People">
-            <EntityTypeMapping TypeName="Pet2ShareModel.Person">
-              <MappingFragment StoreEntitySet="Person">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="AboutMe" ColumnName="AboutMe" />
-                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
-                <ScalarProperty Name="SecondaryPhone" ColumnName="SecondaryPhone" />
-                <ScalarProperty Name="PrimaryPhone" ColumnName="PrimaryPhone" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PetProfiles">
-            <EntityTypeMapping TypeName="Pet2ShareModel.PetProfile">
-              <MappingFragment StoreEntitySet="PetProfile">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="FavFood" ColumnName="FavFood" />
-                <ScalarProperty Name="About" ColumnName="About" />
-                <ScalarProperty Name="CoverPicture" ColumnName="CoverPicture" />
-                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="PetTypeId" ColumnName="PetTypeId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="FamilyName" ColumnName="FamilyName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PetTypes">
-            <EntityTypeMapping TypeName="Pet2ShareModel.PetType">
-              <MappingFragment StoreEntitySet="PetType">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SocialMediaSources">
-            <EntityTypeMapping TypeName="Pet2ShareModel.SocialMediaSource">
-              <MappingFragment StoreEntitySet="SocialMediaSource">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="Pet2ShareModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
-                <ScalarProperty Name="SocialMediaId" ColumnName="SocialMediaId" />
-                <ScalarProperty Name="SocialMediaSourceId" ColumnName="SocialMediaSourceId" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="AlternateEmail" ColumnName="AlternateEmail" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserTypes">
-            <EntityTypeMapping TypeName="Pet2ShareModel.UserType">
-              <MappingFragment StoreEntitySet="UserType">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -718,8 +1454,9 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

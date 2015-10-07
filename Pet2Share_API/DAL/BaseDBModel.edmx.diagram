@@ -4,16 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9f5afe749fc3455dbf0cbdf1fbf44df2" Name="Diagram1">
-        <EntityTypeShape EntityType="Pet2ShareModel.Address" Width="1.5" PointX="2.9664188730374068" PointY="7.9448877759021181" />
-        <EntityTypeShape EntityType="Pet2ShareModel.BreedType" Width="1.5" PointX="9.5788535892864939" PointY="20.118997091482857" />
-        <EntityTypeShape EntityType="Pet2ShareModel.Person" Width="1.5" PointX="11.668816845709838" PointY="21.161483252961879" />
-        <EntityTypeShape EntityType="Pet2ShareModel.PetProfile" Width="1.5" PointX="9.9982413323587931" PointY="20.582474107193981" />
-        <EntityTypeShape EntityType="Pet2ShareModel.PetType" Width="1.5" PointX="2.1016926067423505" PointY="3.7605716901647726" />
-        <EntityTypeShape EntityType="Pet2ShareModel.SocialMediaSource" Width="1.5" PointX="3.8980872034551979" PointY="3.9346338379823762" />
-        <EntityTypeShape EntityType="Pet2ShareModel.User" Width="1.5" PointX="10.712807608168948" PointY="21.780051032910148" />
-        <EntityTypeShape EntityType="Pet2ShareModel.UserType" Width="1.5" PointX="11.20063744075626" PointY="29.871967508397983" />
-        <AssociationConnector Association="Pet2ShareModel.FK_User_User" />
+      <Diagram DiagramId="c6a72db2957743059025f0ef0129978b" Name="Diagram1">
+        <EntityTypeShape EntityType="Pet2ShareModel.Address" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.Album" Width="1.5" PointX="7.5" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.BreedType" Width="1.5" PointX="8.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.Person" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.PetProfile" Width="1.5" PointX="8.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.PetType" Width="1.5" PointX="6" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.Post" Width="1.5" PointX="10.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.Post_Upload" Width="1.5" PointX="9.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.PostComment" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.PostLike" Width="1.5" PointX="12.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.PostType" Width="1.5" PointX="8.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.SocialMediaSource" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.User" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pet2ShareModel.UserType" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <AssociationConnector Association="Pet2ShareModel.FK_Person_Address" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_Album_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_Post_Uploads_Album" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_BreedType_PetType" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_Person_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_Post_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_PostLikes_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_User_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_PetProfile_PetType" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_PetProfile_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_Post_Uploads_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_Post_PostType" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_PostLikes_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_User_SocialMediaSource" ManuallyRouted="false" />
+        <AssociationConnector Association="Pet2ShareModel.FK_User_UserType" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

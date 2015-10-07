@@ -30,13 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\Address.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Album.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\BaseDBModel.Context.cs">
@@ -85,6 +91,21 @@
     <Compile Include="DAL\PetType.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Post.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PostComment.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PostLike.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PostType.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Post_Upload.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\SocialMediaSource.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
@@ -95,13 +116,16 @@
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Address.cs" />
+    <Compile Include="Domain\BreedType.cs" />
     <Compile Include="Domain\Person.cs" />
     <Compile Include="Domain\Pet.cs" />
+    <Compile Include="Domain\SocialMediaSource.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AccountManagement.cs" />
     <Compile Include="Service\PetProfileManager.cs" />
     <Compile Include="Service\UserProfileManager.cs" />
+    <Compile Include="Utility\BoolExt.cs" />
     <Compile Include="Utility\ErrorHandler.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="Utility\MailDaemon.cs" />
@@ -110,13 +134,11 @@
     <Folder Include="Business\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="DAL\BaseDBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BaseDBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="DAL\BaseDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BaseDBModel.edmx</DependentUpon>

@@ -21,7 +21,7 @@ Thumbs.db
 *.lib
 *.sbr
 obj/
-Pet2Share_API/obj
+Pet2Share_API/obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
