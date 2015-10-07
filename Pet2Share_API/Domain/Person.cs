@@ -20,6 +20,8 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public string Email { get; set; }
         [DataMember]
+        public string AlternateEmail { get; set; }
+        [DataMember]
         public DateTime DOB { get; set; }
         [DataMember]
         public Address Addr { get; set; }
@@ -67,7 +69,7 @@ namespace Pet2Share_API.Domain
             this.IsActive = p.IsActive;
         }
 
-        public Person(string firstName, string lastName, string email, DateTime? dob, Address addr, string primaryPhone, string secondaryPhone, string avatarURL) : base()
+        public Person(string firstName, string lastName, string email, string alternateEmail, DateTime? dob, Address addr, string primaryPhone, string secondaryPhone, string avatarURL) : base()
         {
             this.Id = 0;
             this.FirstName = firstName;
@@ -124,7 +126,7 @@ namespace Pet2Share_API.Domain
 
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = Convert.ToInt32(context.InsertUpdatePerson(0, this.FirstName, this.LastName, this.Email, this.DOB, this.Addr.Id, this.PrimaryPhone, this.SecondaryPhone, this.AvatarURL, this.AboutMe).FirstOrDefault());
+                result = Convert.ToInt32(context.InsertUpdatePerson(0, this.FirstName, this.LastName, this.Email, this.AlternateEmail, this.DOB, this.Addr.Id, this.PrimaryPhone, this.SecondaryPhone, this.AvatarURL, this.AboutMe).FirstOrDefault());
                 if (result > 0)
                     this.Id = result;
             }
