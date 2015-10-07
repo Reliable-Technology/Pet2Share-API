@@ -54,9 +54,9 @@ namespace Pet2Share_Service
 
             try
             {
-               
-                var Result = AccountManagement.RegisterNewUser(userObj.UserName, userObj.Password, userObj.FirstName, userObj.LastName, userObj.UserName);
-                 
+
+                var Result = AccountManagement.RegisterNewUser(userObj.UserName, userObj.Password, userObj.FirstName, userObj.LastName, userObj.UserName, userObj.DateOfBirth);
+
                 if (Result != null && Result.Id > 0)
                 {
                     Result.Password = null;
