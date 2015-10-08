@@ -26,7 +26,8 @@ namespace Pet2Share_API.DAL
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public System.DateTime DOB { get; set; }
+        public string AlternateEmail { get; set; }
+        public Nullable<System.DateTime> DOB { get; set; }
         public Nullable<int> AddressId { get; set; }
         public string PrimaryPhone { get; set; }
         public string SecondaryPhone { get; set; }
@@ -37,7 +38,6 @@ namespace Pet2Share_API.DAL
         public System.DateTime DateModified { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
-        public string AlternateEmail { get; set; }
     
         public virtual Address Address { get; set; }
         public virtual ICollection<Album> Albums { get; set; }
