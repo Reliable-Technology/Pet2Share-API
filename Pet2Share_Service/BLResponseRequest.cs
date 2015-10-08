@@ -84,9 +84,7 @@ namespace Pet2Share_Service
 
         [DataMember]
         public string PhoneNumber { get; set; }
-
-        [DataMember]
-        public DateTime DateOfBirth { get; set; }
+ 
 
     }
 

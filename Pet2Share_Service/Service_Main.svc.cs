@@ -56,7 +56,7 @@ namespace Pet2Share_Service
             try
             {
 
-                var Result = AccountManagement.RegisterNewUser(userObj.UserName, userObj.Password, userObj.FirstName, userObj.LastName, userObj.UserName, userObj.DateOfBirth);
+                var Result = AccountManagement.RegisterNewUser(userObj.UserName, userObj.Password, userObj.FirstName, userObj.LastName, userObj.UserName, null);
 
                 if (Result != null && Result.Id > 0)
                 {
@@ -113,7 +113,7 @@ namespace Pet2Share_Service
                 }
                 else
                 {
-                    UserProfileResultResp = new UserProfileGetResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while fetching your profile. Please try again!!") };
+                    UserProfileResultResp = new UserProfileGetResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "Profile not found.") };
                 }
             }
             catch (Exception ex)
