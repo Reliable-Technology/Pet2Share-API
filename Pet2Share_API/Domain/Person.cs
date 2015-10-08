@@ -22,7 +22,7 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public string AlternateEmail { get; set; }
         [DataMember]
-        public DateTime DOB { get; set; }
+        public DateTime? DOB { get; set; }
         [DataMember]
         public Address Addr { get; set; }
         [DataMember]
@@ -75,7 +75,7 @@ namespace Pet2Share_API.Domain
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
-            this.DOB = dob.HasValue ? dob.Value : new DateTime();
+            this.DOB = dob;
             this.Addr = addr;
             this.PrimaryPhone = primaryPhone;
             this.SecondaryPhone = secondaryPhone;
