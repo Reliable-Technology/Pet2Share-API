@@ -95,25 +95,34 @@ namespace Pet2Share_API.Domain
             return new Address();
         }
 
-        public static BoolExt Validate(Address addr)
+        public static bool Validate(Address addr)
         {
-            return new BoolExt(false);
+            if (string.IsNullOrEmpty(addr.City) && string.IsNullOrEmpty(addr.State) && string.IsNullOrEmpty(addr.ZipCode))
+                return false;
+            else
+                return true;
         }
 
-        public BoolExt Validate()
+        public bool Validate()
         {
-            return new BoolExt(false);
+            if (string.IsNullOrEmpty(City) && string.IsNullOrEmpty(State) && string.IsNullOrEmpty(ZipCode))
+                return false;
+            else
+                return true;
         }
 
         public int Save()
         {
             int result = -1;
 
-            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            if (Validate())
             {
-                result = Convert.ToInt32(context.InsertUpdateAddress(this.Id, this.AddressLine1, this.AddressLine2, this.City, this.State, this.Country, this.IsBillingAddress, this.IsShippingAddress, this.ZipCode).FirstOrDefault());
-                if (result > 0)
-                    this.Id = result;
+                using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+                {
+                    result = Convert.ToInt32(context.InsertUpdateAddress(this.Id, this.AddressLine1, this.AddressLine2, this.City, this.State, this.Country, this.IsBillingAddress, this.IsShippingAddress, this.ZipCode).FirstOrDefault());
+                    if (result > 0)
+                        this.Id = result;
+                }
             }
             return result;
         }
@@ -122,11 +131,14 @@ namespace Pet2Share_API.Domain
         {
             int result = -1;
 
-            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            if (Validate(addr))
             {
-                result = Convert.ToInt32(context.InsertUpdateAddress(addr.Id, addr.AddressLine1, addr.AddressLine2, addr.City, addr.State, addr.Country, addr.IsBillingAddress, addr.IsShippingAddress, addr.ZipCode).FirstOrDefault());
-                if (result > 0)
-                    addr.Id = result;
+                using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+                {
+                    result = Convert.ToInt32(context.InsertUpdateAddress(addr.Id, addr.AddressLine1, addr.AddressLine2, addr.City, addr.State, addr.Country, addr.IsBillingAddress, addr.IsShippingAddress, addr.ZipCode).FirstOrDefault());
+                    if (result > 0)
+                        addr.Id = result;
+                }
             }
             return result;
         }
