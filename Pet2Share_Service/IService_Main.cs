@@ -25,11 +25,11 @@ namespace Pet2Share_Service
 
         [OperationContract]
         [WebInvoke(UriTemplate = "UpdateUserProfile", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        UserProfileResponse UpdateProfile(UserProfileRequest userObj);
+        UserProfileUpdateResponse UpdateProfile(UserProfileUpdateRequest userObj);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "GetUserProfile", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        UserProfileResponse GetUserProfile(int UserId);
+        UserProfileGetResponse GetUserProfile(UserProfileGetRequest UserId);
 
     }
 

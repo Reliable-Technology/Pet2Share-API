@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Pet2Share_API.DAL;
 using Pet2Share_API.Service;
+using Pet2Share_API.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -74,48 +75,50 @@ namespace Pet2Share_Service
             return RegisterResultResp;
         }
 
-        public UserProfileResponse UpdateProfile(UserProfileRequest userObj)
+        public UserProfileUpdateResponse UpdateProfile(UserProfileUpdateRequest userObj)
         {
-            UserProfileResponse UserProfileResultResp;
+            UserProfileUpdateResponse UserProfileResultResp;
 
             try
             {
-                var Result = UserProfileManager.UpdateProfile(userObj.UserDetails);
+
+                var Result = UserProfileManager.UpdateProfile(userObj.UserId, userObj.FirstName, userObj.LastName, userObj.Email, userObj.AlternateEmail, userObj.DateOfBirth, userObj.PrimaryPhone, userObj.SecondaryPhone, userObj.AvatarUrl,
+                    userObj.AboutMe, userObj.AddressLine1, userObj.AddressLine2, userObj.City, userObj.State, userObj.Country, userObj.ZipCode);
                 if (Result.IsSuccessful)
                 {
-                    UserProfileResultResp = new UserProfileResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { userObj.UserDetails }), ErrorMsg = null };
+                    UserProfileResultResp = new UserProfileUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
                 }
                 else
                 {
-                    UserProfileResultResp = new UserProfileResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error updating profile. Please try again!!") };
+                    UserProfileResultResp = new UserProfileUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error updating profile. Please try again!!") };
                 }
             }
             catch (Exception ex)
             {
-                UserProfileResultResp = new UserProfileResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+                UserProfileResultResp = new UserProfileUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
             }
             return UserProfileResultResp;
         }
 
-        public UserProfileResponse GetUserProfile(int UserId)
+        public UserProfileGetResponse GetUserProfile(UserProfileGetRequest UserObj)
         {
-            UserProfileResponse UserProfileResultResp;
+            UserProfileGetResponse UserProfileResultResp;
 
             try
             {
-                UserProfileManager userObj = new UserProfileManager(UserId);
-                if (userObj.user.Id == UserId)
+                UserProfileManager userObj = new UserProfileManager(UserObj.UserId);
+                if (userObj.user.Id == UserObj.UserId)
                 {
-                    UserProfileResultResp = new UserProfileResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { userObj.user }), ErrorMsg = null };
+                    UserProfileResultResp = new UserProfileGetResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { userObj.user }), ErrorMsg = null };
                 }
                 else
                 {
-                    UserProfileResultResp = new UserProfileResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while fetching your profile. Please try again!!") };
+                    UserProfileResultResp = new UserProfileGetResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while fetching your profile. Please try again!!") };
                 }
             }
             catch (Exception ex)
             {
-                UserProfileResultResp = new UserProfileResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+                UserProfileResultResp = new UserProfileGetResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
             }
             return UserProfileResultResp;
         }
