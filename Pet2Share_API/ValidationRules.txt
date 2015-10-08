@@ -1,0 +1,12 @@
+﻿**********************************************************************************
+This document contains the validation rules for DB and API
+
+**********************************************************************************
+
+IF ID = -1
+	API		=	The record is not created or there is an error while inserting record, so the ID stays -1
+	DB		=	-1 for the IDs are converted into NULL in database
+
+IF ID = 0
+	API		=
+	DB		=

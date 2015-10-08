@@ -118,17 +118,36 @@ namespace Pet2Share_API.Domain
             return person;
         }
 
+        public static bool Validate(Person person)
+        {
+            if (string.IsNullOrEmpty(person.LastName) || string.IsNullOrEmpty(person.Email))
+                return false;
+            else
+                return true;
+        }
+
+        public bool Validate()
+        {
+            if (string.IsNullOrEmpty(this.LastName) || string.IsNullOrEmpty(this.Email))
+                return false;
+            else
+                return true;
+        }
+
         public int Save()
         {
-            //TODO: Validate the fields on save
-            this.Addr.Id = this.Addr.Save();
             int result = -1;
-
-            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            //TODO: Validate the fields on save
+            if (Validate())
             {
-                result = Convert.ToInt32(context.InsertUpdatePerson(this.Id, this.FirstName, this.LastName, this.Email, this.AlternateEmail, this.DOB, this.Addr.Id, this.PrimaryPhone, this.SecondaryPhone, this.AvatarURL, this.AboutMe).FirstOrDefault());
-                if (result > 0)
-                    this.Id = result;
+                this.Addr.Id = this.Addr.Save();
+
+                using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+                {
+                    result = Convert.ToInt32(context.InsertUpdatePerson(this.Id, this.FirstName, this.LastName, this.Email, this.AlternateEmail, this.DOB, this.Addr.Id, this.PrimaryPhone, this.SecondaryPhone, this.AvatarURL, this.AboutMe).FirstOrDefault());
+                    if (result > 0)
+                        this.Id = result;
+                }
             }
             return result;
         }

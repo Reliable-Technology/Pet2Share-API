@@ -156,17 +156,37 @@ namespace Pet2Share_API.Domain
             return new User();
         }
 
+        public static bool Validate(User user)
+        {
+            if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Email))
+                return false;
+            else
+                return true;
+        }
+
+        public bool Validate()
+        {
+            if (string.IsNullOrEmpty(this.Username) || string.IsNullOrEmpty(this.Email))
+                return false;
+            else
+                return true;
+        }
+
         public int Save()
         {
             //Check if all the objects in User's object is saved
             int result = -1;
-            this.P.Id = this.P.Save();
-            
-            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+
+            if (Validate())
             {
-                result = Convert.ToInt32(context.InsertUpdateUser(this.Id, this.Username, this.Password, this.P.Id, this.Email, this.Phone, this.SocialMediaSourceId, this.SocialMediaId).FirstOrDefault());
-                if (result > 0)
-                    this.Id = result;
+                this.P.Id = this.P.Save();
+
+                using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+                {
+                    result = Convert.ToInt32(context.InsertUpdateUser(this.Id, this.Username, this.Password, this.P.Id, this.Email, this.Phone, this.SocialMediaSourceId, this.SocialMediaId).FirstOrDefault());
+                    if (result > 0)
+                        this.Id = result;
+                }
             }
             return result;
         }
@@ -174,13 +194,16 @@ namespace Pet2Share_API.Domain
         public static int Save(User u)
         {
             int result = -1;
-            u.P.Id = u.P.Save();
-
-            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            if (Validate(u))
             {
-                result = Convert.ToInt32(context.InsertUpdateUser(u.Id, u.Username, u.Password, u.P.Id, u.Email, u.Phone, u.SocialMediaSourceId, u.SocialMediaId).FirstOrDefault());
-                if (result > 0)
-                    u.Id = result;
+                u.P.Id = u.P.Save();
+
+                using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+                {
+                    result = Convert.ToInt32(context.InsertUpdateUser(u.Id, u.Username, u.Password, u.P.Id, u.Email, u.Phone, u.SocialMediaSourceId, u.SocialMediaId).FirstOrDefault());
+                    if (result > 0)
+                        u.Id = result;
+                }
             }
             return result;
         }
