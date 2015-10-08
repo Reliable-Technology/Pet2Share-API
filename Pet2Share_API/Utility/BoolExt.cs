@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace Pet2Share_API.Utility
 {
+    [DataContract]
     public class BoolExt
     {
+        [DataMember]
         public bool IsSuccessful { get; set; }
+        [DataMember]
         public string Message { get; set; }
 
         //TODO: Need to work futher and add more fields probably

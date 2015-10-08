@@ -43,7 +43,7 @@ namespace Pet2Share_API.Service
 
             //TODO: Check all params for rogue data
 
-            UserType uType = new UserType(userType.Value);
+            UserType uType = new UserType(userType != null ? userType.Value : 0);
 
             Address addr = new Address(addressLine1, addressLine2, city, state, country, zipCode);
 
@@ -51,7 +51,7 @@ namespace Pet2Share_API.Service
 
             //TODO: Create User Object
 
-            User u = new User(username, password, pers, email, alternateEmail, socialMediaSourceId.Value, socialMediaId, uType);
+            User u = new User(username, password, pers, email, alternateEmail, socialMediaSourceId != null ? socialMediaSourceId.Value : 1, socialMediaId, uType);
 
             return RegisterNewUser(u);
         }
