@@ -105,13 +105,7 @@ namespace Pet2Share_Service
 
         [DataMember]
         public int UserId { get; set; }
-
-        [DataMember]
-        public string UserName { get; set; }
-
-        [DataMember]
-        public string Password { get; set; }
-
+ 
         [DataMember]
         public string FirstName { get; set; }
 
