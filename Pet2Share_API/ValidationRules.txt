@@ -1,0 +1,8 @@
+﻿**********************************************************************************
+This document contains the validation rules for DB and API
+
+**********************************************************************************
+
+IF ID = -1
+	API		=	There is no object so the ID stays -1
+	DB		=	-1 for the IDs are converted into NULL in database
