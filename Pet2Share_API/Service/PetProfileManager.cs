@@ -5,12 +5,91 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Pet2Share_API.Domain;
+using Pet2Share_API.Utility;
 
 namespace Pet2Share_API.Service
 {
     public class PetProfileManager
     {
         //Methods to add and edit pet profile
-        
+        public Pet pet { get; set; }
+
+        private PetProfileManager()
+        {
+
+        }
+
+        public PetProfileManager(int petId)
+        {
+            this.pet = new Pet(petId);
+        }
+
+        public PetProfileManager(Pet pet)
+        {
+            this.pet = pet;
+        }
+
+        public BoolExt UpdateAvatar(string avatarURL)
+        {
+            return new BoolExt(false);
+        }
+
+        public BoolExt ActivateProfile()
+        {
+            return new BoolExt(false);
+        }
+
+        public BoolExt DeactivateProfile(string reason)
+        {
+            return new BoolExt(false);
+        }
+
+        public BoolExt AddProfile()
+        {
+            return new BoolExt(false);
+        }
+
+        public static BoolExt AddProfile(Pet pet)
+        {
+            return new BoolExt(false);
+        }
+
+        public BoolExt AddProfile(string name, string familyName, int userId, int? petTypeId, DateTime? dob, string profilePicture, string coverPicture, string about, string favFood)
+        {
+            return new BoolExt(false);
+        }
+
+        public BoolExt UpdateProfile()
+        {
+            return new BoolExt(false);
+        }
+
+        public static BoolExt UpdateProfile(Pet pet)
+        {
+            return new BoolExt(false);
+        }
+
+        public static BoolExt UpdateProfile(int petId, string name, string familyName, int userId, int? petTypeId, DateTime? dob, string profilePicture, string coverPicture, string about, string favFood)
+        {
+            Pet pet = new Pet(petId);
+
+            pet.Name = string.IsNullOrEmpty(name) ? pet.Name : name;
+            pet.FamilyName = string.IsNullOrEmpty(familyName) ? pet.FamilyName : familyName;
+
+            pet.UserId = userId;
+            pet.PetTypeId = petTypeId == null ? pet.PetTypeId : petTypeId;
+            pet.DOB = dob == null ? pet.DOB : dob;
+            pet.ProfilePicture = string.IsNullOrEmpty(profilePicture) ? pet.ProfilePicture : profilePicture;
+            pet.CoverPicture = string.IsNullOrEmpty(coverPicture) ? pet.CoverPicture : coverPicture;
+            pet.About = string.IsNullOrEmpty(about) ? pet.About : about;
+            pet.FavFood = string.IsNullOrEmpty(favFood) ? pet.FavFood : favFood;
+
+            int result = pet.Save();
+            if (result == userId)
+                return new BoolExt(true, "");
+            else
+                return new BoolExt(false, "Update Failed, Please check application logs for more details");
+
+        }
     }
 }
