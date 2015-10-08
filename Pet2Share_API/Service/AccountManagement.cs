@@ -51,7 +51,7 @@ namespace Pet2Share_API.Service
 
             //TODO: Create User Object
 
-            User u = new User(username, password, pers, email, alternateEmail, socialMediaSourceId != null ? socialMediaSourceId.Value : 0, socialMediaId, uType);
+            User u = new User(username, password, pers, email, alternateEmail, socialMediaSourceId != null ? socialMediaSourceId.Value : 1, socialMediaId, uType);
 
             return RegisterNewUser(u);
         }
