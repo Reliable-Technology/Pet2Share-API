@@ -126,7 +126,7 @@ namespace Pet2Share_API.Domain
 
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = Convert.ToInt32(context.InsertUpdatePerson(0, this.FirstName, this.LastName, this.Email, this.AlternateEmail, this.DOB, this.Addr.Id, this.PrimaryPhone, this.SecondaryPhone, this.AvatarURL, this.AboutMe).FirstOrDefault());
+                result = Convert.ToInt32(context.InsertUpdatePerson(this.Id, this.FirstName, this.LastName, this.Email, this.AlternateEmail, this.DOB, this.Addr.Id, this.PrimaryPhone, this.SecondaryPhone, this.AvatarURL, this.AboutMe).FirstOrDefault());
                 if (result > 0)
                     this.Id = result;
             }

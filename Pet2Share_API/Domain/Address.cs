@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pet2Share_API.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -92,6 +93,16 @@ namespace Pet2Share_API.Domain
                 return addr;
             }
             return new Address();
+        }
+
+        public static BoolExt Validate(Address addr)
+        {
+            return new BoolExt(false);
+        }
+
+        public BoolExt Validate()
+        {
+            return new BoolExt(false);
         }
 
         public int Save()
