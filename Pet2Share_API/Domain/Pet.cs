@@ -57,7 +57,7 @@ namespace Pet2Share_API.Domain
 
         public Pet()
         {
-            this.Id = -1;
+            this.Id = 0;
             this.Name = "Pet Guest";
             this.DateAdded = DateTime.Now;
             this.DateModified = DateTime.Now;
