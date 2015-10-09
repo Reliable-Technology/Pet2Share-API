@@ -23,6 +23,14 @@ namespace Pet2Share_Service
         [WebInvoke(UriTemplate = "Register", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         RegisterResponse RegisterUser(RegisterRequest userObj);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "UpdateUserProfile", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        UserProfileUpdateResponse UpdateProfile(UserProfileUpdateRequest userObj);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetUserProfile", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        UserProfileGetResponse GetUserProfile(UserProfileGetRequest UserId);
+
     }
 
 }

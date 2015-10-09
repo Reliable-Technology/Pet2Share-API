@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Pet2Share_API.DAL;
 using Pet2Share_API.Service;
+using Pet2Share_API.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +26,7 @@ namespace Pet2Share_Service
 
         public LoginResponse LoginUser(LoginRequest loginDetails)
         {
-           
+
             LoginResponse LoginResultResp;
             try
             {
@@ -54,9 +55,12 @@ namespace Pet2Share_Service
 
             try
             {
-                var Result = AccountManagement.RegisterNewUser(userObj.UserDetails);
+
+                var Result = AccountManagement.RegisterNewUser(userObj.UserName, userObj.Password, userObj.FirstName, userObj.LastName, userObj.UserName, null);
+
                 if (Result != null && Result.Id > 0)
                 {
+                    Result.Password = null;
                     RegisterResultResp = new RegisterResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { Result }), ErrorMsg = null };
                 }
                 else
@@ -71,6 +75,53 @@ namespace Pet2Share_Service
             return RegisterResultResp;
         }
 
+        public UserProfileUpdateResponse UpdateProfile(UserProfileUpdateRequest userObj)
+        {
+            UserProfileUpdateResponse UserProfileResultResp;
+
+            try
+            {
+
+                var Result = UserProfileManager.UpdateProfile(userObj.UserId, userObj.FirstName, userObj.LastName, userObj.Email, userObj.AlternateEmail, userObj.DateOfBirth, userObj.PrimaryPhone, userObj.SecondaryPhone, userObj.AvatarUrl,
+                    userObj.AboutMe, userObj.AddressLine1, userObj.AddressLine2, userObj.City, userObj.State, userObj.Country, userObj.ZipCode);
+                if (Result.IsSuccessful)
+                {
+                    UserProfileResultResp = new UserProfileUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
+                }
+                else
+                {
+                    UserProfileResultResp = new UserProfileUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error updating profile. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                UserProfileResultResp = new UserProfileUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return UserProfileResultResp;
+        }
+
+        public UserProfileGetResponse GetUserProfile(UserProfileGetRequest UserObj)
+        {
+            UserProfileGetResponse UserProfileResultResp;
+
+            try
+            {
+                UserProfileManager userObj = new UserProfileManager(UserObj.UserId);
+                if (userObj.user.Id == UserObj.UserId)
+                {
+                    UserProfileResultResp = new UserProfileGetResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { userObj.user }), ErrorMsg = null };
+                }
+                else
+                {
+                    UserProfileResultResp = new UserProfileGetResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "Profile not found.") };
+                }
+            }
+            catch (Exception ex)
+            {
+                UserProfileResultResp = new UserProfileGetResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return UserProfileResultResp;
+        }
 
     }
 }
