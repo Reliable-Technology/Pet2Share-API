@@ -102,7 +102,7 @@ namespace Pet2Share_API.Service
             pet.FavFood = string.IsNullOrEmpty(favFood) ? pet.FavFood : favFood;
 
             int result = pet.Save();
-            if (result == userId)
+            if (result == petId)
                 return new BoolExt(true, "");
             else
                 return new BoolExt(false, "Update Failed, Please check application logs for more details");
