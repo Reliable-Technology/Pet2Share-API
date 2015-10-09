@@ -53,7 +53,7 @@ namespace Pet2Share_API.Service
             return new BoolExt(false);
         }
 
-        public BoolExt AddProfile(string firstname, string lastname, string email, string alternateEmail, DateTime dob, string primaryPhone, string secondaryPhone, string avatarURL, string aboutMe
+        public BoolExt AddProfile(string firstname, string lastname, string email, string alternateEmail, DateTime? dob, string primaryPhone, string secondaryPhone, string avatarURL, string aboutMe
             , string addressLine1, string addressLine2, string city, string state, string country, string zipCode)
         {
             return new BoolExt(false);
@@ -69,7 +69,7 @@ namespace Pet2Share_API.Service
             return new BoolExt(false);
         }
 
-        public static BoolExt UpdateProfile(int userId, string firstname, string lastname, string email, string alternateEmail, DateTime dob, string primaryPhone, string secondaryPhone, string avatarURL, string aboutMe
+        public static BoolExt UpdateProfile(int userId, string firstname, string lastname, string email, string alternateEmail, DateTime? dob, string primaryPhone, string secondaryPhone, string avatarURL, string aboutMe
             , string addressLine1, string addressLine2, string city, string state, string country, string zipCode)
         {
             User u = new User(userId);
