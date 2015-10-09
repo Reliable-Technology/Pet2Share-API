@@ -123,13 +123,7 @@ namespace Pet2Share_Service
         public DateTime DateOfBirth { get; set; }
 
         [DataMember]
-        public string PrimaryPhone { get; set; }
-
-        [DataMember]
         public string SecondaryPhone { get; set; }
-
-        [DataMember]
-        public string AvatarUrl { get; set; }
 
         [DataMember]
         public string AboutMe { get; set; }
@@ -223,7 +217,7 @@ namespace Pet2Share_Service
     [DataContract]
     public class PetProfileInsertRequest : RequestObject
     {
-       
+
         [DataMember]
         public string Name { get; set; }
 

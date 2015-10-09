@@ -13,7 +13,10 @@ namespace Pet2Share_Service
         protected void Page_Load(object sender, EventArgs e)
         {
             //string SerializedResult = JsonConvert.SerializeObject(new UserProfileUpdateRequest());
-        //    Response.Write(SerializedResult);
+            //Response.Write(SerializedResult);
+
+ 
+
         }
     }
 }

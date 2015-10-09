@@ -82,13 +82,13 @@ namespace Pet2Share_Service
             try
             {
 
-                var Result = UserProfileManager.UpdateProfile(userObj.UserId, userObj.FirstName, userObj.LastName, userObj.Email, userObj.AlternateEmail, userObj.DateOfBirth, userObj.PrimaryPhone, userObj.SecondaryPhone, userObj.AvatarUrl,
+                var Result = UserProfileManager.UpdateProfile(userObj.UserId, userObj.FirstName, userObj.LastName, userObj.Email, userObj.AlternateEmail, userObj.DateOfBirth, userObj.PhoneNumber, userObj.SecondaryPhone, "",
                     userObj.AboutMe, userObj.AddressLine1, userObj.AddressLine2, userObj.City, userObj.State, userObj.Country, userObj.ZipCode);
                 if (Result.IsSuccessful)
                 {
                     UserProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
                 }
-                else
+                else 
                 {
                     UserProfileResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error updating profile. Please try again!!") };
                 }
