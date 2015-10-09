@@ -88,7 +88,7 @@ namespace Pet2Share_Service
                 {
                     UserProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
                 }
-                else 
+                else
                 {
                     UserProfileResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error updating profile. Please try again!!") };
                 }
@@ -131,7 +131,7 @@ namespace Pet2Share_Service
             try
             {
 
-                var Result = PetProfileManager.UpdateProfile(PetObj.PetId, PetObj.Name, PetObj.FamilyName, PetObj.UserId, PetObj.PetTypeId, PetObj.DOB, PetObj.ProfilePicture, PetObj.CoverPicture, PetObj.About, PetObj.FavFood);
+                var Result = PetProfileManager.UpdateProfile(PetObj.PetId, PetObj.Name, PetObj.FamilyName, PetObj.UserId, PetObj.PetTypeId, PetObj.DOB, "", "", PetObj.About, PetObj.FavFood);
                 if (Result.IsSuccessful)
                 {
                     PetProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
@@ -155,7 +155,7 @@ namespace Pet2Share_Service
             try
             {
 
-                var Result = PetProfileManager.AddProfile(PetObj.Name, PetObj.FamilyName, PetObj.UserId, PetObj.PetTypeId, PetObj.DOB, PetObj.ProfilePicture, PetObj.CoverPicture, PetObj.About, PetObj.FavFood);
+                var Result = PetProfileManager.AddProfile(PetObj.Name, PetObj.FamilyName, PetObj.UserId, PetObj.PetTypeId, PetObj.DOB, "", "", PetObj.About, PetObj.FavFood);
                 if (Result.IsSuccessful)
                 {
                     PetProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
