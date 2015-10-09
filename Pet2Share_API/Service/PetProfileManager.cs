@@ -56,7 +56,24 @@ namespace Pet2Share_API.Service
 
         public BoolExt AddProfile(string name, string familyName, int userId, int? petTypeId, DateTime? dob, string profilePicture, string coverPicture, string about, string favFood)
         {
-            return new BoolExt(false);
+            Pet pet = new Pet();
+
+            pet.Name = string.IsNullOrEmpty(name) ? pet.Name : name;
+            pet.FamilyName = string.IsNullOrEmpty(familyName) ? pet.FamilyName : familyName;
+
+            pet.UserId = userId;
+            pet.PetTypeId = petTypeId == null ? pet.PetTypeId : petTypeId;
+            pet.DOB = dob == null ? pet.DOB : dob;
+            pet.ProfilePicture = string.IsNullOrEmpty(profilePicture) ? pet.ProfilePicture : profilePicture;
+            pet.CoverPicture = string.IsNullOrEmpty(coverPicture) ? pet.CoverPicture : coverPicture;
+            pet.About = string.IsNullOrEmpty(about) ? pet.About : about;
+            pet.FavFood = string.IsNullOrEmpty(favFood) ? pet.FavFood : favFood;
+
+            int result = pet.Save();
+            if (result > 0)
+                return new BoolExt(true, "");
+            else
+                return new BoolExt(false, "Update Failed, Please check application logs for more details");
         }
 
         public BoolExt UpdateProfile()

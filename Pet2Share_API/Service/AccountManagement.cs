@@ -62,7 +62,7 @@ namespace Pet2Share_API.Service
             return RegisterNewUser(username, password, firstName, lastName, dob, email, null, null, null, null, null, null, null, null, null, null, null, null);
         }
 
-        private static User RegisterNewUser(User u)
+        public static User RegisterNewUser(User u)
         {
             int result = u.Save();
             if (result > 0)
