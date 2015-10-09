@@ -155,7 +155,7 @@ namespace Pet2Share_Service
     public class GeneralUpdateResponse : ResponseObject
     {
         [DataMember]
-        public BoolExt Results { get; set; }
+        public BoolExt[] Results { get; set; }
 
         //TODO: Need to add more fields later
     }

@@ -86,7 +86,7 @@ namespace Pet2Share_Service
                     userObj.AboutMe, userObj.AddressLine1, userObj.AddressLine2, userObj.City, userObj.State, userObj.Country, userObj.ZipCode);
                 if (Result.IsSuccessful)
                 {
-                    UserProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
+                    UserProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { Result }), ErrorMsg = null };
                 }
                 else
                 {
@@ -134,7 +134,7 @@ namespace Pet2Share_Service
                 var Result = PetProfileManager.UpdateProfile(PetObj.PetId, PetObj.Name, PetObj.FamilyName, PetObj.UserId, PetObj.PetTypeId, PetObj.DOB, "", "", PetObj.About, PetObj.FavFood);
                 if (Result.IsSuccessful)
                 {
-                    PetProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
+                    PetProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { Result }), ErrorMsg = null };
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace Pet2Share_Service
                 var Result = PetProfileManager.AddProfile(PetObj.Name, PetObj.FamilyName, PetObj.UserId, PetObj.PetTypeId, PetObj.DOB, "", "", PetObj.About, PetObj.FavFood);
                 if (Result.IsSuccessful)
                 {
-                    PetProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
+                    PetProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { Result }), ErrorMsg = null };
                 }
                 else
                 {
