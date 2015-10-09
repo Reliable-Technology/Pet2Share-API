@@ -84,7 +84,7 @@ namespace Pet2Share_Service
 
         [DataMember]
         public string PhoneNumber { get; set; }
- 
+
 
     }
 
@@ -103,7 +103,7 @@ namespace Pet2Share_Service
 
         [DataMember]
         public int UserId { get; set; }
- 
+
         [DataMember]
         public string FirstName { get; set; }
 
@@ -158,7 +158,7 @@ namespace Pet2Share_Service
     }
 
     [DataContract]
-    public class UserProfileUpdateResponse : ResponseObject
+    public class GeneralUpdateResponse : ResponseObject
     {
         [DataMember]
         public BoolExt Results { get; set; }
@@ -184,5 +184,74 @@ namespace Pet2Share_Service
         //TODO: Need to add more fields later
     }
 
+    [DataContract]
+    public class PetProfileUpdateRequest : RequestObject
+    {
+        [DataMember]
+        public int PetId { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string FamilyName { get; set; }
+
+        [DataMember]
+        public int UserId { get; set; }
+
+        [DataMember]
+        public int? PetTypeId { get; set; }
+
+        [DataMember]
+        public DateTime? DOB { get; set; }
+
+        [DataMember]
+        public string ProfilePicture { get; set; }
+
+        [DataMember]
+        public string CoverPicture { get; set; }
+
+        [DataMember]
+        public string About { get; set; }
+
+        [DataMember]
+        public string FavFood { get; set; }
+
+        //TODO: Need to add more fields later
+    }
+
+    [DataContract]
+    public class PetProfileInsertRequest : RequestObject
+    {
+       
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string FamilyName { get; set; }
+
+        [DataMember]
+        public int UserId { get; set; }
+
+        [DataMember]
+        public int? PetTypeId { get; set; }
+
+        [DataMember]
+        public DateTime? DOB { get; set; }
+
+        [DataMember]
+        public string ProfilePicture { get; set; }
+
+        [DataMember]
+        public string CoverPicture { get; set; }
+
+        [DataMember]
+        public string About { get; set; }
+
+        [DataMember]
+        public string FavFood { get; set; }
+
+        //TODO: Need to add more fields later
+    }
 
 }

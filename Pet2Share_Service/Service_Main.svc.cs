@@ -75,9 +75,9 @@ namespace Pet2Share_Service
             return RegisterResultResp;
         }
 
-        public UserProfileUpdateResponse UpdateProfile(UserProfileUpdateRequest userObj)
+        public GeneralUpdateResponse UpdateProfile(UserProfileUpdateRequest userObj)
         {
-            UserProfileUpdateResponse UserProfileResultResp;
+            GeneralUpdateResponse UserProfileResultResp;
 
             try
             {
@@ -86,16 +86,16 @@ namespace Pet2Share_Service
                     userObj.AboutMe, userObj.AddressLine1, userObj.AddressLine2, userObj.City, userObj.State, userObj.Country, userObj.ZipCode);
                 if (Result.IsSuccessful)
                 {
-                    UserProfileResultResp = new UserProfileUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
+                    UserProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
                 }
                 else
                 {
-                    UserProfileResultResp = new UserProfileUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error updating profile. Please try again!!") };
+                    UserProfileResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error updating profile. Please try again!!") };
                 }
             }
             catch (Exception ex)
             {
-                UserProfileResultResp = new UserProfileUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+                UserProfileResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
             }
             return UserProfileResultResp;
         }
@@ -123,5 +123,53 @@ namespace Pet2Share_Service
             return UserProfileResultResp;
         }
 
+
+        public GeneralUpdateResponse UpdatePetProfile(PetProfileUpdateRequest PetObj)
+        {
+            GeneralUpdateResponse PetProfileResultResp;
+
+            try
+            {
+
+                var Result = PetProfileManager.UpdateProfile(PetObj.PetId, PetObj.Name, PetObj.FamilyName, PetObj.UserId, PetObj.PetTypeId, PetObj.DOB, PetObj.ProfilePicture, PetObj.CoverPicture, PetObj.About, PetObj.FavFood);
+                if (Result.IsSuccessful)
+                {
+                    PetProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
+                }
+                else
+                {
+                    PetProfileResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error updating pet profile. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PetProfileResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PetProfileResultResp;
+        }
+
+        public GeneralUpdateResponse InsertPetProfile(PetProfileInsertRequest PetObj)
+        {
+            GeneralUpdateResponse PetProfileResultResp;
+
+            try
+            {
+
+                var Result = PetProfileManager.AddProfile(PetObj.Name, PetObj.FamilyName, PetObj.UserId, PetObj.PetTypeId, PetObj.DOB, PetObj.ProfilePicture, PetObj.CoverPicture, PetObj.About, PetObj.FavFood);
+                if (Result.IsSuccessful)
+                {
+                    PetProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = Result, ErrorMsg = null };
+                }
+                else
+                {
+                    PetProfileResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error adding pet to your profile. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PetProfileResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PetProfileResultResp;
+        }
     }
 }
