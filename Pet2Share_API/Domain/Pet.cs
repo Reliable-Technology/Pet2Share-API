@@ -102,6 +102,7 @@ namespace Pet2Share_API.Domain
 
         public Pet(DAL.PetProfile pet) : base()
         {
+            this.Id = pet.Id;
             this.Name = pet.Name;
             this.FamilyName = pet.FamilyName;
             this.UserId = pet.UserId;
