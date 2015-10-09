@@ -68,6 +68,7 @@ namespace Pet2Share_API.Domain
         public Pet(int id) : base()
         {
             Pet pet = Pet.GetById(id);
+            this.Id = id;
             this.Name = pet.Name;
             this.FamilyName = pet.FamilyName;
             this.UserId = pet.UserId;
@@ -85,6 +86,7 @@ namespace Pet2Share_API.Domain
 
         public Pet(Pet pet) : base()
         {
+            this.Id = pet.Id;
             this.Name = pet.Name;
             this.FamilyName = pet.FamilyName;
             this.UserId = pet.UserId;
