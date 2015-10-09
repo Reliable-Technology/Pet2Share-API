@@ -328,5 +328,18 @@ namespace Pet2Share_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePerson", idParameter, firstNameParameter, lastNameParameter, emailParameter, alternateEmailParameter, dOBParameter, addressIdParameter, primaryPhoneParameter, secondaryPhoneParameter, avatarParameter, aboutMeParameter);
         }
+    
+        public virtual ObjectResult<GetPetProfileByUserId_Result> GetPetProfileByUserId(Nullable<int> userId, Nullable<int> isActive)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPetProfileByUserId_Result>("GetPetProfileByUserId", userIdParameter, isActiveParameter);
+        }
     }
 }

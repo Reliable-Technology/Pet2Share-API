@@ -58,6 +58,8 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public UserType UType;
         [DataMember]
+        public Pet[] Pets { get; set; }
+        [DataMember]
         public DateTime DateAdded { get; set; }
         [DataMember]
         public DateTime DateModified { get; set; }
@@ -75,6 +77,7 @@ namespace Pet2Share_API.Domain
             this.Username = "Guest";
             this.P = new Person();
             this.UType = new UserType();
+            Pets = new Pet[] { };
         }
 
         public User(int id) : base()
@@ -87,6 +90,7 @@ namespace Pet2Share_API.Domain
             this.SocialMediaSourceId = u.SocialMediaSourceId;
             this.SocialMediaId = u.SocialMediaId;
             this.Phone = u.Phone;
+            this.Pets = u.Pets;
             this.DateAdded = u.DateAdded;
             this.DateModified = u.DateModified;
             this.IsActive = u.IsActive;
@@ -103,6 +107,7 @@ namespace Pet2Share_API.Domain
             this.SocialMediaSourceId = u.SocialMediaSourceId;
             this.SocialMediaId = u.SocialMediaId;
             this.Phone = u.Phone;
+            this.Pets = u.Pets;
             this.DateAdded = u.DateAdded;
             this.DateModified = u.DateModified;
             this.IsActive = u.IsActive;
@@ -122,6 +127,8 @@ namespace Pet2Share_API.Domain
             this.DateAdded = u.DateAdded;
             this.DateModified = u.DateModified;
             this.IsActive = u.IsActive;
+
+            this.Pets = GetPetList();
 
             this.IsAuthenticated = this.Id > 0 ? true : false;
         }
@@ -144,13 +151,24 @@ namespace Pet2Share_API.Domain
         public static User GetById(int id)
         {
             DAL.User userObj;
+            List<Pet> petsList = new List<Pet>();
+
             using(DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
                 userObj = context.Users.Where(p => p.Id == id).FirstOrDefault();
+
+                //Section to fetch pets under the user
+                DAL.PetProfile[] petProfiles = context.PetProfiles.Where(p => p.UserId == id).ToArray<DAL.PetProfile>();
+                foreach (DAL.PetProfile petProfile in petProfiles)
+                {
+                    Pet pet = new Pet(petProfile);
+                    petsList.Add(pet);
+                }
             }
             if (userObj != null)
             {
                 User u = new User(userObj);
+                u.Pets = petsList.ToArray();
                 return u;
             }
             return new User();
@@ -234,6 +252,22 @@ namespace Pet2Share_API.Domain
                     id = result;
             }
             return result > 0 ? true : false;
+        }
+
+        public Pet[] GetPetList(bool? isActive = null)
+        {
+            List<Pet> petsList = new List<Pet>();
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                DAL.PetProfile[] petProfiles = context.PetProfiles.Where(p => p.UserId == this.Id).ToArray<DAL.PetProfile>();
+
+                foreach (DAL.PetProfile petProfile in petProfiles)
+                {
+                    Pet pet = new Pet(petProfile);
+                    petsList.Add(pet);
+                }
+            }
+            return petsList.ToArray();
         }
 
         #endregion
