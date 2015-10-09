@@ -54,7 +54,7 @@ namespace Pet2Share_API.Service
             return new BoolExt(false);
         }
 
-        public BoolExt AddProfile(string name, string familyName, int userId, int? petTypeId, DateTime? dob, string profilePicture, string coverPicture, string about, string favFood)
+        public static BoolExt AddProfile(string name, string familyName, int userId, int? petTypeId, DateTime? dob, string profilePicture, string coverPicture, string about, string favFood)
         {
             Pet pet = new Pet();
 
