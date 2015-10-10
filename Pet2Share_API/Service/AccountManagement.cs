@@ -74,7 +74,16 @@ namespace Pet2Share_API.Service
 
         public static bool IsExistingUser(string username)
         {
-            return false;
+            int count = 0;
+            using (Pet2Share_API.DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                count = context.Users.Where(u => u.Username == username).Count();
+            }
+
+            if (count > 0)
+                return true;
+            else
+                return false;
         }
     }
 }
