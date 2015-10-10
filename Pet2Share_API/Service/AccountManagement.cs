@@ -71,5 +71,10 @@ namespace Pet2Share_API.Service
                 return null;
             return u;
         }
+
+        public static bool IsExistingUser(string username)
+        {
+            return false;
+        }
     }
 }
