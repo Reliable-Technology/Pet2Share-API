@@ -1,13 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using System.Configuration;
+
+using Pet2Share_API.Domain;
 
 namespace Pet2Share_API.Utility
 {
     class ImageProcessor
     {
+        public static string Upload(Byte[] binaryImage, string filename, string fileType, int? id, Type type)
+        {
+            if (binaryImage != null && binaryImage.Length > 0 && !string.IsNullOrEmpty(filename))
+            {
+                string path = GetImageSavePath(id, type);
+                File.WriteAllBytes(path, binaryImage);
+                return path;
+            }
+            return "";
+        }
 
+        public static string GetImageSavePath(int? id, Type type)
+        {
+            //TODO: find better logic of implementation
+            string imageFolder = ConfigurationManager.AppSettings["ImagesFolder"];
+            string imagePath = imageFolder + "/";
+            if(type == typeof(User))
+            {
+                imagePath += (id.ToString() + "/");
+            }
+            else if(type == typeof(Pet))
+            {
+                Pet p = new Pet(id.Value);
+                imagePath += (p.UserId.ToString() + "/" + p.Id.ToString() + "/");
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            return imagePath;
+        }
     }
 }
