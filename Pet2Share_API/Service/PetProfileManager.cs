@@ -115,8 +115,8 @@ namespace Pet2Share_API.Service
             string relativePath = "";
             string fullFileName = "";
 
+            relativePath = "/" + pet.UserId + "/" + pet.Id;
             fullFileName = pet.UserId.ToString() + "_" + pet.Id.ToString() + "_" + filename;// +"." + imageType.ToString();
-            relativePath = "/" + this.pet.UserId + "/" + this.pet.Id + "/" + fullFileName;
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
@@ -136,8 +136,8 @@ namespace Pet2Share_API.Service
 
             Pet pet = new Pet(petId);
 
+            relativePath = "/" + pet.UserId + "/" + pet.Id;
             fullFileName = pet.UserId.ToString() + "_" + pet.Id.ToString() + "_" + filename;// +"." + imageType.ToString();
-            relativePath = "/" + pet.UserId + "/" + pet.Id + "/" + fullFileName;
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
@@ -155,8 +155,8 @@ namespace Pet2Share_API.Service
             string relativePath = "";
             string fullFileName = "";
 
+            relativePath = "/" + pet.UserId + "/" + pet.Id;
             fullFileName = pet.UserId.ToString() + "_" + pet.Id.ToString() + "_" + filename;// +"." + imageType.ToString();
-            relativePath = "/" + this.pet.UserId + "/" + this.pet.Id + "/" + fullFileName;
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
@@ -176,8 +176,8 @@ namespace Pet2Share_API.Service
 
             Pet pet = new Pet(petId);
 
+            relativePath = "/" + pet.UserId + "/" + pet.Id;
             fullFileName = pet.UserId.ToString() + "_" + pet.Id.ToString() + "_" + filename;// +"." + imageType.ToString();
-            relativePath = "/" + pet.UserId + "/" + pet.Id + "/" + fullFileName;
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
