@@ -32,9 +32,10 @@ namespace Pet2Share_API.Utility
         {
             if (binaryImage != null && binaryImage.Length > 0 && !string.IsNullOrEmpty(filename))
             {
-                FileInfo file = new System.IO.FileInfo(savePath);
+                string imageFolder = ConfigurationManager.AppSettings["ImagesFolder"];
+                string fullyQualifiedFilename = imageFolder + savePath + "/" + filename;
+                FileInfo file = new System.IO.FileInfo(fullyQualifiedFilename);
                 file.Directory.Create();
-                string fullyQualifiedFilename = savePath + "/" + filename;
                 File.WriteAllBytes(fullyQualifiedFilename, binaryImage);
                 return fullyQualifiedFilename;
             }
