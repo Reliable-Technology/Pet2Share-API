@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pet2Share_Service", "Pet2Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_UnitTest", "API_UnitTest\API_UnitTest.csproj", "{F8D27CAC-0CC7-4ED6-BED9-B9E6FBF32059}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTester", "ConsoleTester\ConsoleTester.csproj", "{05D0B829-E3CE-4B11-97B2-FD6A2E5B78F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F8D27CAC-0CC7-4ED6-BED9-B9E6FBF32059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8D27CAC-0CC7-4ED6-BED9-B9E6FBF32059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8D27CAC-0CC7-4ED6-BED9-B9E6FBF32059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05D0B829-E3CE-4B11-97B2-FD6A2E5B78F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05D0B829-E3CE-4B11-97B2-FD6A2E5B78F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05D0B829-E3CE-4B11-97B2-FD6A2E5B78F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05D0B829-E3CE-4B11-97B2-FD6A2E5B78F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

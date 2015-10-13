@@ -47,7 +47,7 @@ namespace Pet2Share_API.Service
 
             Address addr = new Address(addressLine1, addressLine2, city, state, country, zipCode);
 
-            Person pers = new Person(firstName, lastName, email, alternateEmail, dob, addr, phone, alternatePhone, null);
+            Person pers = new Person(firstName, lastName, email, alternateEmail, dob, addr, phone, alternatePhone, null, null);
 
             //TODO: Create User Object
 

@@ -280,55 +280,6 @@ namespace Pet2Share_API.DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("UserLogin", usernameParameter, passwordParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePerson(Nullable<int> id, string firstName, string lastName, string email, string alternateEmail, Nullable<System.DateTime> dOB, Nullable<int> addressId, string primaryPhone, string secondaryPhone, string avatar, string aboutMe)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(int));
-    
-            var firstNameParameter = firstName != null ?
-                new ObjectParameter("FirstName", firstName) :
-                new ObjectParameter("FirstName", typeof(string));
-    
-            var lastNameParameter = lastName != null ?
-                new ObjectParameter("LastName", lastName) :
-                new ObjectParameter("LastName", typeof(string));
-    
-            var emailParameter = email != null ?
-                new ObjectParameter("Email", email) :
-                new ObjectParameter("Email", typeof(string));
-    
-            var alternateEmailParameter = alternateEmail != null ?
-                new ObjectParameter("AlternateEmail", alternateEmail) :
-                new ObjectParameter("AlternateEmail", typeof(string));
-    
-            var dOBParameter = dOB.HasValue ?
-                new ObjectParameter("DOB", dOB) :
-                new ObjectParameter("DOB", typeof(System.DateTime));
-    
-            var addressIdParameter = addressId.HasValue ?
-                new ObjectParameter("AddressId", addressId) :
-                new ObjectParameter("AddressId", typeof(int));
-    
-            var primaryPhoneParameter = primaryPhone != null ?
-                new ObjectParameter("PrimaryPhone", primaryPhone) :
-                new ObjectParameter("PrimaryPhone", typeof(string));
-    
-            var secondaryPhoneParameter = secondaryPhone != null ?
-                new ObjectParameter("SecondaryPhone", secondaryPhone) :
-                new ObjectParameter("SecondaryPhone", typeof(string));
-    
-            var avatarParameter = avatar != null ?
-                new ObjectParameter("Avatar", avatar) :
-                new ObjectParameter("Avatar", typeof(string));
-    
-            var aboutMeParameter = aboutMe != null ?
-                new ObjectParameter("AboutMe", aboutMe) :
-                new ObjectParameter("AboutMe", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePerson", idParameter, firstNameParameter, lastNameParameter, emailParameter, alternateEmailParameter, dOBParameter, addressIdParameter, primaryPhoneParameter, secondaryPhoneParameter, avatarParameter, aboutMeParameter);
-        }
-    
         public virtual ObjectResult<GetPetProfileByUserId_Result> GetPetProfileByUserId(Nullable<int> userId, Nullable<int> isActive)
         {
             var userIdParameter = userId.HasValue ?
@@ -399,6 +350,59 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("Id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePostById", idParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePerson(Nullable<int> id, string firstName, string lastName, string email, string alternateEmail, Nullable<System.DateTime> dOB, Nullable<int> addressId, string primaryPhone, string secondaryPhone, string avatar, string coverPicture, string aboutMe)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var firstNameParameter = firstName != null ?
+                new ObjectParameter("FirstName", firstName) :
+                new ObjectParameter("FirstName", typeof(string));
+    
+            var lastNameParameter = lastName != null ?
+                new ObjectParameter("LastName", lastName) :
+                new ObjectParameter("LastName", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var alternateEmailParameter = alternateEmail != null ?
+                new ObjectParameter("AlternateEmail", alternateEmail) :
+                new ObjectParameter("AlternateEmail", typeof(string));
+    
+            var dOBParameter = dOB.HasValue ?
+                new ObjectParameter("DOB", dOB) :
+                new ObjectParameter("DOB", typeof(System.DateTime));
+    
+            var addressIdParameter = addressId.HasValue ?
+                new ObjectParameter("AddressId", addressId) :
+                new ObjectParameter("AddressId", typeof(int));
+    
+            var primaryPhoneParameter = primaryPhone != null ?
+                new ObjectParameter("PrimaryPhone", primaryPhone) :
+                new ObjectParameter("PrimaryPhone", typeof(string));
+    
+            var secondaryPhoneParameter = secondaryPhone != null ?
+                new ObjectParameter("SecondaryPhone", secondaryPhone) :
+                new ObjectParameter("SecondaryPhone", typeof(string));
+    
+            var avatarParameter = avatar != null ?
+                new ObjectParameter("Avatar", avatar) :
+                new ObjectParameter("Avatar", typeof(string));
+    
+            var coverPictureParameter = coverPicture != null ?
+                new ObjectParameter("CoverPicture", coverPicture) :
+                new ObjectParameter("CoverPicture", typeof(string));
+    
+            var aboutMeParameter = aboutMe != null ?
+                new ObjectParameter("AboutMe", aboutMe) :
+                new ObjectParameter("AboutMe", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePerson", idParameter, firstNameParameter, lastNameParameter, emailParameter, alternateEmailParameter, dOBParameter, addressIdParameter, primaryPhoneParameter, secondaryPhoneParameter, avatarParameter, coverPictureParameter, aboutMeParameter);
         }
     }
 }

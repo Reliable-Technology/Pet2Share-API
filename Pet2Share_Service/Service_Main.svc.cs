@@ -215,9 +215,174 @@ namespace Pet2Share_Service
         //    }
         //}
 
-        
+        public GeneralUpdateResponse UploadUserProfileCoverPic(Stream PicObj, string UserId, string FileName, string IsCoverPic)
+        {
+            try
+            {
+                //if (PicObj.1)
+                //{
+                //    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Please upload a file") }, ErrorMsg = null };
+                //}
+
+                if (string.IsNullOrEmpty(FileName))
+                {
+                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "File name cannot be empty") }, ErrorMsg = null };
+                }
+
+                string FileExtension = Path.GetExtension(FileName);
+
+                Pet2Share_API.Utility.ImageType FileType;
+
+                switch (FileExtension.ToLower())
+                {
+                    case ".jpg":
+                    case ".jpeg":
+                        FileType = ImageType.jpg;
+                        break;
+
+                    case ".png":
+                        FileType = ImageType.png;
+                        break;
+
+                    default:
+                        return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Only Jpg and Png file can be uploaded") }, ErrorMsg = null };
+                        break;
+
+                }
+
+                int IntUserId = 0;
+                if (!int.TryParse(UserId, out IntUserId))
+                {
+                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "UserId must be an integer") }, ErrorMsg = null };
+                }
+
+                BoolExt Result;
+
+                bool BoolIsCover = false;
+
+                if (!bool.TryParse(IsCoverPic, out BoolIsCover))
+                {
+                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "IsCoverPic field should contain only true or false") }, ErrorMsg = null };
+                }
+
+                if (BoolIsCover)
+                {
+                    Result = UserProfileManager.UpdateCoverPicture(ReadFully(PicObj), FileName, FileType, IntUserId);
+                }
+                else
+                {
+                    Result = UserProfileManager.UpdateProfilePicture(ReadFully(PicObj), FileName, FileType, IntUserId);
+                }
 
 
+
+                if (Result.IsSuccessful)
+                {
+                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "") }, ErrorMsg = null };
+                }
+                else
+                {
+                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "") }, ErrorMsg = null };
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+        }
+
+        public GeneralUpdateResponse UploadPetProfileCoverPic(Stream PicObj, string PetId, string FileName, string IsCoverPic)
+        {
+            try
+            {
+                //if (PicObj.Length <= 0)
+                //{
+                //    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Please upload a file") }, ErrorMsg = null };
+                //}
+
+                if (string.IsNullOrEmpty(FileName))
+                {
+                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "File name cannot be empty") }, ErrorMsg = null };
+                }
+
+                string FileExtension = Path.GetExtension(FileName);
+
+                Pet2Share_API.Utility.ImageType FileType;
+
+                switch (FileExtension.ToLower())
+                {
+                    case ".jpg":
+                    case ".jpeg":
+                        FileType = ImageType.jpg;
+                        break;
+
+                    case ".png":
+                        FileType = ImageType.png;
+                        break;
+
+                    default:
+                        return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Only Jpg and Png file can be uploaded") }, ErrorMsg = null };
+                        break;
+
+                }
+
+                bool BoolIsCover = false;
+
+                if (!bool.TryParse(IsCoverPic, out BoolIsCover))
+                {
+                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "IsCoverPic field should contain only true or false") }, ErrorMsg = null };
+                }
+
+                int IntPetId = 0;
+                if (!int.TryParse(PetId, out IntPetId))
+                {
+                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "UserId must be an integer") }, ErrorMsg = null };
+                }
+
+                BoolExt Result;
+
+                if (BoolIsCover)
+                {
+                    Result = PetProfileManager.UpdateCoverPicture(ReadFully(PicObj), FileName, FileType, IntPetId);
+                }
+                else
+                {
+                    Result = PetProfileManager.UpdateProfilePicture(ReadFully(PicObj), FileName, FileType, IntPetId);
+                }
+                if (Result.IsSuccessful)
+                {
+                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "") }, ErrorMsg = null };
+                }
+                else
+                {
+                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "") }, ErrorMsg = null };
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+        }
+
+
+
+        public static byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
 
     }
 

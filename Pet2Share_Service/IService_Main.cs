@@ -39,9 +39,19 @@ namespace Pet2Share_Service
         [WebInvoke(UriTemplate = "UpdatePetProfile", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         GeneralUpdateResponse UpdatePetProfile(PetProfileUpdateRequest PetObj);
 
-        //[OperationContract]
-        //[WebInvoke(UriTemplate = "UploadPic?UserId={UserId}&PetId={PetId}&UploadType={UploadType}&FileName={FileName}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        //GeneralUpdateResponse UploadUserPic(Stream PicObj, string UserId, string PetId, string UploadType, string FileName);
+        [OperationContract]
+        [WebInvoke(UriTemplate = "UploadUserPic?UserId={UserId}&FileName={FileName}&IsCoverPic={IsCoverPic}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse UploadUserProfileCoverPic(Stream PicObj, string UserId, string FileName, string IsCoverPic);
+
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "UploadPetPic?PetId={PetId}&FileName={FileName}&IsCoverPic={IsCoverPic}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse UploadPetProfileCoverPic(Stream PicObj, string PetId, string FileName, string IsCoverPic);
+
+       
+
+
+
     }
 
 }

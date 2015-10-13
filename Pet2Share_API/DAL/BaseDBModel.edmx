@@ -449,6 +449,7 @@
           <Parameter Name="PrimaryPhone" Type="varchar" Mode="In" />
           <Parameter Name="SecondaryPhone" Type="varchar" Mode="In" />
           <Parameter Name="Avatar" Type="varchar" Mode="In" />
+          <Parameter Name="CoverPicture" Type="varchar" Mode="In" />
           <Parameter Name="AboutMe" Type="varchar" Mode="In" />
         </Function>
         <Function Name="InsertUpdatePetProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -642,19 +643,6 @@
             <Parameter Name="Username" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="InsertUpdatePerson" ReturnType="Collection(Decimal)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
-            <Parameter Name="FirstName" Mode="In" Type="String" />
-            <Parameter Name="LastName" Mode="In" Type="String" />
-            <Parameter Name="Email" Mode="In" Type="String" />
-            <Parameter Name="AlternateEmail" Mode="In" Type="String" />
-            <Parameter Name="DOB" Mode="In" Type="DateTime" />
-            <Parameter Name="AddressId" Mode="In" Type="Int32" />
-            <Parameter Name="PrimaryPhone" Mode="In" Type="String" />
-            <Parameter Name="SecondaryPhone" Mode="In" Type="String" />
-            <Parameter Name="Avatar" Mode="In" Type="String" />
-            <Parameter Name="AboutMe" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="Addresses" EntityType="Pet2ShareModel.Address" />
           <EntitySet Name="Albums" EntityType="Pet2ShareModel.Album" />
           <EntitySet Name="BreedTypes" EntityType="Pet2ShareModel.BreedType" />
@@ -748,7 +736,21 @@
             <End Role="PostLike" EntitySet="PostLikes" />
           </AssociationSet>
           <FunctionImport Name="DeletePostById">
+          <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUpdatePerson" ReturnType="Collection(Decimal)">
             <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="AlternateEmail" Mode="In" Type="String" />
+            <Parameter Name="DOB" Mode="In" Type="DateTime" />
+            <Parameter Name="AddressId" Mode="In" Type="Int32" />
+            <Parameter Name="PrimaryPhone" Mode="In" Type="String" />
+            <Parameter Name="SecondaryPhone" Mode="In" Type="String" />
+            <Parameter Name="Avatar" Mode="In" Type="String" />
+            <Parameter Name="CoverPicture" Mode="In" Type="String" />
+            <Parameter Name="AboutMe" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
@@ -1301,7 +1303,6 @@
           <FunctionImportMapping FunctionImportName="InsertUpdatePetProfile" FunctionName="Pet2ShareModel.Store.InsertUpdatePetProfile" />
           <FunctionImportMapping FunctionImportName="InsertUpdateUser" FunctionName="Pet2ShareModel.Store.InsertUpdateUser" />
           <FunctionImportMapping FunctionImportName="UserLogin" FunctionName="Pet2ShareModel.Store.UserLogin" />
-          <FunctionImportMapping FunctionImportName="InsertUpdatePerson" FunctionName="Pet2ShareModel.Store.InsertUpdatePerson" />
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="Pet2ShareModel.Address">
               <MappingFragment StoreEntitySet="Address">
@@ -1542,6 +1543,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="DeletePostById" FunctionName="Pet2ShareModel.Store.DeletePostById" />
+          <FunctionImportMapping FunctionImportName="InsertUpdatePerson" FunctionName="Pet2ShareModel.Store.InsertUpdatePerson" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
