@@ -122,6 +122,27 @@ namespace Pet2Share_API.Service
             return result;
         }
 
+        public static BoolExt UpdateProfilePicture(Byte[] binaryImage, string filename, ImageType imageType, int userId)
+        {
+            string savePath = "";
+            string relativePath = "";
+            string fullFileName = "";
+
+            relativePath = "/" + userId;
+            fullFileName = userId.ToString() + "_" + filename + imageType.ToString();
+
+            savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
+
+            User u = new User(userId);
+
+            u.P.AvatarURL = relativePath;
+            u.P.Save();
+
+            BoolExt result = new BoolExt(true, savePath);
+
+            return result;
+        }
+
         public BoolExt UpdateCoverPicture(Byte[] binaryImage, string filename, ImageType imageType)
         {
             string savePath = "";
@@ -130,6 +151,25 @@ namespace Pet2Share_API.Service
 
             relativePath = "/" + this.user.Id;
             fullFileName = user.Id.ToString() + "_" + filename + imageType.ToString();
+
+            //savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
+
+            //this.user.P.AvatarURL = relativePath;
+            //this.user.P.Save();
+
+            BoolExt result = new BoolExt(true, savePath);
+
+            return result;
+        }
+
+        public static BoolExt UpdateCoverPicture(Byte[] binaryImage, string filename, ImageType imageType, int userId)
+        {
+            string savePath = "";
+            string relativePath = "";
+            string fullFileName = "";
+
+            relativePath = "/" + userId;
+            fullFileName = userId.ToString() + "_" + filename + imageType.ToString();
 
             //savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
