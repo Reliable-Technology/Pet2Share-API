@@ -128,7 +128,7 @@ namespace Pet2Share_API.Service
             return result;
         }
 
-        public BoolExt UpdateProfilePicture(Byte[] binaryImage, string filename, ImageType imageType, int petId)
+        public static BoolExt UpdateProfilePicture(Byte[] binaryImage, string filename, ImageType imageType, int petId)
         {
             string savePath = "";
             string relativePath = "";
