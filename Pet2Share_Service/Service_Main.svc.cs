@@ -4,6 +4,8 @@ using Pet2Share_API.Service;
 using Pet2Share_API.Utility;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -171,5 +173,51 @@ namespace Pet2Share_Service
             }
             return PetProfileResultResp;
         }
+
+        //public GeneralUpdateResponse UploadUserPic(Stream PicObj, string UserId, string PetId, string UploadType, string FileName)
+        //{
+
+        //    GeneralUpdateResponse UpdateResp;
+        //    try
+        //    {
+        //        //typeof(GetTfromString(UploadType))
+
+
+
+        //        if (string.IsNullOrEmpty(ImageProcessor.Upload(ReadFully(PicObj), FileName, "", 0, typeof(User))))
+        //        {
+        //            UpdateResp = new GeneralUpdateResponse { Total = 0, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true) }), ErrorMsg = null };
+        //        }
+        //        else
+        //        {
+        //            UpdateResp = new GeneralUpdateResponse { Total = 0, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false) }), ErrorMsg = null };
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        UpdateResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+        //    }
+
+        //    return UpdateResp;
+        //}
+
+        //public static byte[] ReadFully(Stream input)
+        //{
+        //    byte[] buffer = new byte[16 * 1024];
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        int read;
+        //        while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+        //        {
+        //            ms.Write(buffer, 0, read);
+        //        }
+        //        return ms.ToArray();
+        //    }
+        //}
+
     }
+
+
+
+
 }

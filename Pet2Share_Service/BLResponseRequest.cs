@@ -2,8 +2,10 @@
 using Pet2Share_API.Utility;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ServiceModel;
 using System.Web;
 
 namespace Pet2Share_Service
@@ -199,11 +201,12 @@ namespace Pet2Share_Service
         [DataMember]
         public DateTime? DOB { get; set; }
 
-        [DataMember]
-        public string ProfilePicture { get; set; }
+        //Removed because they are uploaded from seperate service
+        //[DataMember]
+        //public string ProfilePicture { get; set; }
 
-        [DataMember]
-        public string CoverPicture { get; set; }
+        //[DataMember]
+        //public string CoverPicture { get; set; }
 
         [DataMember]
         public string About { get; set; }
@@ -233,11 +236,12 @@ namespace Pet2Share_Service
         [DataMember]
         public DateTime? DOB { get; set; }
 
-        [DataMember]
-        public string ProfilePicture { get; set; }
+        //Removing because they are update from seperate service 
+        //[DataMember]
+        //public string ProfilePicture { get; set; }
 
-        [DataMember]
-        public string CoverPicture { get; set; }
+        //[DataMember]
+        //public string CoverPicture { get; set; }
 
         [DataMember]
         public string About { get; set; }
@@ -247,5 +251,27 @@ namespace Pet2Share_Service
 
         //TODO: Need to add more fields later
     }
+
+
+    [DataContract]
+    public class UploadPicRequest : RequestObject
+    {
+        [MessageHeader]
+        public int UserId { get; set; }
+
+        [MessageHeader]
+        public int PetId { get; set; }
+
+        [MessageHeader]
+        public int AlbumnId { get; set; }
+
+        [MessageHeader]
+        public bool isCoverPic { get; set; }
+
+        [MessageBodyMember]
+        public Stream FileContent { get; set; }
+
+    }
+
 
 }

@@ -11,7 +11,7 @@ using System.Text;
 namespace Pet2Share_Service
 {
     [ServiceContract]
-    public interface IService_Main 
+    public interface IService_Main
     {
 
 
@@ -39,6 +39,9 @@ namespace Pet2Share_Service
         [WebInvoke(UriTemplate = "UpdatePetProfile", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         GeneralUpdateResponse UpdatePetProfile(PetProfileUpdateRequest PetObj);
 
+        //[OperationContract]
+        //[WebInvoke(UriTemplate = "UploadPic?UserId={UserId}&PetId={PetId}&UploadType={UploadType}&FileName={FileName}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        //GeneralUpdateResponse UploadUserPic(Stream PicObj, string UserId, string PetId, string UploadType, string FileName);
     }
 
 }
