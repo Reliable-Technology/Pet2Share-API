@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Pet2Share_API.Domain;
 using Pet2Share_API.Utility;
+using System.IO;
 
 namespace Pet2Share_API.Service
 {
@@ -100,6 +101,44 @@ namespace Pet2Share_API.Service
             else
                 return new BoolExt(false, "Update Failed, Please check application logs for more details");
 
+        }
+
+        public BoolExt UpdateProfilePicture(Byte[] binaryImage, string filename, ImageType imageType)
+        {
+            string savePath = "";
+            string relativePath = "";
+            string fullFileName = "";
+
+            relativePath = "/" + this.user.Id;
+            fullFileName = user.Id.ToString() + "_" + filename + imageType.ToString();
+
+            savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
+
+            this.user.P.AvatarURL = relativePath;
+            this.user.P.Save();
+
+            BoolExt result = new BoolExt(true, savePath);
+
+            return result;
+        }
+
+        public BoolExt UpdateCoverPicture(Byte[] binaryImage, string filename, ImageType imageType)
+        {
+            string savePath = "";
+            string relativePath = "";
+            string fullFileName = "";
+
+            relativePath = "/" + this.user.Id;
+            fullFileName = user.Id.ToString() + "_" + filename + imageType.ToString();
+
+            //savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
+
+            //this.user.P.AvatarURL = relativePath;
+            //this.user.P.Save();
+
+            BoolExt result = new BoolExt(true, savePath);
+
+            return result;
         }
     }
 }
