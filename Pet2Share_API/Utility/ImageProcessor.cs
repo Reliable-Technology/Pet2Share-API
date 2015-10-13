@@ -32,6 +32,8 @@ namespace Pet2Share_API.Utility
         {
             if (binaryImage != null && binaryImage.Length > 0 && !string.IsNullOrEmpty(filename))
             {
+                FileInfo file = new System.IO.FileInfo(savePath);
+                file.Directory.Create();
                 string fullyQualifiedFilename = savePath + "/" + filename;
                 File.WriteAllBytes(fullyQualifiedFilename, binaryImage);
                 return fullyQualifiedFilename;

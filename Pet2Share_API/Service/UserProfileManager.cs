@@ -110,7 +110,7 @@ namespace Pet2Share_API.Service
             string fullFileName = "";
 
             relativePath = "/" + this.user.Id;
-            fullFileName = user.Id.ToString() + "_" + filename + imageType.ToString();
+            fullFileName = user.Id.ToString() + "_" + filename + "." + imageType.ToString();
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
@@ -129,7 +129,7 @@ namespace Pet2Share_API.Service
             string fullFileName = "";
 
             relativePath = "/" + userId;
-            fullFileName = userId.ToString() + "_" + filename + imageType.ToString();
+            fullFileName = userId.ToString() + "_" + filename + "." + imageType.ToString();
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
@@ -150,7 +150,7 @@ namespace Pet2Share_API.Service
             string fullFileName = "";
 
             relativePath = "/" + this.user.Id;
-            fullFileName = user.Id.ToString() + "_" + filename + imageType.ToString();
+            fullFileName = user.Id.ToString() + "_" + filename + "." + imageType.ToString();
 
             //savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
@@ -169,7 +169,7 @@ namespace Pet2Share_API.Service
             string fullFileName = "";
 
             relativePath = "/" + userId;
-            fullFileName = userId.ToString() + "_" + filename + imageType.ToString();
+            fullFileName = userId.ToString() + "_" + filename + "." + imageType.ToString();
 
             //savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
