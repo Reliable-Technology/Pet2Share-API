@@ -114,7 +114,7 @@ namespace Pet2Share_API.Service
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
-            this.user.P.AvatarURL = relativePath;
+            this.user.P.AvatarURL = relativePath + "/" + fullFileName;
             this.user.P.Save();
 
             BoolExt result = new BoolExt(true, savePath);
@@ -135,7 +135,7 @@ namespace Pet2Share_API.Service
 
             User u = new User(userId);
 
-            u.P.AvatarURL = relativePath;
+            u.P.AvatarURL = relativePath + "/" + fullFileName;
             u.P.Save();
 
             BoolExt result = new BoolExt(true, savePath);
@@ -152,10 +152,10 @@ namespace Pet2Share_API.Service
             relativePath = "/" + this.user.Id;
             fullFileName = user.Id.ToString() + "_" + filename;// +"." + imageType.ToString();
 
-            //savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
+            savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
-            //this.user.P.AvatarURL = relativePath;
-            //this.user.P.Save();
+            this.user.P.CoverPicture = relativePath + "/" + fullFileName;
+            this.user.P.Save();
 
             BoolExt result = new BoolExt(true, savePath);
 
@@ -168,13 +168,15 @@ namespace Pet2Share_API.Service
             string relativePath = "";
             string fullFileName = "";
 
+            User user = new User(userId);
+
             relativePath = "/" + userId;
             fullFileName = userId.ToString() + "_" + filename;// +"." + imageType.ToString();
 
-            //savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
+            savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
-            //this.user.P.AvatarURL = relativePath;
-            //this.user.P.Save();
+            user.P.CoverPicture = relativePath + "/" + fullFileName;
+            user.P.Save();
 
             BoolExt result = new BoolExt(true, savePath);
 
