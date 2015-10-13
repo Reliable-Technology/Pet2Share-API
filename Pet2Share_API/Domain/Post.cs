@@ -47,7 +47,7 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public bool IsCommentedByPet { get; set; }
         [DataMember]
-        public string Comment { get; set; }        
+        public string CommentDescription { get; set; }        
         [DataMember]
         public DateTime DateAdded { get; set; }
         [DataMember]
@@ -72,9 +72,9 @@ namespace Pet2Share_API.Domain
         public Comment(int postId, int commenterId, bool isCommentedByPet, string comment) : base()
         {
             this.PostId = postId;
-            this.CommentedBy = posterId;
-            this.IsCommentedByPet = isPosterPet;
-            this.Comment = comment;
+            this.CommentedBy = commenterId;
+            this.IsCommentedByPet = isCommentedByPet;
+            this.CommentDescription = comment;
         }
 
         #endregion
@@ -168,8 +168,8 @@ namespace Pet2Share_API.Domain
 
         public Post(DAL.Post post) : base()
         {
-            this.Id = post.ID;
-            this.PostTypeId = post.PostTypeID;
+            this.Id = post.Id;
+            this.PostTypeId = post.PostTypeId;
             this.Description = post.Description;
             this.PostedBy = post.PostedBy;
             this.IsPostByPet = post.IsPostByPet;
@@ -233,7 +233,7 @@ namespace Pet2Share_API.Domain
             {
                 using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
                 {
-                    result = Convert.ToInt32(context.InsertUpdatePost(this.Id, this.Name, this.FamilyName, this.UserId, this.PetTypeId, this.DOB, this.ProfilePicture, this.About, this.CoverPicture, this.FavFood).FirstOrDefault());
+                    result = Convert.ToInt32(context.InsertUpdatePost(this.Id, this.PostTypeId, this.Description, this.PostedBy, this.IsPostByPet).FirstOrDefault());
                     if (result > 0)
                         this.Id = result;
                 }
@@ -249,9 +249,9 @@ namespace Pet2Share_API.Domain
             {
                 using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
                 {
-                    result = Convert.ToInt32(context.InsertUpdatePetProfile(pet.Id, pet.Name, pet.FamilyName, pet.UserId, pet.PetTypeId, pet.DOB, pet.ProfilePicture, pet.About, pet.CoverPicture, pet.FavFood).FirstOrDefault());
+                    result = Convert.ToInt32(context.InsertUpdatePost(post.Id, post.PostTypeId, post.Description, post.PostedBy, post.IsPostByPet).FirstOrDefault());
                     if (result > 0)
-                        pet.Id = result;
+                        post.Id = result;
                 }
             }
             return result;
@@ -264,7 +264,7 @@ namespace Pet2Share_API.Domain
 
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.DeletePetProfileById(this.Id);
+                result = context.DeletePostById(this.Id);
                 if (result > 0)
                     this.Id = result;
             }
@@ -278,7 +278,7 @@ namespace Pet2Share_API.Domain
 
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.DeletePetProfileById(id);
+                result = context.DeletePostById(id);
                 if (result > 0)
                     id = result;
             }

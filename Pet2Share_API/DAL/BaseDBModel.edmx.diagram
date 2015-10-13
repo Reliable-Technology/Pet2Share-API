@@ -11,9 +11,7 @@
         <EntityTypeShape EntityType="Pet2ShareModel.Person" Width="1.5" PointX="5.25" PointY="5" />
         <EntityTypeShape EntityType="Pet2ShareModel.PetProfile" Width="1.5" PointX="8.25" PointY="5.625" />
         <EntityTypeShape EntityType="Pet2ShareModel.PetType" Width="1.5" PointX="6" PointY="1.5" />
-        <EntityTypeShape EntityType="Pet2ShareModel.Post" Width="1.5" PointX="10.5" PointY="5.75" />
         <EntityTypeShape EntityType="Pet2ShareModel.Post_Upload" Width="1.5" PointX="12.75" PointY="8.125" />
-        <EntityTypeShape EntityType="Pet2ShareModel.PostComment" Width="1.5" PointX="10.75" PointY="0.75" />
         <EntityTypeShape EntityType="Pet2ShareModel.PostLike" Width="1.5" PointX="12.75" PointY="4.25" />
         <EntityTypeShape EntityType="Pet2ShareModel.PostType" Width="1.5" PointX="8.25" PointY="2.5" />
         <EntityTypeShape EntityType="Pet2ShareModel.SocialMediaSource" Width="1.5" PointX="0.75" PointY="3.25" />
@@ -24,17 +22,19 @@
         <AssociationConnector Association="Pet2ShareModel.FK_Post_Uploads_Album" />
         <AssociationConnector Association="Pet2ShareModel.FK_BreedType_PetType" />
         <AssociationConnector Association="Pet2ShareModel.FK_Person_User" />
-        <AssociationConnector Association="Pet2ShareModel.FK_Post_Person" />
         <AssociationConnector Association="Pet2ShareModel.FK_PostLikes_Person" />
         <AssociationConnector Association="Pet2ShareModel.FK_User_Person" />
         <AssociationConnector Association="Pet2ShareModel.FK_PetProfile_PetType" />
         <AssociationConnector Association="Pet2ShareModel.FK_PetProfile_User" />
+        <AssociationConnector Association="Pet2ShareModel.FK_User_SocialMediaSource" />
+        <AssociationConnector Association="Pet2ShareModel.FK_User_UserType" />
+        <EntityTypeShape EntityType="Pet2ShareModel.Post" Width="1.5" PointX="10.5" PointY="4.375" />
+        <EntityTypeShape EntityType="Pet2ShareModel.PostComment" Width="1.5" PointX="10.375" PointY="0.75" />
+        <AssociationConnector Association="Pet2ShareModel.FK_Post_Person" />
         <AssociationConnector Association="Pet2ShareModel.FK_Post_Uploads_Post" />
         <AssociationConnector Association="Pet2ShareModel.FK_Post_PostType" />
         <AssociationConnector Association="Pet2ShareModel.FK_PostLikes_Post" />
-        <AssociationConnector Association="Pet2ShareModel.FK_User_SocialMediaSource" />
-        <AssociationConnector Association="Pet2ShareModel.FK_User_UserType" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

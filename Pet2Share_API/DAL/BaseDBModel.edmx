@@ -61,6 +61,7 @@
           <Property Name="PrimaryPhone" Type="varchar" MaxLength="10" />
           <Property Name="SecondaryPhone" Type="varchar" MaxLength="10" />
           <Property Name="Avatar" Type="varchar" MaxLength="200" />
+          <Property Name="CoverPicture" Type="varchar" MaxLength="200" />
           <Property Name="AboutMe" Type="varchar" MaxLength="1000" />
           <Property Name="UserID" Type="int" />
           <Property Name="DateAdded" Type="datetime" Nullable="false" />
@@ -99,17 +100,19 @@
         </EntityType>
         <EntityType Name="Post">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PostTypeID" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostTypeId" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="PostedBy" Type="int" Nullable="false" />
           <Property Name="IsPostByPet" Type="bit" Nullable="false" />
           <Property Name="PostLikeCount" Type="int" Nullable="false" />
+          <Property Name="PostLikedBy" Type="varchar(max)" />
           <Property Name="PostCommentCount" Type="int" Nullable="false" />
           <Property Name="DateAdded" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Post Uploads">
@@ -126,13 +129,15 @@
           <Property Name="DateModified" Type="datetime" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" />
         </EntityType>
-        <EntityType Name="PostComments">
+        <EntityType Name="PostComment">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Comment" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="PostID" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostId" Type="int" Nullable="false" />
+          <Property Name="CommentedBy" Type="int" Nullable="false" />
+          <Property Name="IsCommentedByPet" Type="bit" Nullable="false" />
+          <Property Name="Comment" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="DateAdded" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -291,7 +296,7 @@
           <End Role="Post Uploads" Type="Self.Post Uploads" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Post">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Post Uploads">
               <PropertyRef Name="PostID" />
@@ -318,7 +323,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Post">
-              <PropertyRef Name="PostTypeID" />
+              <PropertyRef Name="PostTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -339,7 +344,7 @@
           <End Role="PostLikes" Type="Self.PostLikes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Post">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PostLikes">
               <PropertyRef Name="PostID" />
@@ -403,6 +408,9 @@
         <Function Name="DeletePetProfileById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
+        <Function Name="DeletePostById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteUserById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
@@ -455,6 +463,20 @@
           <Parameter Name="CoverPicture" Type="varchar" Mode="In" />
           <Parameter Name="FavFood" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="InsertUpdatePost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="PostTypeId" Type="int" Mode="In" />
+          <Parameter Name="Description" Type="varchar" Mode="In" />
+          <Parameter Name="PostedBy" Type="int" Mode="In" />
+          <Parameter Name="IsPostByPet" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="InsertUpdatePostComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="PostId" Type="int" Mode="In" />
+          <Parameter Name="CommentedBy" Type="int" Mode="In" />
+          <Parameter Name="IsCommentedByPet" Type="bit" Mode="In" />
+          <Parameter Name="Comment" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="InsertUpdateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
           <Parameter Name="Username" Type="varchar" Mode="In" />
@@ -478,7 +500,7 @@
           <EntitySet Name="PetType" EntityType="Self.PetType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Post Uploads" EntityType="Self.Post Uploads" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PostComments" EntityType="Self.PostComments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostComment" EntityType="Self.PostComment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PostLikes" EntityType="Self.PostLikes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PostType" EntityType="Self.PostType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SocialMediaSource" EntityType="Self.SocialMediaSource" Schema="dbo" store:Type="Tables" />
@@ -639,9 +661,7 @@
           <EntitySet Name="People" EntityType="Pet2ShareModel.Person" />
           <EntitySet Name="PetProfiles" EntityType="Pet2ShareModel.PetProfile" />
           <EntitySet Name="PetTypes" EntityType="Pet2ShareModel.PetType" />
-          <EntitySet Name="Posts" EntityType="Pet2ShareModel.Post" />
           <EntitySet Name="Post_Uploads" EntityType="Pet2ShareModel.Post_Upload" />
-          <EntitySet Name="PostComments" EntityType="Pet2ShareModel.PostComment" />
           <EntitySet Name="PostLikes" EntityType="Pet2ShareModel.PostLike" />
           <EntitySet Name="PostTypes" EntityType="Pet2ShareModel.PostType" />
           <EntitySet Name="SocialMediaSources" EntityType="Pet2ShareModel.SocialMediaSource" />
@@ -667,10 +687,6 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Person" EntitySet="People" />
           </AssociationSet>
-          <AssociationSet Name="FK_Post_Person" Association="Pet2ShareModel.FK_Post_Person">
-            <End Role="Person" EntitySet="People" />
-            <End Role="Post" EntitySet="Posts" />
-          </AssociationSet>
           <AssociationSet Name="FK_PostLikes_Person" Association="Pet2ShareModel.FK_PostLikes_Person">
             <End Role="Person" EntitySet="People" />
             <End Role="PostLike" EntitySet="PostLikes" />
@@ -687,6 +703,38 @@
             <End Role="User" EntitySet="Users" />
             <End Role="PetProfile" EntitySet="PetProfiles" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_SocialMediaSource" Association="Pet2ShareModel.FK_User_SocialMediaSource">
+            <End Role="SocialMediaSource" EntitySet="SocialMediaSources" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserType" Association="Pet2ShareModel.FK_User_UserType">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <FunctionImport Name="GetPetProfileByUserId" ReturnType="Collection(Pet2ShareModel.GetPetProfileByUserId_Result)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="IsActive" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUpdatePost" ReturnType="Collection(Decimal)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="PostTypeId" Mode="In" Type="Int32" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="PostedBy" Mode="In" Type="Int32" />
+            <Parameter Name="IsPostByPet" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUpdatePostComment" ReturnType="Collection(Decimal)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="PostId" Mode="In" Type="Int32" />
+            <Parameter Name="CommentedBy" Mode="In" Type="Int32" />
+            <Parameter Name="IsCommentedByPet" Mode="In" Type="Boolean" />
+            <Parameter Name="Comment" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Posts" EntityType="Pet2ShareModel.Post" />
+          <EntitySet Name="PostComments" EntityType="Pet2ShareModel.PostComment" />
+          <AssociationSet Name="FK_Post_Person" Association="Pet2ShareModel.FK_Post_Person">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
           <AssociationSet Name="FK_Post_Uploads_Post" Association="Pet2ShareModel.FK_Post_Uploads_Post">
             <End Role="Post" EntitySet="Posts" />
             <End Role="Post_Upload" EntitySet="Post_Uploads" />
@@ -699,17 +747,8 @@
             <End Role="Post" EntitySet="Posts" />
             <End Role="PostLike" EntitySet="PostLikes" />
           </AssociationSet>
-          <AssociationSet Name="FK_User_SocialMediaSource" Association="Pet2ShareModel.FK_User_SocialMediaSource">
-            <End Role="SocialMediaSource" EntitySet="SocialMediaSources" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_UserType" Association="Pet2ShareModel.FK_User_UserType">
-            <End Role="UserType" EntitySet="UserTypes" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <FunctionImport Name="GetPetProfileByUserId" ReturnType="Collection(Pet2ShareModel.GetPetProfileByUserId_Result)">
-            <Parameter Name="UserId" Mode="In" Type="Int32" />
-            <Parameter Name="IsActive" Mode="In" Type="Int32" />
+          <FunctionImport Name="DeletePostById">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
@@ -827,9 +866,10 @@
           <NavigationProperty Name="Address" Relationship="Pet2ShareModel.FK_Person_Address" FromRole="Person" ToRole="Address" />
           <NavigationProperty Name="Albums" Relationship="Pet2ShareModel.FK_Album_Person" FromRole="Person" ToRole="Album" />
           <NavigationProperty Name="User" Relationship="Pet2ShareModel.FK_Person_User" FromRole="Person" ToRole="User" />
-          <NavigationProperty Name="Posts" Relationship="Pet2ShareModel.FK_Post_Person" FromRole="Person" ToRole="Post" />
           <NavigationProperty Name="PostLikes" Relationship="Pet2ShareModel.FK_PostLikes_Person" FromRole="Person" ToRole="PostLike" />
           <NavigationProperty Name="Users" Relationship="Pet2ShareModel.FK_User_Person" FromRole="Person" ToRole="User" />
+          <Property Name="CoverPicture" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Posts" Relationship="Pet2ShareModel.FK_Post_Person" FromRole="Person" ToRole="Post" />
         </EntityType>
         <EntityType Name="PetProfile">
           <Key>
@@ -864,25 +904,6 @@
           <NavigationProperty Name="BreedTypes" Relationship="Pet2ShareModel.FK_BreedType_PetType" FromRole="PetType" ToRole="BreedType" />
           <NavigationProperty Name="PetProfiles" Relationship="Pet2ShareModel.FK_PetProfile_PetType" FromRole="PetType" ToRole="PetProfile" />
         </EntityType>
-        <EntityType Name="Post">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PostTypeID" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="PostedBy" Type="Int32" Nullable="false" />
-          <Property Name="IsPostByPet" Type="Boolean" Nullable="false" />
-          <Property Name="PostLikeCount" Type="Int32" Nullable="false" />
-          <Property Name="PostCommentCount" Type="Int32" Nullable="false" />
-          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Person" Relationship="Pet2ShareModel.FK_Post_Person" FromRole="Post" ToRole="Person" />
-          <NavigationProperty Name="Post_Uploads" Relationship="Pet2ShareModel.FK_Post_Uploads_Post" FromRole="Post" ToRole="Post_Upload" />
-          <NavigationProperty Name="PostType" Relationship="Pet2ShareModel.FK_Post_PostType" FromRole="Post" ToRole="PostType" />
-          <NavigationProperty Name="PostLikes" Relationship="Pet2ShareModel.FK_PostLikes_Post" FromRole="Post" ToRole="PostLike" />
-        </EntityType>
         <EntityType Name="Post_Upload">
           <Key>
             <PropertyRef Name="ID" />
@@ -898,19 +919,7 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="Album" Relationship="Pet2ShareModel.FK_Post_Uploads_Album" FromRole="Post_Upload" ToRole="Album" />
           <NavigationProperty Name="Post" Relationship="Pet2ShareModel.FK_Post_Uploads_Post" FromRole="Post_Upload" ToRole="Post" />
-        </EntityType>
-        <EntityType Name="PostComment">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Comment" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PostID" Type="Int32" Nullable="false" />
-          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="PostLike">
           <Key>
             <PropertyRef Name="ID" />
@@ -924,7 +933,7 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Person" Relationship="Pet2ShareModel.FK_PostLikes_Person" FromRole="PostLike" ToRole="Person" />
           <NavigationProperty Name="Post" Relationship="Pet2ShareModel.FK_PostLikes_Post" FromRole="PostLike" ToRole="Post" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="PostType">
           <Key>
             <PropertyRef Name="ID" />
@@ -936,7 +945,7 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Posts" Relationship="Pet2ShareModel.FK_Post_PostType" FromRole="PostType" ToRole="Post" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="SocialMediaSource">
           <Key>
             <PropertyRef Name="Id" />
@@ -1045,18 +1054,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Post_Person">
-          <End Type="Pet2ShareModel.Person" Role="Person" Multiplicity="1" />
-          <End Type="Pet2ShareModel.Post" Role="Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Person">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="PostedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PostLikes_Person">
           <End Type="Pet2ShareModel.Person" Role="Person" Multiplicity="1" />
           <End Type="Pet2ShareModel.PostLike" Role="PostLike" Multiplicity="*" />
@@ -1105,42 +1102,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Post_Uploads_Post">
-          <End Type="Pet2ShareModel.Post" Role="Post" Multiplicity="1" />
-          <End Type="Pet2ShareModel.Post_Upload" Role="Post_Upload" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Post">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Post_Upload">
-              <PropertyRef Name="PostID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Post_PostType">
-          <End Type="Pet2ShareModel.PostType" Role="PostType" Multiplicity="1" />
-          <End Type="Pet2ShareModel.Post" Role="Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PostType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="PostTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PostLikes_Post">
-          <End Type="Pet2ShareModel.Post" Role="Post" Multiplicity="0..1" />
-          <End Type="Pet2ShareModel.PostLike" Role="PostLike" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Post">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PostLike">
-              <PropertyRef Name="PostID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_User_SocialMediaSource">
           <End Type="Pet2ShareModel.SocialMediaSource" Role="SocialMediaSource" Multiplicity="0..1" />
           <End Type="Pet2ShareModel.User" Role="User" Multiplicity="*" />
@@ -1182,7 +1143,90 @@
           <Property Type="String" Name="FavFood" Nullable="true" MaxLength="500" />
           <Property Type="Boolean" Name="IsActive1" Nullable="false" />
         </ComplexType>
-      </Schema>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PostedBy" Type="Int32" Nullable="false" />
+          <Property Name="IsPostByPet" Type="Boolean" Nullable="false" />
+          <Property Name="PostLikeCount" Type="Int32" Nullable="false" />
+          <Property Name="PostLikedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PostCommentCount" Type="Int32" Nullable="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Pet2ShareModel.FK_Post_Person" FromRole="Post" ToRole="Person" />
+          <NavigationProperty Name="Post_Uploads" Relationship="Pet2ShareModel.FK_Post_Uploads_Post" FromRole="Post" ToRole="Post_Upload" />
+          <NavigationProperty Name="PostType" Relationship="Pet2ShareModel.FK_Post_PostType" FromRole="Post" ToRole="PostType" />
+          <NavigationProperty Name="PostLikes" Relationship="Pet2ShareModel.FK_PostLikes_Post" FromRole="Post" ToRole="PostLike" />
+        </EntityType>
+        <EntityType Name="PostComment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <Property Name="CommentedBy" Type="Int32" Nullable="false" />
+          <Property Name="IsCommentedByPet" Type="Boolean" Nullable="false" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Post_Person">
+          <End Type="Pet2ShareModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="Pet2ShareModel.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="PostedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Uploads_Post">
+          <End Type="Pet2ShareModel.Post" Role="Post" Multiplicity="1" />
+          <End Type="Pet2ShareModel.Post_Upload" Role="Post_Upload" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post_Upload">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_PostType">
+          <End Type="Pet2ShareModel.PostType" Role="PostType" Multiplicity="1" />
+          <End Type="Pet2ShareModel.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="PostTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostLikes_Post">
+          <End Type="Pet2ShareModel.Post" Role="Post" Multiplicity="0..1" />
+          <End Type="Pet2ShareModel.PostLike" Role="PostLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostLike">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1306,6 +1350,7 @@
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="Pet2ShareModel.Person">
               <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="CoverPicture" ColumnName="CoverPicture" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DateModified" ColumnName="DateModified" />
@@ -1356,22 +1401,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Posts">
-            <EntityTypeMapping TypeName="Pet2ShareModel.Post">
-              <MappingFragment StoreEntitySet="Post">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="PostCommentCount" ColumnName="PostCommentCount" />
-                <ScalarProperty Name="PostLikeCount" ColumnName="PostLikeCount" />
-                <ScalarProperty Name="IsPostByPet" ColumnName="IsPostByPet" />
-                <ScalarProperty Name="PostedBy" ColumnName="PostedBy" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="PostTypeID" ColumnName="PostTypeID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Post_Uploads">
             <EntityTypeMapping TypeName="Pet2ShareModel.Post_Upload">
               <MappingFragment StoreEntitySet="Post Uploads">
@@ -1383,19 +1412,6 @@
                 <ScalarProperty Name="FileMimeType" ColumnName="FileMimeType" />
                 <ScalarProperty Name="UploadedFilePath" ColumnName="UploadedFilePath" />
                 <ScalarProperty Name="PostID" ColumnName="PostID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PostComments">
-            <EntityTypeMapping TypeName="Pet2ShareModel.PostComment">
-              <MappingFragment StoreEntitySet="PostComments">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="PostID" ColumnName="PostID" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1490,6 +1506,42 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertUpdatePost" FunctionName="Pet2ShareModel.Store.InsertUpdatePost" />
+          <FunctionImportMapping FunctionImportName="InsertUpdatePostComment" FunctionName="Pet2ShareModel.Store.InsertUpdatePostComment" />
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="Pet2ShareModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="PostCommentCount" ColumnName="PostCommentCount" />
+                <ScalarProperty Name="PostLikedBy" ColumnName="PostLikedBy" />
+                <ScalarProperty Name="PostLikeCount" ColumnName="PostLikeCount" />
+                <ScalarProperty Name="IsPostByPet" ColumnName="IsPostByPet" />
+                <ScalarProperty Name="PostedBy" ColumnName="PostedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostComments">
+            <EntityTypeMapping TypeName="Pet2ShareModel.PostComment">
+              <MappingFragment StoreEntitySet="PostComment">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="IsCommentedByPet" ColumnName="IsCommentedByPet" />
+                <ScalarProperty Name="CommentedBy" ColumnName="CommentedBy" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeletePostById" FunctionName="Pet2ShareModel.Store.DeletePostById" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

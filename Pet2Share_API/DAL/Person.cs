@@ -17,9 +17,9 @@ namespace Pet2Share_API.DAL
         public Person()
         {
             this.Albums = new HashSet<Album>();
-            this.Posts = new HashSet<Post>();
             this.PostLikes = new HashSet<PostLike>();
             this.Users = new HashSet<User>();
+            this.Posts = new HashSet<Post>();
         }
     
         public int Id { get; set; }
@@ -38,12 +38,13 @@ namespace Pet2Share_API.DAL
         public System.DateTime DateModified { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
+        public string CoverPicture { get; set; }
     
         public virtual Address Address { get; set; }
         public virtual ICollection<Album> Albums { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<PostLike> PostLikes { get; set; }
         public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }
