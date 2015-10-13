@@ -4,14 +4,18 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.Configuration;
 
 using Pet2Share_API.Domain;
 
 namespace Pet2Share_API.Utility
 {
-    class ImageProcessor
+    public enum ImageType
+    {
+        jpg, png
+    }
+
+    public class ImageProcessor
     {
         public static string Upload(Byte[] binaryImage, string filename, string fileType, int? id, Type type)
         {
@@ -20,6 +24,17 @@ namespace Pet2Share_API.Utility
                 string path = GetImageSavePath(id, type);
                 File.WriteAllBytes(path, binaryImage);
                 return path;
+            }
+            return "";
+        }
+
+        public static string Upload(Byte[] binaryImage, ImageType imageType, string filename, string savePath)
+        {
+            if (binaryImage != null && binaryImage.Length > 0 && !string.IsNullOrEmpty(filename))
+            {
+                string fullyQualifiedFilename = savePath + "/" + filename;
+                File.WriteAllBytes(fullyQualifiedFilename, binaryImage);
+                return fullyQualifiedFilename;
             }
             return "";
         }

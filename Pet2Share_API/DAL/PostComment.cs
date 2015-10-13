@@ -14,9 +14,11 @@ namespace Pet2Share_API.DAL
     
     public partial class PostComment
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
+        public int PostId { get; set; }
+        public int CommentedBy { get; set; }
+        public bool IsCommentedByPet { get; set; }
         public string Comment { get; set; }
-        public int PostID { get; set; }
         public System.DateTime DateAdded { get; set; }
         public System.DateTime DateModified { get; set; }
         public bool IsActive { get; set; }

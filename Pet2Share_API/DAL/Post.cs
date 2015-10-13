@@ -20,15 +20,17 @@ namespace Pet2Share_API.DAL
             this.PostLikes = new HashSet<PostLike>();
         }
     
-        public int ID { get; set; }
-        public int PostTypeID { get; set; }
+        public int Id { get; set; }
+        public int PostTypeId { get; set; }
         public string Description { get; set; }
         public int PostedBy { get; set; }
         public bool IsPostByPet { get; set; }
         public int PostLikeCount { get; set; }
+        public string PostLikedBy { get; set; }
         public int PostCommentCount { get; set; }
         public System.DateTime DateAdded { get; set; }
         public System.DateTime DateModified { get; set; }
+        public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
     
         public virtual Person Person { get; set; }

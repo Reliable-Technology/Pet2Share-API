@@ -33,14 +33,14 @@ namespace Pet2Share_API.DAL
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<PetProfile> PetProfiles { get; set; }
         public virtual DbSet<PetType> PetTypes { get; set; }
-        public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Post_Upload> Post_Uploads { get; set; }
-        public virtual DbSet<PostComment> PostComments { get; set; }
         public virtual DbSet<PostLike> PostLikes { get; set; }
         public virtual DbSet<PostType> PostTypes { get; set; }
         public virtual DbSet<SocialMediaSource> SocialMediaSources { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<PostComment> PostComments { get; set; }
     
         public virtual int ChangeActivePetProfileById(Nullable<int> id, Nullable<bool> active)
         {
@@ -340,6 +340,65 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("IsActive", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPetProfileByUserId_Result>("GetPetProfileByUserId", userIdParameter, isActiveParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePost(Nullable<int> id, Nullable<int> postTypeId, string description, Nullable<int> postedBy, Nullable<bool> isPostByPet)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var postTypeIdParameter = postTypeId.HasValue ?
+                new ObjectParameter("PostTypeId", postTypeId) :
+                new ObjectParameter("PostTypeId", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var postedByParameter = postedBy.HasValue ?
+                new ObjectParameter("PostedBy", postedBy) :
+                new ObjectParameter("PostedBy", typeof(int));
+    
+            var isPostByPetParameter = isPostByPet.HasValue ?
+                new ObjectParameter("IsPostByPet", isPostByPet) :
+                new ObjectParameter("IsPostByPet", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePost", idParameter, postTypeIdParameter, descriptionParameter, postedByParameter, isPostByPetParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePostComment(Nullable<int> id, Nullable<int> postId, Nullable<int> commentedBy, Nullable<bool> isCommentedByPet, string comment)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var postIdParameter = postId.HasValue ?
+                new ObjectParameter("PostId", postId) :
+                new ObjectParameter("PostId", typeof(int));
+    
+            var commentedByParameter = commentedBy.HasValue ?
+                new ObjectParameter("CommentedBy", commentedBy) :
+                new ObjectParameter("CommentedBy", typeof(int));
+    
+            var isCommentedByPetParameter = isCommentedByPet.HasValue ?
+                new ObjectParameter("IsCommentedByPet", isCommentedByPet) :
+                new ObjectParameter("IsCommentedByPet", typeof(bool));
+    
+            var commentParameter = comment != null ?
+                new ObjectParameter("Comment", comment) :
+                new ObjectParameter("Comment", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePostComment", idParameter, postIdParameter, commentedByParameter, isCommentedByPetParameter, commentParameter);
+        }
+    
+        public virtual int DeletePostById(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePostById", idParameter);
         }
     }
 }

@@ -108,5 +108,43 @@ namespace Pet2Share_API.Service
                 return new BoolExt(false, "Update Failed, Please check application logs for more details");
 
         }
+
+        public BoolExt UpdateProfilePicture(Byte[] binaryImage, string filename, ImageType imageType)
+        {
+            string savePath = "";
+            string relativePath = "";
+            string fullFileName = "";
+
+            fullFileName = pet.UserId.ToString() + "_" + pet.Id.ToString() + "_" + filename + imageType.ToString();
+            relativePath = "/" + this.pet.UserId + "/" + this.pet.Id + "/" + fullFileName;
+
+            savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
+
+            this.pet.ProfilePicture = relativePath;
+            this.pet.Save();
+
+            BoolExt result = new BoolExt(true, savePath);
+
+            return result;
+        }
+
+        public BoolExt UpdateCoverPicture(Byte[] binaryImage, string filename, ImageType imageType)
+        {
+            string savePath = "";
+            string relativePath = "";
+            string fullFileName = "";
+
+            fullFileName = pet.UserId.ToString() + "_" + pet.Id.ToString() + "_" + filename + imageType.ToString();
+            relativePath = "/" + this.pet.UserId + "/" + this.pet.Id + "/" + fullFileName;
+
+            savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
+
+            this.pet.CoverPicture = relativePath;
+            this.pet.Save();
+
+            BoolExt result = new BoolExt(true, savePath);
+
+            return result;
+        }
     }
 }
