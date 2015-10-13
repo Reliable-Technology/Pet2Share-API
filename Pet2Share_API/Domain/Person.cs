@@ -32,6 +32,8 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public string AvatarURL { get; set; }
         [DataMember]
+        public string CoverPicture { get; set; }
+        [DataMember]
         public string AboutMe { get; set; }
         [DataMember]
         public DateTime DateAdded { get; set; }
@@ -63,13 +65,14 @@ namespace Pet2Share_API.Domain
             this.PrimaryPhone = p.PrimaryPhone;
             this.SecondaryPhone = p.SecondaryPhone;
             this.AvatarURL = p.AvatarURL;
+            this.CoverPicture = p.CoverPicture;
             this.AboutMe = p.AboutMe;
             this.DateAdded = p.DateAdded;
             this.DateModified = p.DateModified;
             this.IsActive = p.IsActive;
         }
 
-        public Person(string firstName, string lastName, string email, string alternateEmail, DateTime? dob, Address addr, string primaryPhone, string secondaryPhone, string avatarURL) : base()
+        public Person(string firstName, string lastName, string email, string alternateEmail, DateTime? dob, Address addr, string primaryPhone, string secondaryPhone, string avatarURL, string coverPicture) : base()
         {
             this.Id = 0;
             this.FirstName = firstName;
@@ -80,6 +83,7 @@ namespace Pet2Share_API.Domain
             this.PrimaryPhone = primaryPhone;
             this.SecondaryPhone = secondaryPhone;
             this.AvatarURL = avatarURL;
+            this.CoverPicture = coverPicture;
         }
 
         public Person(DAL.Person p) : base()
@@ -93,6 +97,7 @@ namespace Pet2Share_API.Domain
             this.PrimaryPhone = p.PrimaryPhone;
             this.SecondaryPhone = p.SecondaryPhone;
             this.AvatarURL = p.Avatar;
+            this.CoverPicture = p.CoverPicture;
             this.AboutMe = p.AboutMe;
             this.DateAdded = p.DateAdded;
             this.DateModified = p.DateModified;
@@ -144,7 +149,7 @@ namespace Pet2Share_API.Domain
 
                 using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
                 {
-                    result = Convert.ToInt32(context.InsertUpdatePerson(this.Id, this.FirstName, this.LastName, this.Email, this.AlternateEmail, this.DOB, this.Addr.Id, this.PrimaryPhone, this.SecondaryPhone, this.AvatarURL, this.AboutMe).FirstOrDefault());
+                    result = Convert.ToInt32(context.InsertUpdatePerson(this.Id, this.FirstName, this.LastName, this.Email, this.AlternateEmail, this.DOB, this.Addr.Id, this.PrimaryPhone, this.SecondaryPhone, this.AvatarURL, this.CoverPicture, this.AboutMe).FirstOrDefault());
                     if (result > 0)
                         this.Id = result;
                 }
