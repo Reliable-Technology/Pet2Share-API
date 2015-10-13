@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Pet2Share_API;
 using Pet2Share_API.Domain;
+using Pet2Share_API.Utility;
 
 namespace Pet2Share_API.Service
 {
@@ -45,9 +46,14 @@ namespace Pet2Share_API.Service
             
         }
 
-        public static void AddComment()
+        public static BoolExt AddComment()
         {
+            return new BoolExt(false);
+        }
 
+        public static BoolExt DeleteComment()
+        {
+            return new BoolExt(false);
         }
     }
 }
