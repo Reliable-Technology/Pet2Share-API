@@ -12,6 +12,8 @@ namespace Pet2Share_API.Service
     public class PostManager
     {
         Post post;
+        User user;
+        Pet pet;
 
         public PostManager()
         {
@@ -23,7 +25,7 @@ namespace Pet2Share_API.Service
             post = new Post(postId);
         }
 
-        public Comment[] GetComments(int postId)
+        public static Comment[] GetComments(int postId)
         {
             List<Comment> listComments = new List<Comment>();
             using(DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
@@ -36,6 +38,16 @@ namespace Pet2Share_API.Service
                 }
             }
             return listComments.ToArray();
+        }
+
+        public static void Like(int postId, int userId)
+        {
+            
+        }
+
+        public static void AddComment()
+        {
+
         }
     }
 }
