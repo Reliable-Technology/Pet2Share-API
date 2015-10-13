@@ -120,7 +120,7 @@ namespace Pet2Share_API.Service
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
-            this.pet.ProfilePicture = relativePath;
+            this.pet.ProfilePicture = relativePath + "/" + filename;
             this.pet.Save();
 
             BoolExt result = new BoolExt(true, savePath);
@@ -141,7 +141,7 @@ namespace Pet2Share_API.Service
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
-            pet.ProfilePicture = relativePath;
+            pet.ProfilePicture = relativePath + "/" + filename;
             pet.Save();
 
             BoolExt result = new BoolExt(true, savePath);
@@ -156,11 +156,11 @@ namespace Pet2Share_API.Service
             string fullFileName = "";
 
             relativePath = "/" + pet.UserId + "/" + pet.Id;
-            fullFileName = pet.UserId.ToString() + "_" + pet.Id.ToString() + "_" + filename;// +"." + imageType.ToString();
+            fullFileName = pet.UserId.ToString() + "_" + pet.Id.ToString() + "_cover_" + filename;// +"." + imageType.ToString();
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
-            this.pet.CoverPicture = relativePath;
+            this.pet.CoverPicture = relativePath + "/" + filename;
             this.pet.Save();
 
             BoolExt result = new BoolExt(true, savePath);
@@ -177,11 +177,11 @@ namespace Pet2Share_API.Service
             Pet pet = new Pet(petId);
 
             relativePath = "/" + pet.UserId + "/" + pet.Id;
-            fullFileName = pet.UserId.ToString() + "_" + pet.Id.ToString() + "_" + filename;// +"." + imageType.ToString();
+            fullFileName = pet.UserId.ToString() + "_" + pet.Id.ToString() + "_cover_" + filename;// +"." + imageType.ToString();
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
-            pet.CoverPicture = relativePath;
+            pet.CoverPicture = relativePath + "/" + filename;
             pet.Save();
 
             BoolExt result = new BoolExt(true, savePath);
