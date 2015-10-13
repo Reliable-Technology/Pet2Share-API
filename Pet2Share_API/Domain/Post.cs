@@ -69,6 +69,15 @@ namespace Pet2Share_API.Domain
             this.IsDeleted = false;
         }
 
+        public Comment(DAL.PostComment dalComment)
+        {
+            this.Id = dalComment.Id;
+            this.PostId = dalComment.PostId;
+            this.CommentedBy = dalComment.CommentedBy;
+            this.IsCommentedByPet = dalComment.IsCommentedByPet;
+            this.CommentDescription = dalComment.Comment;
+        }
+
         public Comment(int postId, int commenterId, bool isCommentedByPet, string comment) : base()
         {
             this.PostId = postId;
@@ -218,7 +227,7 @@ namespace Pet2Share_API.Domain
 
         public bool Validate()
         {
-            if (string.IsNullOrEmpty(this.Description) || this.PostedBy == null || this.PostTypeId <= 0)
+            if (string.IsNullOrEmpty(this.Description) || this.PostedBy <= 0 || this.PostTypeId <= 0)
                 return false;
             else
                 return true;
