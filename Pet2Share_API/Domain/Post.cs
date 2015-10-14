@@ -105,11 +105,11 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public int PostLikeCount { get; set; }
         [DataMember]
-        public int[] PostLikedBy { get; set; }
+        public List<int> PostLikedBy { get; set; }
         [DataMember]
         public int PostCommentCount { get; set; }
         [DataMember]
-        public Comment[] Comments { get; set; }
+        public List<Comment> Comments { get; set; }
         [DataMember]
         public DateTime DateAdded { get; set; }
         [DataMember]
@@ -128,9 +128,9 @@ namespace Pet2Share_API.Domain
             this.Id = 0;
             this.Description = "Please post something!";
             this.PostLikeCount = 0;
-            this.PostLikedBy = new int[] { };
+            this.PostLikedBy = new List<int>();
             this.PostCommentCount = 0;
-            this.Comments = new Comment[] { };
+            this.Comments = new List<Comment>();
             this.DateAdded = DateTime.Now;
             this.DateModified = DateTime.Now;
             this.IsActive = true;
@@ -153,6 +153,7 @@ namespace Pet2Share_API.Domain
             this.PostedBy = post.PostedBy;
             this.IsPostByPet = post.IsPostByPet;
             this.PostLikeCount = post.PostLikeCount;
+            this.PostLikedBy = post.PostLikedBy;
             this.PostCommentCount = post.PostCommentCount;
             this.DateAdded = post.DateAdded;
             this.DateModified = post.DateModified;
@@ -168,6 +169,7 @@ namespace Pet2Share_API.Domain
             this.PostedBy = post.PostedBy;
             this.IsPostByPet = post.IsPostByPet;
             this.PostLikeCount = post.PostLikeCount;
+            this.PostLikedBy = post.PostLikedBy;
             this.PostCommentCount = post.PostCommentCount;
             this.DateAdded = post.DateAdded;
             this.DateModified = post.DateModified;
@@ -183,6 +185,12 @@ namespace Pet2Share_API.Domain
             this.PostedBy = post.PostedBy;
             this.IsPostByPet = post.IsPostByPet;
             this.PostLikeCount = post.PostLikeCount;
+            if (post.PostLikedBy.Contains(','))
+            {
+                string[] arrStr = post.PostLikedBy.Split(',');
+                foreach (string id in arrStr)
+                    this.PostLikedBy.Add(Convert.ToInt32(id));
+            }
             this.PostCommentCount = post.PostCommentCount;
             this.DateAdded = post.DateAdded;
             this.DateModified = post.DateModified;

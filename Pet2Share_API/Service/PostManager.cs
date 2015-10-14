@@ -26,6 +26,56 @@ namespace Pet2Share_API.Service
             post = new Post(postId);
         }
 
+        #region PostSection
+
+        public static Post AddPost(Post post)
+        {
+            return post;
+        }
+
+        public static Post AddPost(int postTypeId, string description, int postedById, bool isPostedByPet)
+        {
+            return null;
+        }
+
+        public static Post UpdatePost(Post post)
+        {
+            return null;
+        }
+
+        public static Post UpdatePost(int postId, string description)
+        {
+            return null;
+        }
+
+        public static BoolExt DeletePost(int postId)
+        {
+            return new BoolExt(false);
+        }
+
+        #endregion
+
+        #region LikeSection
+
+        public static void ToggleLike(int postId, int userId)
+        {
+            Post post = new Post(postId);
+            if (post.PostLikedBy.Contains(userId))
+            {
+                post.PostLikeCount--;
+                post.PostLikedBy.Remove(userId);
+            }
+            else
+            {
+                post.PostLikeCount++;
+                post.PostLikedBy.Add(userId);
+            }
+        }
+
+        #endregion
+
+        #region commentsSection
+
         public static Comment[] GetComments(int postId)
         {
             List<Comment> listComments = new List<Comment>();
@@ -41,19 +91,26 @@ namespace Pet2Share_API.Service
             return listComments.ToArray();
         }
 
-        public static void Like(int postId, int userId)
+        public static Comment AddComment(Comment comment)
         {
-            
+            return null;
         }
 
-        public static BoolExt AddComment()
+        public static Comment AddComment(int postId, int commentedById, bool isCommenterPet, string comment)
+        {
+            return null;
+        }
+
+        public static BoolExt DeleteComment(int commentId)
         {
             return new BoolExt(false);
         }
 
-        public static BoolExt DeleteComment()
+        public static Comment UpdateComment(int commentId, string comment)
         {
-            return new BoolExt(false);
+            return null;
         }
+
+        #endregion
     }
 }
