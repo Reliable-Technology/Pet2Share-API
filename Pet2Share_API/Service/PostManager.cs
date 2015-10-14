@@ -30,27 +30,39 @@ namespace Pet2Share_API.Service
 
         public static Post AddPost(Post post)
         {
+            post.Save();
             return post;
         }
 
         public static Post AddPost(int postTypeId, string description, int postedById, bool isPostedByPet)
         {
-            return null;
+            Post post = new Post(description, postedById, isPostedByPet, postTypeId);
+            post.Save();
+            return post;
         }
 
         public static Post UpdatePost(Post post)
         {
-            return null;
+            post.Save();
+            return post;
         }
 
         public static Post UpdatePost(int postId, string description)
         {
-            return null;
+            Post post = new Post(postId);
+            post.Description = description;
+            post.Save();
+            return post;
         }
 
         public static BoolExt DeletePost(int postId)
         {
-            return new BoolExt(false);
+            bool isDeleted = Post.DeleteById(postId);
+
+            if (isDeleted)
+                return new BoolExt(isDeleted, "");
+            else
+                return new BoolExt(isDeleted, "Delete failed, please contact system admin!");
         }
 
         #endregion
@@ -93,22 +105,33 @@ namespace Pet2Share_API.Service
 
         public static Comment AddComment(Comment comment)
         {
-            return null;
+            comment.Save();
+            return comment;
         }
 
-        public static Comment AddComment(int postId, int commentedById, bool isCommenterPet, string comment)
+        public static Comment AddComment(int postId, int commentedById, bool isCommenterPet, string commentDescription)
         {
-            return null;
+            Comment comment = new Comment(postId, commentedById, isCommenterPet, commentDescription);
+            comment.Save();
+            return comment;
         }
 
         public static BoolExt DeleteComment(int commentId)
         {
-            return new BoolExt(false);
+            bool isCommentDeleted = Comment.DeleteById(commentId);
+
+            if (isCommentDeleted)
+                return new BoolExt(isCommentDeleted, "");
+            else
+                return new BoolExt(isCommentDeleted, "Failed to delete comment");
         }
 
-        public static Comment UpdateComment(int commentId, string comment)
+        public static Comment UpdateComment(int commentId, string commentDescription)
         {
-            return null;
+            Comment comment = Comment.GetById(commentId);
+            comment.CommentDescription = commentDescription;
+            comment.Save();
+            return comment;
         }
 
         #endregion

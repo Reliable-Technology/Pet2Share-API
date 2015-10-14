@@ -87,6 +87,102 @@ namespace Pet2Share_API.Domain
         }
 
         #endregion
+
+        #region methods
+
+        public static Comment GetById(int id)
+        {
+            DAL.PostComment commentObj;
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                commentObj = context.PostComments.Where(c => c.Id == id).FirstOrDefault();
+            }
+            if (commentObj != null)
+            {
+                Comment comment = new Comment(commentObj);
+                return comment;
+            }
+            return new Comment();
+        }
+
+        public static bool Validate(Comment comment)
+        {
+            if (string.IsNullOrEmpty(comment.CommentDescription) || comment.CommentedBy <= 0)
+                return false;
+            else
+                return true;
+        }
+
+        public bool Validate()
+        {
+            if (string.IsNullOrEmpty(this.CommentDescription) || this.CommentedBy <= 0)
+                return false;
+            else
+                return true;
+        }
+
+        public int Save()
+        {
+            //Check if all the objects in User's object is saved
+            int result = -1;
+
+            if (Validate())
+            {
+                using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+                {
+                    result = Convert.ToInt32(context.InsertUpdatePostComment(this.Id, this.PostId, this.CommentedBy, this.IsCommentedByPet, this.CommentDescription).FirstOrDefault());
+                    if (result > 0)
+                        this.Id = result;
+                }
+            }
+            return result;
+        }
+
+        public static int Save(Comment comment)
+        {
+            int result = -1;
+
+            if (Validate(comment))
+            {
+                using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+                {
+                    result = Convert.ToInt32(context.InsertUpdatePostComment(comment.Id, comment.PostId, comment.CommentedBy, comment.IsCommentedByPet, comment.CommentDescription).FirstOrDefault());
+                    if (result > 0)
+                        comment.Id = result;
+                }
+            }
+            return result;
+        }
+
+        public bool Delete()
+        {
+            int result = -1;
+            if (this.Id <= 0) return false;
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.DeletePostCommentById(this.Id);
+                if (result > 0)
+                    this.Id = result;
+            }
+            return result > 0 ? true : false;
+        }
+
+        public static bool DeleteById(int id)
+        {
+            int result = -1;
+            if (id <= 0) return false;
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.DeletePostCommentById(id);
+                if (result > 0)
+                    id = result;
+            }
+            return result > 0 ? true : false;
+        }
+
+        #endregion
     }
 
     public class Post

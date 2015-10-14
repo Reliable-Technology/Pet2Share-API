@@ -411,6 +411,9 @@
         <Function Name="DeletePostById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
+        <Function Name="DeletePostCommentById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteUserById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
@@ -751,6 +754,9 @@
             <Parameter Name="Avatar" Mode="In" Type="String" />
             <Parameter Name="CoverPicture" Mode="In" Type="String" />
             <Parameter Name="AboutMe" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeletePostCommentById">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
@@ -1544,6 +1550,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="DeletePostById" FunctionName="Pet2ShareModel.Store.DeletePostById" />
           <FunctionImportMapping FunctionImportName="InsertUpdatePerson" FunctionName="Pet2ShareModel.Store.InsertUpdatePerson" />
+          <FunctionImportMapping FunctionImportName="DeletePostCommentById" FunctionName="Pet2ShareModel.Store.DeletePostCommentById" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
