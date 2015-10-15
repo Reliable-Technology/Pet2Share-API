@@ -28,12 +28,12 @@ namespace Pet2Share_API.Service
 
         #region PostSection
 
-        public static List<Post> GetPostsByUser(int userId)
+        public static List<Post> GetPostsByUser(int userId, int postCount = 0, int pageNumber = 1)
         {
             return null;
         }
 
-        public static List<Post> GetPostsByPet(int petId)
+        public static List<Post> GetPostsByPet(int petId, int postCount = 0, int pageNumber = 1)
         {
             return null;
         }
@@ -79,19 +79,22 @@ namespace Pet2Share_API.Service
 
         #region LikeSection
 
-        public static void ToggleLike(int postId, int userId)
+        public static int ToggleLike(int postId, int userId)
         {
             Post post = new Post(postId);
             if (post.PostLikedBy.Contains(userId))
             {
                 post.PostLikeCount--;
                 post.PostLikedBy.Remove(userId);
+                post.Save();
             }
             else
             {
                 post.PostLikeCount++;
                 post.PostLikedBy.Add(userId);
+                post.Save();
             }
+            return post.PostLikeCount;
         }
 
         #endregion

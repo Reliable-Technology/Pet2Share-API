@@ -13,6 +13,8 @@ namespace Pet2Share_API.Utility
         [DataMember]
         public bool IsSuccessful { get; set; }
         [DataMember]
+        public int UpdatedId { get; set; }
+        [DataMember]
         public string Message { get; set; }
 
         //TODO: Need to work futher and add more fields probably
@@ -26,6 +28,13 @@ namespace Pet2Share_API.Utility
         {
             this.IsSuccessful = isSuccessful;
             this.Message = message;
+        }
+
+        public BoolExt(bool isSuccessful, string message, int updateId)
+        {
+            this.IsSuccessful = isSuccessful;
+            this.Message = message;
+            this.UpdatedId = updateId;
         }
     }
 }
