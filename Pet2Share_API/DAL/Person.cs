@@ -19,7 +19,6 @@ namespace Pet2Share_API.DAL
             this.Albums = new HashSet<Album>();
             this.PostLikes = new HashSet<PostLike>();
             this.Users = new HashSet<User>();
-            this.Posts = new HashSet<Post>();
         }
     
         public int Id { get; set; }
@@ -45,6 +44,5 @@ namespace Pet2Share_API.DAL
         public virtual User User { get; set; }
         public virtual ICollection<PostLike> PostLikes { get; set; }
         public virtual ICollection<User> Users { get; set; }
-        public virtual ICollection<Post> Posts { get; set; }
     }
 }

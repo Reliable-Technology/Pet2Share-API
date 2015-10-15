@@ -39,8 +39,8 @@ namespace Pet2Share_API.DAL
         public virtual DbSet<SocialMediaSource> SocialMediaSources { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
-        public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<PostComment> PostComments { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
     
         public virtual int ChangeActivePetProfileById(Nullable<int> id, Nullable<bool> active)
         {

@@ -28,9 +28,8 @@
         <AssociationConnector Association="Pet2ShareModel.FK_PetProfile_User" />
         <AssociationConnector Association="Pet2ShareModel.FK_User_SocialMediaSource" />
         <AssociationConnector Association="Pet2ShareModel.FK_User_UserType" />
-        <EntityTypeShape EntityType="Pet2ShareModel.Post" Width="1.5" PointX="10.5" PointY="4.375" />
         <EntityTypeShape EntityType="Pet2ShareModel.PostComment" Width="1.5" PointX="10.375" PointY="0.75" />
-        <AssociationConnector Association="Pet2ShareModel.FK_Post_Person" />
+        <EntityTypeShape EntityType="Pet2ShareModel.Post" Width="1.5" PointX="10.5" PointY="4.75" />
         <AssociationConnector Association="Pet2ShareModel.FK_Post_Uploads_Post" />
         <AssociationConnector Association="Pet2ShareModel.FK_Post_PostType" />
         <AssociationConnector Association="Pet2ShareModel.FK_PostLikes_Post" />

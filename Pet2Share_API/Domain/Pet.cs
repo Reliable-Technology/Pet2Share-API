@@ -19,11 +19,9 @@ namespace Pet2Share_API.Domain
     }
 
     [DataContract]
-    public class Pet
+    public class Pet : DomainBase
     {
         #region members
-        [DataMember]
-        public int Id { get; set; }
         [DataMember]
         public string Name { get; set; }
         [DataMember]
@@ -42,14 +40,6 @@ namespace Pet2Share_API.Domain
         public string About { get; set; }
         [DataMember]
         public string FavFood { get; set; }
-        [DataMember]
-        public DateTime DateAdded { get; set; }
-        [DataMember]
-        public DateTime DateModified { get; set; }
-        [DataMember]
-        public bool IsActive { get; set; }
-        [DataMember]
-        public bool IsDeleted { get; set; }
 
         #endregion
 

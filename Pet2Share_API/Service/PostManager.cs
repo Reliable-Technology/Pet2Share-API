@@ -88,7 +88,7 @@ namespace Pet2Share_API.Service
 
         #region commentsSection
 
-        public static Comment[] GetComments(int postId)
+        public static List<Comment> GetComments(int postId)
         {
             List<Comment> listComments = new List<Comment>();
             using(DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
@@ -100,7 +100,7 @@ namespace Pet2Share_API.Service
                     listComments.Add(new Comment(dalComment));
                 }
             }
-            return listComments.ToArray();
+            return listComments;
         }
 
         public static Comment AddComment(Comment comment)

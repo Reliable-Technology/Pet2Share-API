@@ -7,21 +7,12 @@ using System.Threading.Tasks;
 
 namespace Pet2Share_API.Domain
 {
-    public class PostType
+    [DataContract]
+    public class PostType : DomainBase
     {
         #region members
         [DataMember]
-        public int Id { get; set; }
-        [DataMember]
         public string Name { get; set; }
-        [DataMember]
-        public DateTime DateAdded { get; set; }
-        [DataMember]
-        public DateTime DateModified { get; set; }
-        [DataMember]
-        public bool IsActive { get; set; }
-        [DataMember]
-        public bool IsDeleted { get; set; }
 
         #endregion
 
@@ -35,6 +26,7 @@ namespace Pet2Share_API.Domain
         }
     }
 
+    [DataContract]
     public class Comment
     {
         #region members
@@ -121,7 +113,7 @@ namespace Pet2Share_API.Domain
                 return true;
         }
 
-        public int Save()
+        internal int Save()
         {
             //Check if all the objects in User's object is saved
             int result = -1;
@@ -138,7 +130,7 @@ namespace Pet2Share_API.Domain
             return result;
         }
 
-        public static int Save(Comment comment)
+        internal static int Save(Comment comment)
         {
             int result = -1;
 
@@ -185,6 +177,7 @@ namespace Pet2Share_API.Domain
         #endregion
     }
 
+    [DataContract]
     public class Post
     {
         #region members
@@ -223,6 +216,7 @@ namespace Pet2Share_API.Domain
         {
             this.Id = 0;
             this.Description = "Please post something!";
+            this.PostTypeId = 1;
             this.PostLikeCount = 0;
             this.PostLikedBy = new List<int>();
             this.PostCommentCount = 0;
@@ -331,13 +325,13 @@ namespace Pet2Share_API.Domain
 
         public bool Validate()
         {
-            if (string.IsNullOrEmpty(this.Description) || this.PostedBy <= 0 || this.PostTypeId <= 0)
+            if (string.IsNullOrEmpty(this.Description) || this.PostedBy <= 0)
                 return false;
             else
                 return true;
         }
 
-        public int Save()
+        internal int Save()
         {
             //Check if all the objects in User's object is saved
             int result = -1;
@@ -354,7 +348,7 @@ namespace Pet2Share_API.Domain
             return result;
         }
 
-        public static int Save(Post post)
+        internal static int Save(Post post)
         {
             int result = -1;
 

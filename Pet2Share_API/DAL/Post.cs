@@ -33,7 +33,6 @@ namespace Pet2Share_API.DAL
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
     
-        public virtual Person Person { get; set; }
         public virtual ICollection<Post_Upload> Post_Uploads { get; set; }
         public virtual PostType PostType { get; set; }
         public virtual ICollection<PostLike> PostLikes { get; set; }
