@@ -32,9 +32,20 @@ namespace Pet2Share_API.Domain
     }
 
     [DataContract]
-    public class User : DomainBase
+    public class User
     {
         #region members
+
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public DateTime DateAdded { get; set; }
+        [DataMember]
+        public DateTime DateModified { get; set; }
+        [DataMember]
+        public bool IsActive { get; set; }
+        [DataMember]
+        public bool IsDeleted { get; set; }
 
         [DataMember]
         public string Username { get; set; }
