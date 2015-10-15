@@ -138,7 +138,7 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        public static User GetById(int id)
+        internal static User GetById(int id)
         {
             DAL.User userObj;
             List<Pet> petsList = new List<Pet>();
@@ -164,7 +164,7 @@ namespace Pet2Share_API.Domain
             return new User();
         }
 
-        public static bool Validate(User user)
+        internal static bool Validate(User user)
         {
             if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Email))
                 return false;
@@ -172,7 +172,7 @@ namespace Pet2Share_API.Domain
                 return true;
         }
 
-        public bool Validate()
+        internal bool Validate()
         {
             if (string.IsNullOrEmpty(this.Username) || string.IsNullOrEmpty(this.Email))
                 return false;
@@ -180,7 +180,7 @@ namespace Pet2Share_API.Domain
                 return true;
         }
 
-        public int Save()
+        internal int Save()
         {
             //Check if all the objects in User's object is saved
             int result = -1;
@@ -199,7 +199,7 @@ namespace Pet2Share_API.Domain
             return result;
         }
 
-        public static int Save(User u)
+        internal static int Save(User u)
         {
             int result = -1;
             if (Validate(u))
@@ -216,7 +216,7 @@ namespace Pet2Share_API.Domain
             return result;
         }
 
-        public bool Delete()
+        internal bool Delete()
         {
             int result = -1;
             if (this.Id <= 0) return false;
@@ -230,7 +230,7 @@ namespace Pet2Share_API.Domain
             return result > 0 ? true : false ;
         }
 
-        public static bool DeleteById(int id)
+        internal static bool DeleteById(int id)
         {
             int result = -1;
             if (id <= 0) return false;
@@ -244,7 +244,7 @@ namespace Pet2Share_API.Domain
             return result > 0 ? true : false;
         }
 
-        public Pet[] GetPetList(bool? isActive = null)
+        internal Pet[] GetPetList(bool? isActive = null)
         {
             List<Pet> petsList = new List<Pet>();
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())

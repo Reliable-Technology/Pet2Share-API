@@ -134,7 +134,7 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        public static Pet GetById(int id)
+        internal static Pet GetById(int id)
         {
             DAL.PetProfile petObj;
             using(DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
@@ -149,7 +149,7 @@ namespace Pet2Share_API.Domain
             return new Pet();
         }
 
-        public static bool Validate(Pet pet)
+        internal static bool Validate(Pet pet)
         {
             if (string.IsNullOrEmpty(pet.Name) || pet.UserId == null || pet.UserId <= 0)
                 return false;
@@ -157,7 +157,7 @@ namespace Pet2Share_API.Domain
                 return true;
         }
 
-        public bool Validate()
+        internal bool Validate()
         {
             if (string.IsNullOrEmpty(this.Name) || this.UserId == null || this.UserId <= 0)
                 return false;
@@ -165,7 +165,7 @@ namespace Pet2Share_API.Domain
                 return true;
         }
 
-        public int Save()
+        internal int Save()
         {
             //Check if all the objects in User's object is saved
             int result = -1;
@@ -182,7 +182,7 @@ namespace Pet2Share_API.Domain
             return result;
         }
 
-        public static int Save(Pet pet)
+        internal static int Save(Pet pet)
         {
             int result = -1;
 
@@ -198,7 +198,7 @@ namespace Pet2Share_API.Domain
             return result;
         }
 
-        public bool Delete()
+        internal bool Delete()
         {
             int result = -1;
             if (this.Id <= 0) return false;
@@ -212,7 +212,7 @@ namespace Pet2Share_API.Domain
             return result > 0 ? true : false ;
         }
 
-        public static bool DeleteById(int id)
+        internal static bool DeleteById(int id)
         {
             int result = -1;
             if (id <= 0) return false;

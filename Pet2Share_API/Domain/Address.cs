@@ -78,7 +78,7 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        public static Address GetById(int id)
+        internal static Address GetById(int id)
         {
             DAL.Address addressObj;
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
@@ -93,7 +93,7 @@ namespace Pet2Share_API.Domain
             return new Address();
         }
 
-        public static bool Validate(Address addr)
+        internal static bool Validate(Address addr)
         {
             if (string.IsNullOrEmpty(addr.City) && string.IsNullOrEmpty(addr.State) && string.IsNullOrEmpty(addr.ZipCode))
                 return false;
@@ -101,7 +101,7 @@ namespace Pet2Share_API.Domain
                 return true;
         }
 
-        public bool Validate()
+        internal bool Validate()
         {
             if (string.IsNullOrEmpty(City) && string.IsNullOrEmpty(State) && string.IsNullOrEmpty(ZipCode))
                 return false;
@@ -109,7 +109,7 @@ namespace Pet2Share_API.Domain
                 return true;
         }
 
-        public int Save()
+        internal int Save()
         {
             int result = -1;
 
@@ -125,7 +125,7 @@ namespace Pet2Share_API.Domain
             return result;
         }
 
-        public static int Save(Address addr)
+        internal static int Save(Address addr)
         {
             int result = -1;
 
@@ -141,7 +141,7 @@ namespace Pet2Share_API.Domain
             return result;
         }
 
-        public bool Delete()
+        internal bool Delete()
         {
             int result = -1;
             if (this.Id <= 0) return false;
@@ -155,7 +155,7 @@ namespace Pet2Share_API.Domain
             return result > 0 ? true : false;
         }
 
-        public static bool DeleteById(int id)
+        internal static bool DeleteById(int id)
         {
             int result = -1;
             if (id <= 0) return false;

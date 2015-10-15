@@ -105,7 +105,7 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        public static Person GetById(int id)
+        internal static Person GetById(int id)
         {
             Person person;
             DAL.Person personObject;
@@ -120,7 +120,7 @@ namespace Pet2Share_API.Domain
             return person;
         }
 
-        public static bool Validate(Person person)
+        internal static bool Validate(Person person)
         {
             if (string.IsNullOrEmpty(person.LastName) || string.IsNullOrEmpty(person.Email))
                 return false;
@@ -128,7 +128,7 @@ namespace Pet2Share_API.Domain
                 return true;
         }
 
-        public bool Validate()
+        internal bool Validate()
         {
             if (string.IsNullOrEmpty(this.LastName) || string.IsNullOrEmpty(this.Email))
                 return false;
@@ -136,7 +136,7 @@ namespace Pet2Share_API.Domain
                 return true;
         }
 
-        public int Save()
+        internal int Save()
         {
             int result = -1;
             //TODO: Validate the fields on save
@@ -154,7 +154,7 @@ namespace Pet2Share_API.Domain
             return result;
         }
 
-        public bool Delete()
+        internal bool Delete()
         {
             int result = -1;
             if (this.Id <= 0) return false;
@@ -168,7 +168,7 @@ namespace Pet2Share_API.Domain
             return result > 0 ? true : false;
         }
 
-        public static bool DeleteById(int id)
+        internal static bool DeleteById(int id)
         {
             int result = -1;
             if (id <= 0) return false;
