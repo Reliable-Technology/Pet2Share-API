@@ -27,11 +27,9 @@ namespace Pet2Share_API.Domain
     }
 
     [DataContract]
-    public class Comment
+    public class Comment : DomainBase
     {
         #region members
-        [DataMember]
-        public int Id { get; set; }
         [DataMember]
         public int PostId { get; set; }
         [DataMember]
@@ -40,14 +38,6 @@ namespace Pet2Share_API.Domain
         public bool IsCommentedByPet { get; set; }
         [DataMember]
         public string CommentDescription { get; set; }        
-        [DataMember]
-        public DateTime DateAdded { get; set; }
-        [DataMember]
-        public DateTime DateModified { get; set; }
-        [DataMember]
-        public bool IsActive { get; set; }
-        [DataMember]
-        public bool IsDeleted { get; set; }
         #endregion
 
         #region Constructors
@@ -178,11 +168,9 @@ namespace Pet2Share_API.Domain
     }
 
     [DataContract]
-    public class Post
+    public class Post : DomainBase
     {
         #region members
-        [DataMember]
-        public int Id { get; set; }
         [DataMember]
         public int PostTypeId { get; set; }
         [DataMember]
@@ -199,14 +187,6 @@ namespace Pet2Share_API.Domain
         public int PostCommentCount { get; set; }
         [DataMember]
         public List<Comment> Comments { get; set; }
-        [DataMember]
-        public DateTime DateAdded { get; set; }
-        [DataMember]
-        public DateTime DateModified { get; set; }
-        [DataMember]
-        public bool IsActive { get; set; }
-        [DataMember]
-        public bool IsDeleted { get; set; }
 
         #endregion
 

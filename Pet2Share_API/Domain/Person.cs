@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 namespace Pet2Share_API.Domain
 {
     [DataContract]
-    public class Person
+    public class Person : DomainBase
     {
         #region members
-        [DataMember]
-        public int Id { get; set; }
         [DataMember]
         public string FirstName { get; set; }
         [DataMember]
@@ -35,12 +33,6 @@ namespace Pet2Share_API.Domain
         public string CoverPicture { get; set; }
         [DataMember]
         public string AboutMe { get; set; }
-        [DataMember]
-        public DateTime DateAdded { get; set; }
-        [DataMember]
-        public DateTime DateModified { get; set; }
-        [DataMember]
-        public bool IsActive { get; set; }
 
         #endregion
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pet2Share_API.Domain
 {
-    class BreedType
+    class BreedType : DomainBase
     {
     }
 }

@@ -14,8 +14,6 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public int Id { get; set; }
         [DataMember]
-        public string Name { get; set; }
-        [DataMember]
         public DateTime DateAdded { get; set; }
         [DataMember]
         public DateTime DateModified { get; set; }

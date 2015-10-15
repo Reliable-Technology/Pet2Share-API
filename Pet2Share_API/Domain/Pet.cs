@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 namespace Pet2Share_API.Domain
 {
     [DataContract]
-    public class PetType
+    public class PetType : DomainBase
     {
-        [DataMember]
-        public int Id { get; set; }
         [DataMember]
         public string Name { get; set; }
         [DataMember]
