@@ -158,7 +158,7 @@ namespace Pet2Share_Service
     {
         [DataMember]
         public BoolExt[] Results { get; set; }
-
+         
         //TODO: Need to add more fields later
     }
 
@@ -364,7 +364,7 @@ namespace Pet2Share_Service
     public class GetCommentResponse : ResponseObject
     {
         [DataMember]
-        public Comment[] Comments { get; set; }
+        public Comment[] Results { get; set; }
     }
 
 

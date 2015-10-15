@@ -232,22 +232,9 @@ namespace Pet2Share_Service
                 string FileExtension = Path.GetExtension(FileName);
 
                 Pet2Share_API.Utility.ImageType FileType;
-
-                switch (FileExtension.ToLower())
+                if (!Enum.TryParse(FileExtension.TrimStart('.'), out FileType))
                 {
-                    case ".jpg":
-                    case ".jpeg":
-                        FileType = ImageType.jpg;
-                        break;
-
-                    case ".png":
-                        FileType = ImageType.png;
-                        break;
-
-                    default:
-                        return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Only Jpg and Png file can be uploaded") }, ErrorMsg = null };
-                        break;
-
+                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Only Jpg and Png file can be uploaded") }, ErrorMsg = null };
                 }
 
                 int IntUserId = 0;
@@ -274,16 +261,7 @@ namespace Pet2Share_Service
                     Result = UserProfileManager.UpdateProfilePicture(ReadFully(PicObj), FileName, FileType, IntUserId);
                 }
 
-
-
-                if (Result.IsSuccessful)
-                {
-                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "") }, ErrorMsg = null };
-                }
-                else
-                {
-                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "") }, ErrorMsg = null };
-                }
+                return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { Result }, ErrorMsg = null };
 
 
             }
@@ -311,21 +289,9 @@ namespace Pet2Share_Service
 
                 Pet2Share_API.Utility.ImageType FileType;
 
-                switch (FileExtension.ToLower())
+                if (!Enum.TryParse(FileExtension.TrimStart('.'), out FileType))
                 {
-                    case ".jpg":
-                    case ".jpeg":
-                        FileType = ImageType.jpg;
-                        break;
-
-                    case ".png":
-                        FileType = ImageType.png;
-                        break;
-
-                    default:
-                        return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Only Jpg and Png file can be uploaded") }, ErrorMsg = null };
-                        break;
-
+                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Only Jpg and Png file can be uploaded") }, ErrorMsg = null };
                 }
 
                 bool BoolIsCover = false;
@@ -351,14 +317,9 @@ namespace Pet2Share_Service
                 {
                     Result = PetProfileManager.UpdateProfilePicture(ReadFully(PicObj), FileName, FileType, IntPetId);
                 }
-                if (Result.IsSuccessful)
-                {
-                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "") }, ErrorMsg = null };
-                }
-                else
-                {
-                    return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "") }, ErrorMsg = null };
-                }
+
+                return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { Result }, ErrorMsg = null };
+
 
 
             }
@@ -378,7 +339,7 @@ namespace Pet2Share_Service
                 var Result = PostManager.AddPost(PostReq.PostTypeId, PostReq.Description, PostReq.PostedBy, PostReq.IsPostByPet);
                 if (Result.Id > 0)
                 {
-                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true) }), ErrorMsg = null };
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "", Result.Id) }), ErrorMsg = null };
                 }
                 else
                 {
@@ -402,7 +363,7 @@ namespace Pet2Share_Service
                 var Result = PostManager.UpdatePost(PostReq.PostId, PostReq.PostDescription);
                 if (Result.Id > 0)
                 {
-                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true) }), ErrorMsg = null };
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "", Result.Id) }), ErrorMsg = null };
                 }
                 else
                 {
@@ -474,7 +435,7 @@ namespace Pet2Share_Service
                 var Result = PostManager.AddComment(PostReq.PostId, PostReq.CommentedById, PostReq.IsCommentedByPet, PostReq.CommentDescription);
                 if (Result.Id > 0)
                 {
-                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true) }), ErrorMsg = null };
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "", Result.Id) }), ErrorMsg = null };
                 }
                 else
                 {
@@ -498,7 +459,7 @@ namespace Pet2Share_Service
                 var Result = PostManager.UpdateComment(PostReq.CommentId, PostReq.CommentDescription);
                 if (Result.Id > 0)
                 {
-                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true) }), ErrorMsg = null };
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "", Result.Id) }), ErrorMsg = null };
                 }
                 else
                 {
@@ -535,6 +496,33 @@ namespace Pet2Share_Service
             }
             return PostResultResp;
         }
+
+        public GetCommentResponse GetComments(GetCommentRequest PostReq)
+        {
+            GetCommentResponse CommentResultResp;
+
+            try
+            {
+
+                var Result = PostManager.GetComments(PostReq.PostId);
+                //if (Result.count)
+                {
+                    CommentResultResp = new GetCommentResponse { Total = Result.Count(), Results = Result.ToArray(), ErrorMsg = null };
+                }
+                //else
+                //{
+                //    CommentResultResp = new GetCommentResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while getting your comment. Please try again!!") };
+                //}
+            }
+            catch (Exception ex)
+            {
+                CommentResultResp = new GetCommentResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return CommentResultResp;
+        }
+
+
+
 
 
         public static byte[] ReadFully(Stream input)

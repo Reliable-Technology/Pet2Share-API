@@ -83,11 +83,9 @@
     <Compile Include="DAL\GetPetProfileById_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
-
     <Compile Include="DAL\GetPetProfileByUserId_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
-
     <Compile Include="DAL\Person.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
@@ -123,6 +121,7 @@
     </Compile>
     <Compile Include="Domain\Address.cs" />
     <Compile Include="Domain\BreedType.cs" />
+    <Compile Include="Domain\DomainBase.cs" />
     <Compile Include="Domain\Person.cs" />
     <Compile Include="Domain\Pet.cs" />
     <Compile Include="Domain\Post.cs" />
@@ -134,6 +133,7 @@
     <Compile Include="Service\PostManager.cs" />
     <Compile Include="Service\UserProfileManager.cs" />
     <Compile Include="Utility\BoolExt.cs" />
+    <Compile Include="Utility\ConfigMember.cs" />
     <Compile Include="Utility\ErrorHandler.cs" />
     <Compile Include="Utility\ImageProcessor.cs" />
     <Compile Include="Utility\Logger.cs" />

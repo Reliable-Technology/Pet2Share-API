@@ -72,6 +72,10 @@ namespace Pet2Share_Service
         [WebInvoke(UriTemplate = "DeleteComment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         GeneralUpdateResponse DeleteComment(DeleteCommentRequest PostReq);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetComments", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GetCommentResponse GetComments(GetCommentRequest PostReq);
+
 
     }
 
