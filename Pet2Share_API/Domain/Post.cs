@@ -72,7 +72,7 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        public static Comment GetById(int id)
+        internal static Comment GetById(int id)
         {
             DAL.PostComment commentObj;
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
@@ -87,7 +87,7 @@ namespace Pet2Share_API.Domain
             return new Comment();
         }
 
-        public static bool Validate(Comment comment)
+        internal static bool Validate(Comment comment)
         {
             if (string.IsNullOrEmpty(comment.CommentDescription) || comment.CommentedBy <= 0)
                 return false;
@@ -95,7 +95,7 @@ namespace Pet2Share_API.Domain
                 return true;
         }
 
-        public bool Validate()
+        internal bool Validate()
         {
             if (string.IsNullOrEmpty(this.CommentDescription) || this.CommentedBy <= 0)
                 return false;
@@ -136,7 +136,7 @@ namespace Pet2Share_API.Domain
             return result;
         }
 
-        public bool Delete()
+        internal bool Delete()
         {
             int result = -1;
             if (this.Id <= 0) return false;
@@ -150,7 +150,7 @@ namespace Pet2Share_API.Domain
             return result > 0 ? true : false;
         }
 
-        public static bool DeleteById(int id)
+        internal static bool DeleteById(int id)
         {
             int result = -1;
             if (id <= 0) return false;
@@ -284,7 +284,7 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        public static Post GetById(int id)
+        internal static Post GetById(int id)
         {
             DAL.Post postObj;
             using(DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
@@ -299,7 +299,7 @@ namespace Pet2Share_API.Domain
             return new Post();
         }
 
-        public static bool Validate(Post post)
+        internal static bool Validate(Post post)
         {
             if (string.IsNullOrEmpty(post.Description) || post.PostedBy <= 0 || post.PostTypeId <= 0)
                 return false;
@@ -307,7 +307,7 @@ namespace Pet2Share_API.Domain
                 return true;
         }
 
-        public bool Validate()
+        internal bool Validate()
         {
             if (string.IsNullOrEmpty(this.Description) || this.PostedBy <= 0)
                 return false;
@@ -348,7 +348,7 @@ namespace Pet2Share_API.Domain
             return result;
         }
 
-        public bool Delete()
+        internal bool Delete()
         {
             int result = -1;
             if (this.Id <= 0) return false;
@@ -362,7 +362,7 @@ namespace Pet2Share_API.Domain
             return result > 0 ? true : false ;
         }
 
-        public static bool DeleteById(int id)
+        internal static bool DeleteById(int id)
         {
             int result = -1;
             if (id <= 0) return false;
