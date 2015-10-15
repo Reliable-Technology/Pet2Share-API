@@ -255,11 +255,15 @@ namespace Pet2Share_API.Domain
             this.PostedBy = post.PostedBy;
             this.IsPostByPet = post.IsPostByPet;
             this.PostLikeCount = post.PostLikeCount;
-            if (post.PostLikedBy.Contains(','))
+            if (!string.IsNullOrEmpty(post.PostLikedBy) && post.PostLikedBy.Contains(','))
             {
                 string[] arrStr = post.PostLikedBy.Split(',');
                 foreach (string id in arrStr)
-                    this.PostLikedBy.Add(Convert.ToInt32(id));
+                {
+                    int i = 0;
+                    if (Int32.TryParse(id, out i))
+                        this.PostLikedBy.Add(i);
+                }
             }
             this.PostCommentCount = post.PostCommentCount;
             this.DateAdded = post.DateAdded;

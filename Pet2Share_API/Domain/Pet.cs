@@ -18,12 +18,23 @@ namespace Pet2Share_API.Domain
     }
 
     [DataContract]
-    public class Pet : DomainBase
+    public class Pet
     {
         #region members
 
         string _profilePicture;
         string _coverPicture;
+
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public DateTime DateAdded { get; set; }
+        [DataMember]
+        public DateTime DateModified { get; set; }
+        [DataMember]
+        public bool IsActive { get; set; }
+        [DataMember]
+        public bool IsDeleted { get; set; }
 
         [DataMember]
         public string Name { get; set; }
@@ -38,11 +49,11 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public string ProfilePicture { get; set; }
         [DataMember]
-        public string ProfilePictureURL { get { if (!string.IsNullOrEmpty(ProfilePicture)) return ConfigMember.ImageURL + ProfilePicture; else if (ProfilePicture.Contains("http")) return ProfilePicture; else return ""; } set { } }
+        public string ProfilePictureURL { get { if (string.IsNullOrEmpty(ProfilePicture)) return ""; else if (ProfilePicture.Contains("http")) return ProfilePicture; else return ConfigMember.ImageURL + ProfilePicture; } set { } }
         [DataMember]
         public string CoverPicture { get; set; }
         [DataMember]
-        public string CoverPictureURL { get { if (!string.IsNullOrEmpty(CoverPicture)) return ConfigMember.ImageURL + CoverPicture; else if (CoverPicture.Contains("http")) return CoverPicture; else return ""; } set { } }
+        public string CoverPictureURL { get { if (string.IsNullOrEmpty(CoverPicture)) return ""; else if (CoverPicture.Contains("http")) return CoverPicture; else return ConfigMember.ImageURL + CoverPicture; } set { } }
         [DataMember]
         public string About { get; set; }
         [DataMember]

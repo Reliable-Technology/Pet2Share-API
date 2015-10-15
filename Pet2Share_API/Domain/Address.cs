@@ -12,6 +12,7 @@ namespace Pet2Share_API.Domain
     public class Address : DomainBase
     {
         #region members
+
         [DataMember]
         public string AddressLine1 { get; set; }
         [DataMember]

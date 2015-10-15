@@ -35,6 +35,7 @@ namespace Pet2Share_API.Domain
     public class User : DomainBase
     {
         #region members
+
         [DataMember]
         public string Username { get; set; }
         [DataMember]
