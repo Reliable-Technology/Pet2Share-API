@@ -38,14 +38,19 @@ namespace Pet2Share_API.Service
             
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                DAL.Post[] dalPosts = context.Posts.Where(p => p.PostedBy == userId && p.IsPostByPet == false).ToArray<DAL.Post>();
+                DAL.Post[] dalPosts = context.Posts.Where(p => p.PostedBy == userId && p.IsPostByPet == false).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
 
                 foreach (DAL.Post dalPost in dalPosts)
                 {
-                    if (forCounter >= postStartCount && forCounter < postEndCount)
-                        postList.Add(new Post(dalPost));
+                    if (postEndCount != 0)
+                    {
+                        if (forCounter >= postStartCount && forCounter < postEndCount)
+                            postList.Add(new Post(dalPost));
+                        else
+                            break;
+                    }
                     else
-                        break;
+                        postList.Add(new Post(dalPost));
                     forCounter++;
                 }
             }
@@ -63,14 +68,19 @@ namespace Pet2Share_API.Service
 
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                DAL.Post[] dalPosts = context.Posts.Where(p => p.PostedBy == petId && p.IsPostByPet == true).ToArray<DAL.Post>();
+                DAL.Post[] dalPosts = context.Posts.Where(p => p.PostedBy == petId && p.IsPostByPet == true).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
 
                 foreach (DAL.Post dalPost in dalPosts)
                 {
-                    if (forCounter >= postStartCount && forCounter < postEndCount)
-                        postList.Add(new Post(dalPost));
+                    if (postEndCount != 0)
+                    {
+                        if (forCounter >= postStartCount && forCounter < postEndCount)
+                            postList.Add(new Post(dalPost));
+                        else
+                            break;
+                    }
                     else
-                        break;
+                        postList.Add(new Post(dalPost));
                     forCounter++;
                 }
             }

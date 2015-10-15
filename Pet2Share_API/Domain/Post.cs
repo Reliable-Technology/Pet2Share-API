@@ -72,7 +72,7 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        internal static Comment GetById(int id)
+        public static Comment GetById(int id)
         {
             DAL.PostComment commentObj;
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
@@ -284,7 +284,7 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        internal static Post GetById(int id)
+        public static Post GetById(int id)
         {
             DAL.Post postObj;
             using(DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())

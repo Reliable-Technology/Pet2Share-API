@@ -105,7 +105,7 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        internal static Person GetById(int id)
+        public static Person GetById(int id)
         {
             Person person;
             DAL.Person personObject;

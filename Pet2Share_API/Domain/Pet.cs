@@ -134,7 +134,7 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        internal static Pet GetById(int id)
+        public static Pet GetById(int id)
         {
             DAL.PetProfile petObj;
             using(DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
