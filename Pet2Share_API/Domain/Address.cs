@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 namespace Pet2Share_API.Domain
 {
     [DataContract]
-    public class Address
+    public class Address : DomainBase
     {
         #region members
-        [DataMember]
-        public int Id { get; set; }
         [DataMember]
         public string AddressLine1 { get; set; }
         [DataMember]
