@@ -120,7 +120,7 @@ namespace Pet2Share_API.Service
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
-            this.pet.ProfilePicture = relativePath + "/" + filename;
+            this.pet.ProfilePicture = relativePath + "/" + fullFileName;
             this.pet.Save();
 
             BoolExt result = new BoolExt(true, ConfigMember.ImageURL + pet.ProfilePicture);
@@ -141,7 +141,7 @@ namespace Pet2Share_API.Service
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
-            pet.ProfilePicture = relativePath + "/" + filename;
+            pet.ProfilePicture = relativePath + "/" + fullFileName;
             pet.Save();
 
             BoolExt result = new BoolExt(true, ConfigMember.ImageURL + pet.ProfilePicture);
@@ -160,7 +160,7 @@ namespace Pet2Share_API.Service
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
-            this.pet.CoverPicture = relativePath + "/" + filename;
+            this.pet.CoverPicture = relativePath + "/" + fullFileName;
             this.pet.Save();
 
             BoolExt result = new BoolExt(true, ConfigMember.ImageURL + pet.ProfilePicture);
@@ -181,7 +181,7 @@ namespace Pet2Share_API.Service
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
-            pet.CoverPicture = relativePath + "/" + filename;
+            pet.CoverPicture = relativePath + "/" + fullFileName;
             pet.Save();
 
             BoolExt result = new BoolExt(true, ConfigMember.ImageURL + pet.ProfilePicture);
