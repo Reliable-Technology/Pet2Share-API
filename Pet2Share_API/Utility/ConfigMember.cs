@@ -10,8 +10,8 @@ namespace Pet2Share_API.Utility
 {
     public static class ConfigMember
     {
-        internal static string baseURL = ConfigurationSettings.AppSettings["BaseURL"];
-        internal static string ImageURL = ConfigurationSettings.AppSettings["ImageURL"];
-        internal static string ImageFolder = ConfigurationSettings.AppSettings["ImagesFolder"];
+        internal static string baseURL = ConfigurationManager.AppSettings["BaseURL"];
+        internal static string ImageURL = ConfigurationManager.AppSettings["ImageURL"];
+        internal static string ImageFolder = ConfigurationManager.AppSettings["ImagesFolder"];
     }
 }
