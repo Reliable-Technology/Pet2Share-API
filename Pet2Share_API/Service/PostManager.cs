@@ -30,12 +30,51 @@ namespace Pet2Share_API.Service
 
         public static List<Post> GetPostsByUser(int userId, int postCount = 0, int pageNumber = 1)
         {
-            return null;
+            List<Post> postList = new List<Post>();
+
+            int postStartCount = postCount * (pageNumber - 1);
+            int postEndCount = postCount * (pageNumber);
+            int forCounter = 0;
+            
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                DAL.Post[] dalPosts = context.Posts.Where(p => p.PostedBy == userId && p.IsPostByPet == false).ToArray<DAL.Post>();
+
+                foreach (DAL.Post dalPost in dalPosts)
+                {
+                    if (forCounter >= postStartCount && forCounter < postEndCount)
+                        postList.Add(new Post(dalPost));
+                    else
+                        break;
+                    forCounter++;
+                }
+            }
+            return postList;
+            
         }
 
         public static List<Post> GetPostsByPet(int petId, int postCount = 0, int pageNumber = 1)
         {
-            return null;
+            List<Post> postList = new List<Post>();
+
+            int postStartCount = postCount * (pageNumber - 1);
+            int postEndCount = postCount * (pageNumber);
+            int forCounter = 0;
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                DAL.Post[] dalPosts = context.Posts.Where(p => p.PostedBy == petId && p.IsPostByPet == true).ToArray<DAL.Post>();
+
+                foreach (DAL.Post dalPost in dalPosts)
+                {
+                    if (forCounter >= postStartCount && forCounter < postEndCount)
+                        postList.Add(new Post(dalPost));
+                    else
+                        break;
+                    forCounter++;
+                }
+            }
+            return postList;
         }
 
         public static Post AddPost(Post post)
