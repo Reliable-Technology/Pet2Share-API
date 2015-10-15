@@ -31,11 +31,11 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public string AvatarURL { get; set; }
         [DataMember]
-        public string ProfilePictureURL { get { if (!string.IsNullOrEmpty(AvatarURL)) return ConfigMember.ImageURL + AvatarURL; else return ""; } set { } }
+        public string ProfilePictureURL { get { if (!string.IsNullOrEmpty(AvatarURL)) return ConfigMember.ImageURL + AvatarURL; else if (AvatarURL.Contains("http")) return AvatarURL; else return ""; } set { } }
         [DataMember]
         public string CoverPicture { get; set; }
         [DataMember]
-        public string CoverPictureURL { get { if (!string.IsNullOrEmpty(CoverPicture)) return ConfigMember.ImageURL + CoverPicture; else return ""; } set { } }
+        public string CoverPictureURL { get { if (!string.IsNullOrEmpty(CoverPicture)) return ConfigMember.ImageURL + CoverPicture; else if (CoverPicture.Contains("http")) return CoverPicture; else return ""; } set { } }
         [DataMember]
         public string AboutMe { get; set; }
 
