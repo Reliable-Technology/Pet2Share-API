@@ -7,21 +7,12 @@ using System.Threading.Tasks;
 
 namespace Pet2Share_API.Domain
 {
-    public class PostType
+    [DataContract]
+    public class PostType : DomainBase
     {
         #region members
         [DataMember]
-        public int Id { get; set; }
-        [DataMember]
         public string Name { get; set; }
-        [DataMember]
-        public DateTime DateAdded { get; set; }
-        [DataMember]
-        public DateTime DateModified { get; set; }
-        [DataMember]
-        public bool IsActive { get; set; }
-        [DataMember]
-        public bool IsDeleted { get; set; }
 
         #endregion
 
@@ -35,6 +26,7 @@ namespace Pet2Share_API.Domain
         }
     }
 
+    [DataContract]
     public class Comment
     {
         #region members
@@ -185,6 +177,7 @@ namespace Pet2Share_API.Domain
         #endregion
     }
 
+    [DataContract]
     public class Post
     {
         #region members
