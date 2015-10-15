@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Pet2Share_API.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-
-using Pet2Share_API.Utility;
 
 namespace Pet2Share_API.Domain
 {
@@ -13,10 +12,6 @@ namespace Pet2Share_API.Domain
     public class Person : DomainBase
     {
         #region members
-
-        string _avatarURL;
-        string _coverPicture;
-
         [DataMember]
         public string FirstName { get; set; }
         [DataMember]
@@ -34,17 +29,13 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public string SecondaryPhone { get; set; }
         [DataMember]
-        public string AvatarURL
-        {
-            get { return ConfigMember.ImageURL + _avatarURL; }
-            set { _avatarURL = value; }
-        }
+        public string AvatarURL { get; set; }
         [DataMember]
-        public string CoverPicture
-        {
-            get { return ConfigMember.ImageURL + _coverPicture; }
-            set { _coverPicture = value; }
-        }
+        public string ProfilePictureURL { get { return ConfigMember.ImageURL + AvatarURL; } set { } }
+        [DataMember]
+        public string CoverPicture { get; set; }
+        [DataMember]
+        public string CoverPictureURL { get { return ConfigMember.ImageURL + CoverPicture; } set { } }
         [DataMember]
         public string AboutMe { get; set; }
 

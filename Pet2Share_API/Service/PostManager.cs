@@ -28,6 +28,16 @@ namespace Pet2Share_API.Service
 
         #region PostSection
 
+        public static List<Post> GetPostsByUser(int userId)
+        {
+            return null;
+        }
+
+        public static List<Post> GetPostsByPet(int petId)
+        {
+            return null;
+        }
+
         public static Post AddPost(Post post)
         {
             post.Save();

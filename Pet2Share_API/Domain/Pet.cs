@@ -36,17 +36,13 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public DateTime? DOB { get; set; }
         [DataMember]
-        public string ProfilePicture
-        {
-            get { return ConfigMember.ImageURL + _profilePicture; }
-            set { _profilePicture = value; }
-        }
+        public string ProfilePicture { get; set; }
         [DataMember]
-        public string CoverPicture
-        {
-            get { return ConfigMember.ImageURL + _coverPicture; }
-            set { _coverPicture = value; }
-        }
+        public string ProfilePictureURL { get { return ConfigMember.ImageURL + ProfilePicture; } set { } }
+        [DataMember]
+        public string CoverPicture { get; set; }
+        [DataMember]
+        public string CoverPictureURL { get { return ConfigMember.ImageURL + CoverPicture; } set { } }
         [DataMember]
         public string About { get; set; }
         [DataMember]
