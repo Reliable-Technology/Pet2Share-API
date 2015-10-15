@@ -78,7 +78,7 @@ namespace Pet2Share_API.Domain
 
         #region methods
 
-        internal static Address GetById(int id)
+        public static Address GetById(int id)
         {
             DAL.Address addressObj;
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
