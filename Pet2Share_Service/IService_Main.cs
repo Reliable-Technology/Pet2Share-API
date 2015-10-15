@@ -48,8 +48,29 @@ namespace Pet2Share_Service
         [WebInvoke(UriTemplate = "UploadPetPic?PetId={PetId}&FileName={FileName}&IsCoverPic={IsCoverPic}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         GeneralUpdateResponse UploadPetProfileCoverPic(Stream PicObj, string PetId, string FileName, string IsCoverPic);
 
-       
+        [OperationContract]
+        [WebInvoke(UriTemplate = "AddPost", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse AddPost(AddPostRequest PostReq);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "UpdatePost", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse UpdatePost(UpdatePostRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "DeletePost", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse DeletePost(DeletePostRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "AddComment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse AddComment(AddCommentRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "UpdateComment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse UpdateComment(UpdateCommentRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "DeleteComment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse DeleteComment(DeleteCommentRequest PostReq);
 
 
     }

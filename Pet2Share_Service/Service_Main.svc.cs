@@ -368,6 +368,173 @@ namespace Pet2Share_Service
             }
         }
 
+        public GeneralUpdateResponse AddPost(AddPostRequest PostReq)
+        {
+            GeneralUpdateResponse PostResultResp;
+
+            try
+            {
+
+                var Result = PostManager.AddPost(PostReq.PostTypeId, PostReq.Description, PostReq.PostedBy, PostReq.IsPostByPet);
+                if (Result.Id > 0)
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true) }), ErrorMsg = null };
+                }
+                else
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while posting. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PostResultResp;
+        }
+
+        public GeneralUpdateResponse UpdatePost(UpdatePostRequest PostReq)
+        {
+            GeneralUpdateResponse PostResultResp;
+
+            try
+            {
+
+                var Result = PostManager.UpdatePost(PostReq.PostId, PostReq.PostDescription);
+                if (Result.Id > 0)
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true) }), ErrorMsg = null };
+                }
+                else
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while updating your post. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PostResultResp;
+        }
+
+        public GeneralUpdateResponse DeletePost(DeletePostRequest PostReq)
+        {
+            GeneralUpdateResponse PostResultResp;
+
+            try
+            {
+
+                var Result = PostManager.DeletePost(PostReq.PostId);
+                if (Result.IsSuccessful)
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { Result }), ErrorMsg = null };
+                }
+                else
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while deleting your post. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PostResultResp;
+        }
+
+        //public GeneralUpdateResponse LikePost(PostLikeRequest PostReq)
+        //{
+        //    GeneralUpdateResponse PostResultResp;
+
+        //    try
+        //    {
+
+        //        var Result = PostManager.ToggleLike(PostReq.PostId, PostReq.UserId);
+        //        if (Result.IsSuccessful)
+        //        {
+        //            PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { Result }), ErrorMsg = null };
+        //        }
+        //        else
+        //        {
+        //            PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while deleting your post. Please try again!!") };
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+        //    }
+        //    return PostResultResp;
+        //}
+
+        public GeneralUpdateResponse AddComment(AddCommentRequest PostReq)
+        {
+            GeneralUpdateResponse PostResultResp;
+
+            try
+            {
+
+                var Result = PostManager.AddComment(PostReq.PostId, PostReq.CommentedById, PostReq.IsCommentedByPet, PostReq.CommentDescription);
+                if (Result.Id > 0)
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true) }), ErrorMsg = null };
+                }
+                else
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while adding your comment. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PostResultResp;
+        }
+
+        public GeneralUpdateResponse UpdateComment(UpdateCommentRequest PostReq)
+        {
+            GeneralUpdateResponse PostResultResp;
+
+            try
+            {
+
+                var Result = PostManager.UpdateComment(PostReq.CommentId, PostReq.CommentDescription);
+                if (Result.Id > 0)
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true) }), ErrorMsg = null };
+                }
+                else
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while updating your comment. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PostResultResp;
+        }
+
+        public GeneralUpdateResponse DeleteComment(DeleteCommentRequest PostReq)
+        {
+            GeneralUpdateResponse PostResultResp;
+
+            try
+            {
+
+                var Result = PostManager.DeleteComment(PostReq.CommentId);
+                if (Result.IsSuccessful)
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { Result }), ErrorMsg = null };
+                }
+                else
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while deleting your comment. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PostResultResp;
+        }
 
 
         public static byte[] ReadFully(Stream input)

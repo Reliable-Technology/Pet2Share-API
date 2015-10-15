@@ -273,5 +273,99 @@ namespace Pet2Share_Service
 
     }
 
+    [DataContract]
+    public class AddPostRequest : RequestObject
+    {
+        [DataMember]
+        public int PostTypeId { get; set; }
+
+        [DataMember]
+        public string Description { get; set; }
+
+        [DataMember]
+        public int PostedBy { get; set; }
+
+        [DataMember]
+        public bool IsPostByPet { get; set; }
+
+    }
+
+    [DataContract]
+    public class UpdatePostRequest : RequestObject
+    {
+        [DataMember]
+        public int PostId { get; set; }
+
+        [DataMember]
+        public string PostDescription { get; set; }
+    }
+
+    [DataContract]
+    public class DeletePostRequest : RequestObject
+    {
+        [DataMember]
+        public int PostId { get; set; }
+    }
+
+    [DataContract]
+    public class PostLikeRequest : RequestObject
+    {
+        [DataMember]
+        public int PostId { get; set; }
+
+        [DataMember]
+        public int UserId { get; set; }
+
+    }
+
+    [DataContract]
+    public class AddCommentRequest : RequestObject
+    {
+        [DataMember]
+        public int PostId { get; set; }
+
+        [DataMember]
+        public int CommentedById { get; set; }
+
+        [DataMember]
+        public bool IsCommentedByPet { get; set; }
+
+        [DataMember]
+        public string CommentDescription { get; set; }
+    }
+
+    [DataContract]
+    public class UpdateCommentRequest : RequestObject
+    {
+        [DataMember]
+        public int CommentId { get; set; }
+
+        [DataMember]
+        public string CommentDescription { get; set; }
+    }
+
+    [DataContract]
+    public class DeleteCommentRequest : RequestObject
+    {
+        [DataMember]
+        public int CommentId { get; set; }
+
+    }
+
+    [DataContract]
+    public class GetCommentRequest : RequestObject
+    {
+        [DataMember]
+        public int PostId { get; set; }
+
+    }
+
+    [DataContract]
+    public class GetCommentResponse : ResponseObject
+    {
+        [DataMember]
+        public Comment[] Comments { get; set; }
+    }
+
 
 }
