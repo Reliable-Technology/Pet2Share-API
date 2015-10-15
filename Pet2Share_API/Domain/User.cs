@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 namespace Pet2Share_API.Domain
 {
     [DataContract]
-    public class UserType
+    public class UserType : DomainBase
     {
-        [DataMember]
-        public int Id { get; set; }
         [DataMember]
         public string Name { get; set; }
         [DataMember]
@@ -34,11 +32,9 @@ namespace Pet2Share_API.Domain
     }
 
     [DataContract]
-    public class User
+    public class User : DomainBase
     {
         #region members
-        [DataMember]
-        public int Id { get; set; }
         [DataMember]
         public string Username { get; set; }
         [DataMember]
@@ -59,12 +55,6 @@ namespace Pet2Share_API.Domain
         public UserType UType;
         [DataMember]
         public Pet[] Pets { get; set; }
-        [DataMember]
-        public DateTime DateAdded { get; set; }
-        [DataMember]
-        public DateTime DateModified { get; set; }
-        [DataMember]
-        public bool IsActive { get; set; }
         
         #endregion
 

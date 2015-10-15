@@ -117,7 +117,7 @@ namespace Pet2Share_API.Service
             this.user.P.AvatarURL = relativePath + "/" + fullFileName;
             this.user.P.Save();
 
-            BoolExt result = new BoolExt(true, savePath);
+            BoolExt result = new BoolExt(true, ConfigMember.ImageURL + user.P.AvatarURL);
 
             return result;
         }
@@ -133,12 +133,12 @@ namespace Pet2Share_API.Service
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
 
-            User u = new User(userId);
+            User user = new User(userId);
 
-            u.P.AvatarURL = relativePath + "/" + fullFileName;
-            u.P.Save();
+            user.P.AvatarURL = relativePath + "/" + fullFileName;
+            user.P.Save();
 
-            BoolExt result = new BoolExt(true, savePath);
+            BoolExt result = new BoolExt(true, ConfigMember.ImageURL + user.P.AvatarURL); 
 
             return result;
         }
@@ -157,7 +157,7 @@ namespace Pet2Share_API.Service
             this.user.P.CoverPicture = relativePath + "/" + fullFileName;
             this.user.P.Save();
 
-            BoolExt result = new BoolExt(true, savePath);
+            BoolExt result = new BoolExt(true, ConfigMember.ImageURL + user.P.AvatarURL);
 
             return result;
         }
@@ -178,7 +178,7 @@ namespace Pet2Share_API.Service
             user.P.CoverPicture = relativePath + "/" + fullFileName;
             user.P.Save();
 
-            BoolExt result = new BoolExt(true, savePath);
+            BoolExt result = new BoolExt(true, ConfigMember.ImageURL + user.P.AvatarURL);
 
             return result;
         }
