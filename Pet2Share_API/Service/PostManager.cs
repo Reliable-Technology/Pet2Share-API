@@ -46,7 +46,7 @@ namespace Pet2Share_API.Service
                     {
                         if (forCounter >= postStartCount && forCounter < postEndCount)
                             postList.Add(new Post(dalPost));
-                        else
+                        else if (forCounter >= postEndCount)
                             break;
                     }
                     else
@@ -76,7 +76,7 @@ namespace Pet2Share_API.Service
                     {
                         if (forCounter >= postStartCount && forCounter < postEndCount)
                             postList.Add(new Post(dalPost));
-                        else
+                        else if (forCounter >= postEndCount)
                             break;
                     }
                     else
