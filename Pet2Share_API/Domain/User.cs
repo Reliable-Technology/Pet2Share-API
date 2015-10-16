@@ -262,4 +262,48 @@ namespace Pet2Share_API.Domain
 
         #endregion
     }
+
+    [DataContract]
+    public class SmallUser
+    {
+        #region members
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public string Username { get; set; }
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public string ProfilePictureURL { get; set; }
+
+        #endregion
+
+        #region constructor
+
+        private SmallUser() 
+        {
+            this.Id = 0;
+            this.Username = "Guest";
+            this.ProfilePictureURL = "";
+        }
+
+        public SmallUser(int userId) : base()
+        {
+            User user = new User(userId);
+            this.Id = user.Id;
+            this.Username = user.Username;
+            this.Name = user.P.FirstName + " " + user.P.LastName;
+            this.ProfilePictureURL = user.P.ProfilePictureURL;
+        }
+
+        public SmallUser(User user) : base()
+        {
+            this.Id = user.Id;
+            this.Username = user.Username;
+            this.Name = user.P.FirstName + " " + user.P.LastName;
+            this.ProfilePictureURL = user.P.ProfilePictureURL;
+        }
+
+        #endregion
+    }
 }

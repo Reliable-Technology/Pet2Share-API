@@ -37,7 +37,8 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public bool IsCommentedByPet { get; set; }
         [DataMember]
-        public string CommentDescription { get; set; }        
+        public string CommentDescription { get; set; }
+
         #endregion
 
         #region Constructors
