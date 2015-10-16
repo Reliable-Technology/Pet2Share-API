@@ -22,9 +22,6 @@ namespace Pet2Share_API.Domain
     {
         #region members
 
-        string _profilePicture;
-        string _coverPicture;
-
         [DataMember]
         public string Name { get; set; }
         [DataMember]
@@ -243,6 +240,8 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public string ProfilePictureURL { get; set; }
 
+        public int? userId;
+
         #endregion
 
         #region constructors
@@ -262,6 +261,7 @@ namespace Pet2Share_API.Domain
             this.Name = pet.Name;
             this.FamilyName = pet.FamilyName;
             this.ProfilePictureURL = pet.ProfilePictureURL;
+            this.userId = pet.UserId;
         }
 
         public SmallPet(Pet pet)
@@ -271,6 +271,7 @@ namespace Pet2Share_API.Domain
             this.Name = pet.Name;
             this.FamilyName = pet.FamilyName;
             this.ProfilePictureURL = pet.ProfilePictureURL;
+            this.userId = pet.UserId;
         }
 
         #endregion
