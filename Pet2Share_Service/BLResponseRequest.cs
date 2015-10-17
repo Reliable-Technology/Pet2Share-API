@@ -158,7 +158,7 @@ namespace Pet2Share_Service
     {
         [DataMember]
         public BoolExt[] Results { get; set; }
-         
+
         //TODO: Need to add more fields later
     }
 
@@ -367,5 +367,27 @@ namespace Pet2Share_Service
         public Comment[] Results { get; set; }
     }
 
+
+    [DataContract]
+    public class GetPostsRequest : RequestObject
+    {
+        [DataMember]
+        public int ProfileId  { get; set; }
+
+        [DataMember]
+        public int PostCount { get; set; }
+
+        [DataMember]
+        public int PageNumber { get; set; }
+
+    }
+
+    [DataContract]
+    public class GetPostsResponse : ResponseObject
+    {
+        [DataMember]
+        public Post[] Results { get; set; }
+
+    }
 
 }

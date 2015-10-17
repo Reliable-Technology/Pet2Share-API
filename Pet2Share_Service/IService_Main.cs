@@ -76,6 +76,14 @@ namespace Pet2Share_Service
         [WebInvoke(UriTemplate = "GetComments", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         GetCommentResponse GetComments(GetCommentRequest PostReq);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetPostsByUser", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GetPostsResponse GetPostsByUser(GetPostsRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetPostsByPet", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GetPostsResponse GetPostsByPet(GetPostsRequest PostReq);
+
 
     }
 
