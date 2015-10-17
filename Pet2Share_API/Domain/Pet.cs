@@ -22,9 +22,6 @@ namespace Pet2Share_API.Domain
     {
         #region members
 
-        string _profilePicture;
-        string _coverPicture;
-
         [DataMember]
         public string Name { get; set; }
         [DataMember]
@@ -224,6 +221,57 @@ namespace Pet2Share_API.Domain
                     id = result;
             }
             return result > 0 ? true : false;
+        }
+
+        #endregion
+    }
+
+    [DataContract]
+    public class SmallPet
+    {
+        #region members
+
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public string FamilyName { get; set; }
+        [DataMember]
+        public string ProfilePictureURL { get; set; }
+
+        public int? userId;
+
+        #endregion
+
+        #region constructors
+
+        private SmallPet() 
+        {
+            this.Id = 0;
+            this.Name = "Guest";
+            this.ProfilePictureURL = "";
+        }
+
+        public SmallPet(int petId) 
+            : base()
+        {
+            Pet pet = new Pet(petId);
+            this.Id = pet.Id;
+            this.Name = pet.Name;
+            this.FamilyName = pet.FamilyName;
+            this.ProfilePictureURL = pet.ProfilePictureURL;
+            this.userId = pet.UserId;
+        }
+
+        public SmallPet(Pet pet)
+            : base()
+        {
+            this.Id = pet.Id;
+            this.Name = pet.Name;
+            this.FamilyName = pet.FamilyName;
+            this.ProfilePictureURL = pet.ProfilePictureURL;
+            this.userId = pet.UserId;
         }
 
         #endregion

@@ -13,8 +13,6 @@ namespace Pet2Share_API.Service
     public class PostManager
     {
         Post post;
-        User user;
-        Pet pet;
 
         public PostManager()
         {

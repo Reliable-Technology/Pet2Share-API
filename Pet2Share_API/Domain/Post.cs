@@ -37,7 +37,10 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public bool IsCommentedByPet { get; set; }
         [DataMember]
-        public string CommentDescription { get; set; }        
+        public string CommentDescription { get; set; }
+        [DataMember]
+        public SmallUser SUser { get; set; }
+
         #endregion
 
         #region Constructors
@@ -51,13 +54,14 @@ namespace Pet2Share_API.Domain
             this.IsDeleted = false;
         }
 
-        public Comment(DAL.PostComment dalComment)
+        public Comment(DAL.PostComment dalComment) : base()
         {
             this.Id = dalComment.Id;
             this.PostId = dalComment.PostId;
             this.CommentedBy = dalComment.CommentedBy;
             this.IsCommentedByPet = dalComment.IsCommentedByPet;
             this.CommentDescription = dalComment.Comment;
+            this.SUser = new SmallUser(CommentedBy);
         }
 
         public Comment(int postId, int commenterId, bool isCommentedByPet, string comment) : base()
@@ -66,6 +70,7 @@ namespace Pet2Share_API.Domain
             this.CommentedBy = commenterId;
             this.IsCommentedByPet = isCommentedByPet;
             this.CommentDescription = comment;
+            this.SUser = new SmallUser(CommentedBy);
         }
 
         #endregion
@@ -187,6 +192,10 @@ namespace Pet2Share_API.Domain
         public int PostCommentCount { get; set; }
         [DataMember]
         public List<Comment> Comments { get; set; }
+        [DataMember]
+        public SmallUser SUser { get; set; }
+        [DataMember]
+        public SmallPet SPet { get; set; }
 
         #endregion
 
@@ -229,6 +238,13 @@ namespace Pet2Share_API.Domain
             this.DateModified = post.DateModified;
             this.IsActive = post.IsActive;
             this.IsDeleted = post.IsDeleted;
+            if (post.IsPostByPet)
+            {
+                this.SPet = new SmallPet(post.PostedBy);
+                this.SUser = new SmallUser(SPet.userId.HasValue ? SPet.userId.Value : 0);
+            }
+            else
+                this.SUser = new SmallUser(post.PostedBy);
         }
 
         public Post(Post post) : base()
@@ -245,6 +261,13 @@ namespace Pet2Share_API.Domain
             this.DateModified = post.DateModified;
             this.IsActive = post.IsActive;
             this.IsDeleted = post.IsDeleted;
+            if (post.IsPostByPet)
+            {
+                this.SPet = new SmallPet(post.PostedBy);
+                this.SUser = new SmallUser(SPet.userId.HasValue ? SPet.userId.Value : 0);
+            }
+            else
+                this.SUser = new SmallUser(post.PostedBy);
         }
 
         public Post(DAL.Post post) : base()
@@ -270,6 +293,13 @@ namespace Pet2Share_API.Domain
             this.DateModified = post.DateModified;
             this.IsActive = post.IsActive;
             this.IsDeleted = post.IsDeleted;
+            if (post.IsPostByPet)
+            {
+                this.SPet = new SmallPet(post.PostedBy);
+                this.SUser = new SmallUser(SPet.userId.HasValue ? SPet.userId.Value : 0);
+            }
+            else
+                this.SUser = new SmallUser(post.PostedBy);
         }
 
         public Post(string description, int postedById, bool isPostByPet, int postTypeId) : base()
@@ -278,6 +308,14 @@ namespace Pet2Share_API.Domain
             this.Description = description;
             this.PostedBy = postedById;
             this.IsPostByPet = isPostByPet;
+            if (isPostByPet)
+            {
+                this.SPet = new SmallPet(postedById);
+                this.SUser = new SmallUser(SPet.userId.HasValue ? SPet.userId.Value : 0);
+            }
+            else
+                this.SUser = new SmallUser(postedById);
+
         }
 
         #endregion
