@@ -40,6 +40,7 @@ namespace Pet2Share_API.Service
 
                 foreach (DAL.Post dalPost in dalPosts)
                 {
+                    //TODO: Not a good practice at all, need to change this so that only one instance of context is used
                     if (postEndCount != 0)
                     {
                         if (forCounter >= postStartCount && forCounter < postEndCount)
