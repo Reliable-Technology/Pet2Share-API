@@ -43,17 +43,25 @@ namespace Pet2Share_API.Service
                     if (postEndCount != 0)
                     {
                         if (forCounter >= postStartCount && forCounter < postEndCount)
+                        {
+                            Post post = new Post(dalPost);
+                            post.Comments = GetComments(post.Id, 3);
                             postList.Add(new Post(dalPost));
+
+                        }
                         else if (forCounter >= postEndCount)
                             break;
                     }
                     else
+                    {
+                        Post post = new Post(dalPost);
+                        post.Comments = GetComments(post.Id, 3);
                         postList.Add(new Post(dalPost));
+                    }
                     forCounter++;
                 }
             }
             return postList;
-            
         }
 
         public static List<Post> GetPostsByPet(int petId, int postCount = 0, int pageNumber = 1)
