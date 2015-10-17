@@ -47,6 +47,19 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Connection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IUserId" Type="int" Nullable="false" />
+          <Property Name="AUserId" Type="int" Nullable="false" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="Id" />
@@ -231,6 +244,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Connection_AUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="AUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Connection_IUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="IUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Person_Address">
           <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
           <End Role="Person" Type="Self.Person" Multiplicity="*" />
@@ -375,6 +412,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ApproveConnection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="AUserId" Type="int" Mode="In" />
+        </Function>
         <Function Name="ChangeActivePetProfileById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
           <Parameter Name="Active" Type="bit" Mode="In" />
@@ -389,6 +430,10 @@
         </Function>
         <Function Name="DeleteAddressById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteConnection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IUserId" Type="int" Mode="In" />
+          <Parameter Name="AUserId" Type="int" Mode="In" />
         </Function>
         <Function Name="DeletePersonById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -428,6 +473,11 @@
           <Parameter Name="IsBillingAddress" Type="bit" Mode="In" />
           <Parameter Name="IsShippingAddress" Type="bit" Mode="In" />
           <Parameter Name="ZipCode" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertUpdateConnection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="IUserId" Type="int" Mode="In" />
+          <Parameter Name="AUserId" Type="int" Mode="In" />
         </Function>
         <Function Name="InsertUpdatePerson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -487,6 +537,7 @@
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BreedType" EntityType="Self.BreedType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Connection" EntityType="Self.Connection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PetProfile" EntityType="Self.PetProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PetType" EntityType="Self.PetType" Schema="dbo" store:Type="Tables" />
@@ -505,6 +556,14 @@
           <AssociationSet Name="FK_BreedType_PetType" Association="Self.FK_BreedType_PetType">
             <End Role="PetType" EntitySet="PetType" />
             <End Role="BreedType" EntitySet="BreedType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connection_AUser" Association="Self.FK_Connection_AUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connection_IUser" Association="Self.FK_Connection_IUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Connection" EntitySet="Connection" />
           </AssociationSet>
           <AssociationSet Name="FK_Person_Address" Association="Self.FK_Person_Address">
             <End Role="Address" EntitySet="Address" />
@@ -738,6 +797,28 @@
             <End Role="Post" EntitySet="Posts" />
             <End Role="PostLike" EntitySet="PostLikes" />
           </AssociationSet>
+          <FunctionImport Name="ApproveConnection" ReturnType="Collection(Boolean)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="AUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteConnection" ReturnType="Collection(Boolean)">
+            <Parameter Name="IUserId" Mode="In" Type="Int32" />
+            <Parameter Name="AUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUpdateConnection" ReturnType="Collection(Int32)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="IUserId" Mode="In" Type="Int32" />
+            <Parameter Name="AUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Connections" EntityType="Pet2ShareModel.Connection" />
+          <AssociationSet Name="FK_Connection_AUser" Association="Pet2ShareModel.FK_Connection_AUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Connection" EntitySet="Connections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connection_IUser" Association="Pet2ShareModel.FK_Connection_IUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Connection" EntitySet="Connections" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -968,6 +1049,8 @@
           <NavigationProperty Name="PetProfiles" Relationship="Pet2ShareModel.FK_PetProfile_User" FromRole="User" ToRole="PetProfile" />
           <NavigationProperty Name="SocialMediaSource" Relationship="Pet2ShareModel.FK_User_SocialMediaSource" FromRole="User" ToRole="SocialMediaSource" />
           <NavigationProperty Name="UserType" Relationship="Pet2ShareModel.FK_User_UserType" FromRole="User" ToRole="UserType" />
+          <NavigationProperty Name="Connections" Relationship="Pet2ShareModel.FK_Connection_AUser" FromRole="User" ToRole="Connection" />
+          <NavigationProperty Name="Connections1" Relationship="Pet2ShareModel.FK_Connection_IUser" FromRole="User" ToRole="Connection" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -1197,6 +1280,45 @@
             </Principal>
             <Dependent Role="PostLike">
               <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Connection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IUserId" Type="Int32" Nullable="false" />
+          <Property Name="AUserId" Type="Int32" Nullable="false" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Pet2ShareModel.FK_Connection_AUser" FromRole="Connection" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Pet2ShareModel.FK_Connection_IUser" FromRole="Connection" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Connection_AUser">
+          <End Type="Pet2ShareModel.User" Role="User" Multiplicity="1" />
+          <End Type="Pet2ShareModel.Connection" Role="Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="AUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Connection_IUser">
+          <End Type="Pet2ShareModel.User" Role="User" Multiplicity="1" />
+          <End Type="Pet2ShareModel.Connection" Role="Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="IUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1513,6 +1635,23 @@
                 <ScalarProperty Name="PostedBy" ColumnName="PostedBy" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ApproveConnection" FunctionName="Pet2ShareModel.Store.ApproveConnection" />
+          <FunctionImportMapping FunctionImportName="DeleteConnection" FunctionName="Pet2ShareModel.Store.DeleteConnection" />
+          <FunctionImportMapping FunctionImportName="InsertUpdateConnection" FunctionName="Pet2ShareModel.Store.InsertUpdateConnection" />
+          <EntitySetMapping Name="Connections">
+            <EntityTypeMapping TypeName="Pet2ShareModel.Connection">
+              <MappingFragment StoreEntitySet="Connection">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="AUserId" ColumnName="AUserId" />
+                <ScalarProperty Name="IUserId" ColumnName="IUserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
