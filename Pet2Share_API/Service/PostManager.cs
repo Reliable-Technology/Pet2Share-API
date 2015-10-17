@@ -148,12 +148,25 @@ namespace Pet2Share_API.Service
 
         #region commentsSection
 
-        public static List<Comment> GetComments(int postId)
+        public static List<Comment> GetComments(int postId, int commentCount = 0) //Sending commentCount = 0 to fetch all the comments;
         {
             List<Comment> listComments = new List<Comment>();
             using(DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                DAL.PostComment[] dalComments = context.PostComments.Where(pc => pc.PostId == postId).ToArray<DAL.PostComment>();
+                DAL.PostComment[] dalComments;
+
+                if (commentCount == 0)
+                {
+                    dalComments = context.PostComments.Where(pc => pc.PostId == postId).OrderByDescending(c => c.DateAdded).ToArray<DAL.PostComment>();
+                }
+                else if (commentCount > 0)
+                {
+                    dalComments = context.PostComments.Where(pc => pc.PostId == postId).OrderByDescending(c => c.DateAdded).Take(commentCount).ToArray<DAL.PostComment>();
+                }
+                else
+                {
+                    dalComments = new DAL.PostComment[] { };
+                }
 
                 foreach(DAL.PostComment dalComment in dalComments)
                 {
