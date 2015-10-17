@@ -40,20 +40,29 @@ namespace Pet2Share_API.Service
 
                 foreach (DAL.Post dalPost in dalPosts)
                 {
+                    //TODO: Not a good practice at all, need to change this so that only one instance of context is used
                     if (postEndCount != 0)
                     {
                         if (forCounter >= postStartCount && forCounter < postEndCount)
+                        {
+                            Post post = new Post(dalPost);
+                            post.Comments = GetComments(post.Id, 3);
                             postList.Add(new Post(dalPost));
+
+                        }
                         else if (forCounter >= postEndCount)
                             break;
                     }
                     else
+                    {
+                        Post post = new Post(dalPost);
+                        post.Comments = GetComments(post.Id, 3);
                         postList.Add(new Post(dalPost));
+                    }
                     forCounter++;
                 }
             }
             return postList;
-            
         }
 
         public static List<Post> GetPostsByPet(int petId, int postCount = 0, int pageNumber = 1)
@@ -148,12 +157,25 @@ namespace Pet2Share_API.Service
 
         #region commentsSection
 
-        public static List<Comment> GetComments(int postId)
+        public static List<Comment> GetComments(int postId, int commentCount = 0) //Sending commentCount = 0 to fetch all the comments;
         {
             List<Comment> listComments = new List<Comment>();
             using(DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                DAL.PostComment[] dalComments = context.PostComments.Where(pc => pc.PostId == postId).ToArray<DAL.PostComment>();
+                DAL.PostComment[] dalComments;
+
+                if (commentCount == 0)
+                {
+                    dalComments = context.PostComments.Where(pc => pc.PostId == postId).OrderByDescending(c => c.DateAdded).ToArray<DAL.PostComment>();
+                }
+                else if (commentCount > 0)
+                {
+                    dalComments = context.PostComments.Where(pc => pc.PostId == postId).OrderByDescending(c => c.DateAdded).Take(commentCount).ToArray<DAL.PostComment>();
+                }
+                else
+                {
+                    dalComments = new DAL.PostComment[] { };
+                }
 
                 foreach(DAL.PostComment dalComment in dalComments)
                 {
