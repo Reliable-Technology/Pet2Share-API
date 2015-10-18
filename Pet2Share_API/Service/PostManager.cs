@@ -47,7 +47,7 @@ namespace Pet2Share_API.Service
                         {
                             Post post = new Post(dalPost);
                             post.Comments = GetComments(post.Id, 3);
-                            postList.Add(new Post(post));
+                            postList.Add(post);
 
                         }
                         else if (forCounter >= postEndCount)
@@ -57,7 +57,7 @@ namespace Pet2Share_API.Service
                     {
                         Post post = new Post(dalPost);
                         post.Comments = GetComments(post.Id, 3);
-                        postList.Add(new Post(post));
+                        postList.Add(post);
                     }
                     forCounter++;
                 }
