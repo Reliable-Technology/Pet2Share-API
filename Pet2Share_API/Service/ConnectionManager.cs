@@ -31,14 +31,28 @@ namespace Pet2Share_API.Service
             return null;
         }
 
-        public static BoolExt AskToConnect(Pet requestor, Pet acceptor)
+        public static BoolExt AskToConnect(User requester, User accepter)
         {
-            return null;
+            int? result;
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.InsertUpdateConnection(0, requestor.Id, acceptor.Id).FirstOrDefault();              
+            }
+            if (result.HasValue && result > 0)
+                return new BoolExt(true, "");
+            return new BoolExt(false, "");
         }
 
-        public static BoolExt ApproveConnect()
+        public static BoolExt ApproveConnect(int connectionId, User accepter)
         {
-            return null;
+            bool? result;
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.ApproveConnection(connectionId, accepter.Id).FirstOrDefault();
+            }
+            if (result.HasValue && result == true)
+                return new BoolExt(true, "");
+            return new BoolExt(false, "");
         }
     }
 }
