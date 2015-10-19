@@ -182,5 +182,17 @@ namespace Pet2Share_API.Service
 
             return result;
         }
+
+        public static SmallUser GetSmallUser(int userId)
+        {
+            SmallUser sUser = new SmallUser(userId);
+            return sUser;
+        }
+
+        public static User GetUser(int userId)
+        {
+            User user = new User(userId);
+            return user;
+        }
     }
 }
