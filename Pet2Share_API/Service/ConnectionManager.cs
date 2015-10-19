@@ -78,7 +78,7 @@ namespace Pet2Share_API.Service
             return new BoolExt(false, "");
         }
 
-        public static BoolExt ApproveConnect(User accepter, User requester)
+        public static BoolExt ApproveConnection(User accepter, User requester)
         {
             bool? result;
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
@@ -87,9 +87,7 @@ namespace Pet2Share_API.Service
             }
             if (result.HasValue && result == true)
                 return new BoolExt(true, "");
-            return new BoolExt(false, "");            
+            return new BoolExt(false, "");
         }
-
-
     }
 }
