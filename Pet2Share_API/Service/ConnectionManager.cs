@@ -36,7 +36,7 @@ namespace Pet2Share_API.Service
             int? result;
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.InsertUpdateConnection(0, requestor.Id, acceptor.Id).FirstOrDefault();              
+                result = context.InsertUpdateConnection(0, requester.Id, accepter.Id).FirstOrDefault();              
             }
             if (result.HasValue && result > 0)
                 return new BoolExt(true, "");
