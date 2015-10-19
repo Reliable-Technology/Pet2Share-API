@@ -83,6 +83,9 @@
     <Compile Include="DAL\GetAvailableConnection_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetMyConnection_Result.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetPersonById_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>

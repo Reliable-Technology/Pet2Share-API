@@ -415,17 +415,17 @@ namespace Pet2Share_API.DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePostCommentById", idParameter);
         }
     
-        public virtual ObjectResult<Nullable<bool>> ApproveConnection(Nullable<int> id, Nullable<int> aUserId)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(int));
-    
+        public virtual ObjectResult<Nullable<bool>> ApproveConnection(Nullable<int> aUserId, Nullable<int> iUserId)
+        {    
             var aUserIdParameter = aUserId.HasValue ?
                 new ObjectParameter("AUserId", aUserId) :
                 new ObjectParameter("AUserId", typeof(int));
+
+            var iUserIdParameter = iUserId.HasValue ?
+                new ObjectParameter("Id", iUserId) :
+                new ObjectParameter("Id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("ApproveConnection", idParameter, aUserIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("ApproveConnection", aUserIdParameter, iUserIdParameter);
         }
     
         public virtual ObjectResult<Nullable<bool>> DeleteConnection(Nullable<int> iUserId, Nullable<int> aUserId)

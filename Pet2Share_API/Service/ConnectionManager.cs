@@ -22,7 +22,7 @@ namespace Pet2Share_API.Service
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
                 List<DAL.GetMyConnection_Result> connectionList = context.GetMyConnection(user.Id).ToList<DAL.GetMyConnection_Result>();
-                foreach (DAL.GetAvailableConnection_Result result in connectionList)
+                foreach (DAL.GetMyConnection_Result result in connectionList)
                 {
                     Person p = new Person(result.PrimaryPersonId);
                     SmallUser sUser = new SmallUser();
@@ -78,12 +78,12 @@ namespace Pet2Share_API.Service
             return new BoolExt(false, "");
         }
 
-        public static BoolExt ApproveConnect(int connectionId, User accepter)
+        public static BoolExt ApproveConnect(User accepter, User requester)
         {
             bool? result;
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.ApproveConnection(connectionId, accepter.Id).FirstOrDefault();
+                result = context.ApproveConnection(accepter.Id, requester.Id).FirstOrDefault();
             }
             if (result.HasValue && result == true)
                 return new BoolExt(true, "");
