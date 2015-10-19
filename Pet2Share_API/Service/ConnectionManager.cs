@@ -18,7 +18,23 @@ namespace Pet2Share_API.Service
 
         public static SmallUser[] GetMyConnection(User user)
         {
-            return null;
+            List<SmallUser> sUserList = new List<SmallUser>();
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                List<DAL.GetMyConnection_Result> connectionList = context.GetMyConnection(user.Id).ToList<DAL.GetMyConnection_Result>();
+                foreach (DAL.GetAvailableConnection_Result result in connectionList)
+                {
+                    Person p = new Person(result.PrimaryPersonId);
+                    SmallUser sUser = new SmallUser();
+                    sUser.Id = result.Id;
+                    sUser.Name = p.FirstName + " " + p.LastName;
+                    sUser.Username = result.Username;
+                    sUser.ProfilePictureURL = p.ProfilePictureURL;
+
+                    sUserList.Add(sUser);
+                }
+            }
+            return sUserList.ToArray();
         }
 
         public static SmallPet[] GetConnectionSuggestion(Pet pet)
