@@ -74,10 +74,13 @@
     <Compile Include="DAL\BreedType.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
-	<Compile Include="DAL\Connection.cs">
+    <Compile Include="DAL\Connection.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\GetAddressById_Result.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GetAvailableConnection_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\GetPersonById_Result.cs">

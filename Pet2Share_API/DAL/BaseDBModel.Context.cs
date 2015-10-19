@@ -457,5 +457,14 @@ namespace Pet2Share_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InsertUpdateConnection", idParameter, iUserIdParameter, aUserIdParameter);
         }
+    
+        public virtual ObjectResult<GetAvailableConnection_Result> GetAvailableConnection(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAvailableConnection_Result>("GetAvailableConnection", userIdParameter);
+        }
     }
 }

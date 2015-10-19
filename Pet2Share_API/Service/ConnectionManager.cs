@@ -21,16 +21,35 @@ namespace Pet2Share_API.Service
             return null;
         }
 
-        public static SmallPet[] GetConnectionSuggestion(User user)
+        public static SmallPet[] GetConnectionSuggestion(Pet pet)
         {
             return null;
         }
 
-        public static SmallUser[] GetConnectionSuggestion(Pet pet)
+        public static SmallUser[] GetConnectionSuggestion(User user)
         {
-            return null;
+            List<SmallUser> sUserList = new List<SmallUser>();
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                List<DAL.GetAvailableConnection_Result> connectionList = context.GetAvailableConnection(user.Id).ToList<DAL.GetAvailableConnection_Result>();
+                foreach(DAL.GetAvailableConnection_Result result in connectionList)
+                {
+                    Person p = new Person(result.PrimaryPersonId);
+                    SmallUser sUser = new SmallUser();
+                    sUser.Id = result.Id;
+                    sUser.Name = p.FirstName + " " + p.LastName;
+                    sUser.Username = result.Username;
+                    sUser.ProfilePictureURL = p.ProfilePictureURL;
+
+                    sUserList.Add(sUser);
+                }
+            }
+            return sUserList.ToArray();
         }
 
+        /// <summary>Method to send friend request</summary>
+        /// <param name="requester">The person sending request</param>
+        /// <param name="accepter">The person who has to accept this request</param>
         public static BoolExt AskToConnect(User requester, User accepter)
         {
             int? result;
@@ -52,7 +71,9 @@ namespace Pet2Share_API.Service
             }
             if (result.HasValue && result == true)
                 return new BoolExt(true, "");
-            return new BoolExt(false, "");
+            return new BoolExt(false, "");            
         }
+
+
     }
 }
