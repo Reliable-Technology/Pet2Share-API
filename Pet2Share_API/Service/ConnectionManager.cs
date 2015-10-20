@@ -90,7 +90,7 @@ namespace Pet2Share_API.Service
             return new BoolExt(false, "");
         }
 
-        public static SmallUser[] SearchUser(string searchString)
+        public static SmallUser[] SearchUser(string searchString, int userCount = 0, int pageNumber = 1)
         {
             List<SmallUser> sUserList = new List<SmallUser>();
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
