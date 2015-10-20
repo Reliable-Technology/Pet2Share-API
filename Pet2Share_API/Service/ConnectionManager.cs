@@ -22,9 +22,9 @@ namespace Pet2Share_API.Service
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
                 //TODO: Correct it so that you dont return the complete set of object
-                result = (from dalUser in context.Users
-                          where dalUser.Id == user.Id
-                          select dalUser.Id).Count();
+                result = (from dalConnection in context.Connections
+                          where dalConnection.IUserId == user.Id || dalConnection.AUserId == user.Id
+                          select dalConnection.Id).Count();
                 //result = context.GetMyConnection(user.Id).ToList().Count;
             }
             return result;
