@@ -89,5 +89,26 @@ namespace Pet2Share_API.Service
                 return new BoolExt(true, "");
             return new BoolExt(false, "");
         }
+
+        public static SmallUser[] SearchUser(string searchString)
+        {
+            List<SmallUser> sUserList = new List<SmallUser>();
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                List<DAL.SearchUser_Result> connectionList = context.SearchUser(searchString).ToList<DAL.SearchUser_Result>();
+                foreach (DAL.SearchUser_Result result in connectionList)
+                {
+                    Person p = new Person(result.PrimaryPersonId);
+                    SmallUser sUser = new SmallUser();
+                    sUser.Id = result.Id;
+                    sUser.Name = p.FirstName + " " + p.LastName;
+                    sUser.Username = result.Username;
+                    sUser.ProfilePictureURL = p.ProfilePictureURL;
+
+                    sUserList.Add(sUser);
+                }
+            }
+            return sUserList.ToArray();
+        }
     }
 }

@@ -416,14 +416,14 @@ namespace Pet2Share_API.DAL
         }
     
         public virtual ObjectResult<Nullable<bool>> ApproveConnection(Nullable<int> aUserId, Nullable<int> iUserId)
-        {    
+        {
             var aUserIdParameter = aUserId.HasValue ?
                 new ObjectParameter("AUserId", aUserId) :
                 new ObjectParameter("AUserId", typeof(int));
-
+    
             var iUserIdParameter = iUserId.HasValue ?
-                new ObjectParameter("Id", iUserId) :
-                new ObjectParameter("Id", typeof(int));
+                new ObjectParameter("IUserId", iUserId) :
+                new ObjectParameter("IUserId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("ApproveConnection", aUserIdParameter, iUserIdParameter);
         }
@@ -474,6 +474,15 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("UserId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyConnection_Result>("GetMyConnection", userIdParameter);
+        }
+    
+        public virtual ObjectResult<SearchUser_Result> SearchUser(string searchString)
+        {
+            var searchStringParameter = searchString != null ?
+                new ObjectParameter("SearchString", searchString) :
+                new ObjectParameter("SearchString", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchUser_Result>("SearchUser", searchStringParameter);
         }
     }
 }
