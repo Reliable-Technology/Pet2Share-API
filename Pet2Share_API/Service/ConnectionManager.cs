@@ -16,6 +16,20 @@ namespace Pet2Share_API.Service
             return null;
         }
 
+        public static int GetMyConnectionCount(User user)
+        {
+            int result;
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                //TODO: Correct it so that you dont return the complete set of object
+                result = (from dalUser in context.Users
+                          where dalUser.Id == user.Id
+                          select dalUser.Id).Count();
+                //result = context.GetMyConnection(user.Id).ToList().Count;
+            }
+            return result;
+        }
+
         public static SmallUser[] GetMyConnection(User user)
         {
             List<SmallUser> sUserList = new List<SmallUser>();
