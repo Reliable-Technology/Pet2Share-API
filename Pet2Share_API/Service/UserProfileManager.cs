@@ -198,7 +198,7 @@ namespace Pet2Share_API.Service
         /// <param name="otherUserId">User Id the of profile the is accessed by the user</param>
         /// <param name="connType">This outputs the type of connection between the two users</param>
         /// <returns>Returns the profile of queried user</returns>
-        public User GetOtherUserProfile(int myUserId, int otherUserId, out ConnectionType connType)
+        public static User GetOtherUserProfile(int myUserId, int otherUserId, out ConnectionType connType)
         {
             connType = ConnectionType.Connected;
             User user = new User(otherUserId);
