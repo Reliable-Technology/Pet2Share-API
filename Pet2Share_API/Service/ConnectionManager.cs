@@ -104,6 +104,18 @@ namespace Pet2Share_API.Service
             return new BoolExt(false, "");
         }
 
+        public static BoolExt DeleteConnection(User accepter, User requester)
+        {
+            bool? result;
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.DeleteConnection(accepter.Id, requester.Id).FirstOrDefault();
+            }
+            if (result.HasValue && result == true)
+                return new BoolExt(true, "");
+            return new BoolExt(false, "");
+        }
+
         public static SmallUser[] SearchUser(string searchString, int userCount = 0, int pageNumber = 1)
         {
             List<SmallUser> sUserList = new List<SmallUser>();
