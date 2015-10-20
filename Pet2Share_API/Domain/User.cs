@@ -280,7 +280,7 @@ namespace Pet2Share_API.Domain
 
         #region constructor
 
-        private SmallUser() 
+        internal SmallUser() 
         {
             this.Id = 0;
             this.Username = "Guest";
@@ -298,6 +298,16 @@ namespace Pet2Share_API.Domain
 
         public SmallUser(User user) : base()
         {
+            this.Id = user.Id;
+            this.Username = user.Username;
+            this.Name = user.P.FirstName + " " + user.P.LastName;
+            this.ProfilePictureURL = user.P.ProfilePictureURL;
+        }
+
+        public SmallUser(DAL.User dUser)
+            : base()
+        {
+            User user = new User(dUser);
             this.Id = user.Id;
             this.Username = user.Username;
             this.Name = user.P.FirstName + " " + user.P.LastName;

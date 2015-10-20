@@ -33,6 +33,9 @@
         <AssociationConnector Association="Pet2ShareModel.FK_Post_Uploads_Post" />
         <AssociationConnector Association="Pet2ShareModel.FK_Post_PostType" />
         <AssociationConnector Association="Pet2ShareModel.FK_PostLikes_Post" />
+        <EntityTypeShape EntityType="Pet2ShareModel.Connection" Width="1.5" PointX="5.25" PointY="11.375" />
+        <AssociationConnector Association="Pet2ShareModel.FK_Connection_AUser" />
+        <AssociationConnector Association="Pet2ShareModel.FK_Connection_IUser" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
