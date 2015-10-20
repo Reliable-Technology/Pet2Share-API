@@ -428,6 +428,10 @@
           <Parameter Name="Id" Type="int" Mode="In" />
           <Parameter Name="Active" Type="bit" Mode="In" />
         </Function>
+        <Function Name="ConnectionStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MyUserId" Type="int" Mode="In" />
+          <Parameter Name="OtherUserId" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteAddressById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
@@ -835,7 +839,11 @@
           <Parameter Name="UserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SearchUser" ReturnType="Collection(Pet2ShareModel.SearchUser_Result)">
-            <Parameter Name="SearchString" Mode="In" Type="String" />
+          <Parameter Name="SearchString" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ConnectionStatus" ReturnType="Collection(Int32)">
+            <Parameter Name="MyUserId" Mode="In" Type="Int32" />
+            <Parameter Name="OtherUserId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
@@ -1782,6 +1790,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ConnectionStatus" FunctionName="Pet2ShareModel.Store.ConnectionStatus" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

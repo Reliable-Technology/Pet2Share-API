@@ -484,5 +484,18 @@ namespace Pet2Share_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchUser_Result>("SearchUser", searchStringParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> ConnectionStatus(Nullable<int> myUserId, Nullable<int> otherUserId)
+        {
+            var myUserIdParameter = myUserId.HasValue ?
+                new ObjectParameter("MyUserId", myUserId) :
+                new ObjectParameter("MyUserId", typeof(int));
+    
+            var otherUserIdParameter = otherUserId.HasValue ?
+                new ObjectParameter("OtherUserId", otherUserId) :
+                new ObjectParameter("OtherUserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("ConnectionStatus", myUserIdParameter, otherUserIdParameter);
+        }
     }
 }
