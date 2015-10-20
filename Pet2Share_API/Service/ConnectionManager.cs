@@ -21,7 +21,11 @@ namespace Pet2Share_API.Service
             int result;
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.GetMyConnection(user.Id).ToList().Count;
+                //TODO: Correct it so that you dont return the complete set of object
+                result = (from dalUser in context.Users
+                          where dalUser.Id == user.Id
+                          select dalUser.Id).Count();
+                //result = context.GetMyConnection(user.Id).ToList().Count;
             }
             return result;
         }
