@@ -13,6 +13,7 @@ namespace Pet2Share_API.Service
     public class UserProfileManager
     {
         public User user { get; set; }
+        public static int UserId { get; set; }
 
         private UserProfileManager()
         {
@@ -189,10 +190,35 @@ namespace Pet2Share_API.Service
             return sUser;
         }
 
-        public static User GetUser(int userId)
+
+        /// <summary>
+        /// This method is used if you are logged into one account and check the profile of other user
+        /// </summary>
+        /// <param name="myUserId">Logged in user Id</param>
+        /// <param name="otherUserId">User Id the of profile the is accessed by the user</param>
+        /// <param name="connType">This outputs the type of connection between the two users</param>
+        /// <returns>Returns the profile of queried user</returns>
+        public User GetOtherUserProfile(int myUserId, int otherUserId, out ConnectionType connType)
         {
-            User user = new User(userId);
+            connType = ConnectionType.Connected;
+            User user = new User(otherUserId);
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                int? result = context.ConnectionStatus(myUserId, otherUserId).FirstOrDefault();
+                if (result != null)
+                    connType = (ConnectionType)result.Value;
+            }
+
             return user;
         }
+    }
+
+    public enum ConnectionType 
+    {
+        NotConnected,
+        Connected,
+        ConnectionPendingFromMe,
+        ConnectionPendingFromFriend
     }
 }
