@@ -119,6 +119,9 @@
     <Compile Include="DAL\Post_Upload.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\SearchUser_Result.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\SocialMediaSource.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
