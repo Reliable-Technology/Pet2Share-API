@@ -74,7 +74,16 @@
     <Compile Include="DAL\BreedType.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Connection.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetAddressById_Result.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GetAvailableConnection_Result.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GetMyConnection_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\GetPersonById_Result.cs">
@@ -121,6 +130,7 @@
     </Compile>
     <Compile Include="Domain\Address.cs" />
     <Compile Include="Domain\BreedType.cs" />
+    <Compile Include="Domain\DomainBase.cs" />
     <Compile Include="Domain\Person.cs" />
     <Compile Include="Domain\Pet.cs" />
     <Compile Include="Domain\Post.cs" />
@@ -128,10 +138,12 @@
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AccountManagement.cs" />
+    <Compile Include="Service\ConnectionManager.cs" />
     <Compile Include="Service\PetProfileManager.cs" />
     <Compile Include="Service\PostManager.cs" />
     <Compile Include="Service\UserProfileManager.cs" />
     <Compile Include="Utility\BoolExt.cs" />
+    <Compile Include="Utility\ConfigMember.cs" />
     <Compile Include="Utility\ErrorHandler.cs" />
     <Compile Include="Utility\ImageProcessor.cs" />
     <Compile Include="Utility\Logger.cs" />

@@ -10,18 +10,9 @@
 namespace Pet2Share_API.DAL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class User
+    public partial class GetAvailableConnection_Result
     {
-        public User()
-        {
-            this.People = new HashSet<Person>();
-            this.PetProfiles = new HashSet<PetProfile>();
-            this.Connections = new HashSet<Connection>();
-            this.Connections1 = new HashSet<Connection>();
-        }
-    
         public int Id { get; set; }
         public string Username { get; set; }
         public byte[] Password { get; set; }
@@ -36,13 +27,5 @@ namespace Pet2Share_API.DAL
         public System.DateTime DateModified { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
-    
-        public virtual ICollection<Person> People { get; set; }
-        public virtual Person Person { get; set; }
-        public virtual ICollection<PetProfile> PetProfiles { get; set; }
-        public virtual SocialMediaSource SocialMediaSource { get; set; }
-        public virtual UserType UserType { get; set; }
-        public virtual ICollection<Connection> Connections { get; set; }
-        public virtual ICollection<Connection> Connections1 { get; set; }
     }
 }

@@ -41,6 +41,7 @@ namespace Pet2Share_API.DAL
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<PostComment> PostComments { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<Connection> Connections { get; set; }
     
         public virtual int ChangeActivePetProfileById(Nullable<int> id, Nullable<bool> active)
         {
@@ -412,6 +413,67 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("Id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePostCommentById", idParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> ApproveConnection(Nullable<int> aUserId, Nullable<int> iUserId)
+        {    
+            var aUserIdParameter = aUserId.HasValue ?
+                new ObjectParameter("AUserId", aUserId) :
+                new ObjectParameter("AUserId", typeof(int));
+
+            var iUserIdParameter = iUserId.HasValue ?
+                new ObjectParameter("Id", iUserId) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("ApproveConnection", aUserIdParameter, iUserIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> DeleteConnection(Nullable<int> iUserId, Nullable<int> aUserId)
+        {
+            var iUserIdParameter = iUserId.HasValue ?
+                new ObjectParameter("IUserId", iUserId) :
+                new ObjectParameter("IUserId", typeof(int));
+    
+            var aUserIdParameter = aUserId.HasValue ?
+                new ObjectParameter("AUserId", aUserId) :
+                new ObjectParameter("AUserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("DeleteConnection", iUserIdParameter, aUserIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> InsertUpdateConnection(Nullable<int> id, Nullable<int> iUserId, Nullable<int> aUserId)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var iUserIdParameter = iUserId.HasValue ?
+                new ObjectParameter("IUserId", iUserId) :
+                new ObjectParameter("IUserId", typeof(int));
+    
+            var aUserIdParameter = aUserId.HasValue ?
+                new ObjectParameter("AUserId", aUserId) :
+                new ObjectParameter("AUserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InsertUpdateConnection", idParameter, iUserIdParameter, aUserIdParameter);
+        }
+    
+        public virtual ObjectResult<GetAvailableConnection_Result> GetAvailableConnection(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAvailableConnection_Result>("GetAvailableConnection", userIdParameter);
+        }
+    
+        public virtual ObjectResult<GetMyConnection_Result> GetMyConnection(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyConnection_Result>("GetMyConnection", userIdParameter);
         }
     }
 }
