@@ -2,8 +2,10 @@
 using Pet2Share_API.Utility;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ServiceModel;
 using System.Web;
 
 namespace Pet2Share_Service
@@ -84,7 +86,7 @@ namespace Pet2Share_Service
 
         [DataMember]
         public string PhoneNumber { get; set; }
- 
+
 
     }
 
@@ -103,7 +105,7 @@ namespace Pet2Share_Service
 
         [DataMember]
         public int UserId { get; set; }
- 
+
         [DataMember]
         public string FirstName { get; set; }
 
@@ -123,13 +125,7 @@ namespace Pet2Share_Service
         public DateTime DateOfBirth { get; set; }
 
         [DataMember]
-        public string PrimaryPhone { get; set; }
-
-        [DataMember]
         public string SecondaryPhone { get; set; }
-
-        [DataMember]
-        public string AvatarUrl { get; set; }
 
         [DataMember]
         public string AboutMe { get; set; }
@@ -158,10 +154,10 @@ namespace Pet2Share_Service
     }
 
     [DataContract]
-    public class UserProfileUpdateResponse : ResponseObject
+    public class GeneralUpdateResponse : ResponseObject
     {
         [DataMember]
-        public BoolExt Results { get; set; }
+        public BoolExt[] Results { get; set; }
 
         //TODO: Need to add more fields later
     }
@@ -184,5 +180,214 @@ namespace Pet2Share_Service
         //TODO: Need to add more fields later
     }
 
+    [DataContract]
+    public class PetProfileUpdateRequest : RequestObject
+    {
+        [DataMember]
+        public int PetId { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string FamilyName { get; set; }
+
+        [DataMember]
+        public int UserId { get; set; }
+
+        [DataMember]
+        public int? PetTypeId { get; set; }
+
+        [DataMember]
+        public DateTime? DOB { get; set; }
+
+        //Removed because they are uploaded from seperate service
+        //[DataMember]
+        //public string ProfilePicture { get; set; }
+
+        //[DataMember]
+        //public string CoverPicture { get; set; }
+
+        [DataMember]
+        public string About { get; set; }
+
+        [DataMember]
+        public string FavFood { get; set; }
+
+        //TODO: Need to add more fields later
+    }
+
+    [DataContract]
+    public class PetProfileInsertRequest : RequestObject
+    {
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string FamilyName { get; set; }
+
+        [DataMember]
+        public int UserId { get; set; }
+
+        [DataMember]
+        public int? PetTypeId { get; set; }
+
+        [DataMember]
+        public DateTime? DOB { get; set; }
+
+        //Removing because they are update from seperate service 
+        //[DataMember]
+        //public string ProfilePicture { get; set; }
+
+        //[DataMember]
+        //public string CoverPicture { get; set; }
+
+        [DataMember]
+        public string About { get; set; }
+
+        [DataMember]
+        public string FavFood { get; set; }
+
+        //TODO: Need to add more fields later
+    }
+
+
+    [DataContract]
+    public class UploadPicRequest : RequestObject
+    {
+        [MessageHeader]
+        public int UserId { get; set; }
+
+        [MessageHeader]
+        public int PetId { get; set; }
+
+        [MessageHeader]
+        public int AlbumnId { get; set; }
+
+        [MessageHeader]
+        public bool isCoverPic { get; set; }
+
+        [MessageBodyMember]
+        public Stream FileContent { get; set; }
+
+    }
+
+    [DataContract]
+    public class AddPostRequest : RequestObject
+    {
+        [DataMember]
+        public int PostTypeId { get; set; }
+
+        [DataMember]
+        public string Description { get; set; }
+
+        [DataMember]
+        public int PostedBy { get; set; }
+
+        [DataMember]
+        public bool IsPostByPet { get; set; }
+
+    }
+
+    [DataContract]
+    public class UpdatePostRequest : RequestObject
+    {
+        [DataMember]
+        public int PostId { get; set; }
+
+        [DataMember]
+        public string PostDescription { get; set; }
+    }
+
+    [DataContract]
+    public class DeletePostRequest : RequestObject
+    {
+        [DataMember]
+        public int PostId { get; set; }
+    }
+
+    [DataContract]
+    public class PostLikeRequest : RequestObject
+    {
+        [DataMember]
+        public int PostId { get; set; }
+
+        [DataMember]
+        public int UserId { get; set; }
+
+    }
+
+    [DataContract]
+    public class AddCommentRequest : RequestObject
+    {
+        [DataMember]
+        public int PostId { get; set; }
+
+        [DataMember]
+        public int CommentedById { get; set; }
+
+        [DataMember]
+        public bool IsCommentedByPet { get; set; }
+
+        [DataMember]
+        public string CommentDescription { get; set; }
+    }
+
+    [DataContract]
+    public class UpdateCommentRequest : RequestObject
+    {
+        [DataMember]
+        public int CommentId { get; set; }
+
+        [DataMember]
+        public string CommentDescription { get; set; }
+    }
+
+    [DataContract]
+    public class DeleteCommentRequest : RequestObject
+    {
+        [DataMember]
+        public int CommentId { get; set; }
+
+    }
+
+    [DataContract]
+    public class GetCommentRequest : RequestObject
+    {
+        [DataMember]
+        public int PostId { get; set; }
+
+    }
+
+    [DataContract]
+    public class GetCommentResponse : ResponseObject
+    {
+        [DataMember]
+        public Comment[] Results { get; set; }
+    }
+
+
+    [DataContract]
+    public class GetPostsRequest : RequestObject
+    {
+        [DataMember]
+        public int ProfileId  { get; set; }
+
+        [DataMember]
+        public int PostCount { get; set; }
+
+        [DataMember]
+        public int PageNumber { get; set; }
+
+    }
+
+    [DataContract]
+    public class GetPostsResponse : ResponseObject
+    {
+        [DataMember]
+        public Post[] Results { get; set; }
+
+    }
 
 }

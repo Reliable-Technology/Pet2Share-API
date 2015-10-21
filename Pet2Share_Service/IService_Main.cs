@@ -25,11 +25,65 @@ namespace Pet2Share_Service
 
         [OperationContract]
         [WebInvoke(UriTemplate = "UpdateUserProfile", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        UserProfileUpdateResponse UpdateProfile(UserProfileUpdateRequest userObj);
+        GeneralUpdateResponse UpdateProfile(UserProfileUpdateRequest userObj);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "GetUserProfile", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         UserProfileGetResponse GetUserProfile(UserProfileGetRequest UserId);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "InsertPetProfile", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse InsertPetProfile(PetProfileInsertRequest PetObj);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "UpdatePetProfile", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse UpdatePetProfile(PetProfileUpdateRequest PetObj);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "UploadUserPic?UserId={UserId}&FileName={FileName}&IsCoverPic={IsCoverPic}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse UploadUserProfileCoverPic(Stream PicObj, string UserId, string FileName, string IsCoverPic);
+
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "UploadPetPic?PetId={PetId}&FileName={FileName}&IsCoverPic={IsCoverPic}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse UploadPetProfileCoverPic(Stream PicObj, string PetId, string FileName, string IsCoverPic);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "AddPost", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse AddPost(AddPostRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "UpdatePost", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse UpdatePost(UpdatePostRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "DeletePost", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse DeletePost(DeletePostRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "AddComment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse AddComment(AddCommentRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "UpdateComment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse UpdateComment(UpdateCommentRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "DeleteComment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse DeleteComment(DeleteCommentRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetComments", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GetCommentResponse GetComments(GetCommentRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetPostsByUser", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GetPostsResponse GetPostsByUser(GetPostsRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetPostsByPet", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GetPostsResponse GetPostsByPet(GetPostsRequest PostReq);
+
 
     }
 
