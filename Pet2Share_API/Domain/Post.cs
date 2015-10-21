@@ -239,6 +239,10 @@ namespace Pet2Share_API.Domain
             {
                 return new PostType(this.PostTypeId);
             }
+            set
+            {
+                PType = value;
+            }
         }
         [DataMember]
         public string Description { get; set; }
@@ -357,7 +361,7 @@ namespace Pet2Share_API.Domain
                     this.PostURL = ConfigMember.ImageURL + post.PostURL;
             }
             else
-                this.PostURL = null;
+                this.PostURL = "";
 
             this.PostedBy = post.PostedBy;
             this.IsPostByPet = post.IsPostByPet;
