@@ -77,6 +77,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddPhotoPostRequest.cs" />
     <Compile Include="BLResponseRequest.cs" />
     <Compile Include="Service_Main.svc.cs">
       <DependentUpon>Service_Main.svc</DependentUpon>

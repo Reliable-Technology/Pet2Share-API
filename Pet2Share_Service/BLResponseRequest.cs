@@ -308,6 +308,16 @@ namespace Pet2Share_Service
     }
 
     [DataContract]
+    public class AddPhotoPostRequest : AddPostRequest
+    {
+        [DataMember]
+        public Stream PicObj { get; set; }
+
+        [DataMember]
+        public string FileName { get; set; }
+    }
+
+    [DataContract]
     public class PostLikeRequest : RequestObject
     {
         [DataMember]

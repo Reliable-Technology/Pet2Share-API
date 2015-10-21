@@ -125,7 +125,6 @@ namespace Pet2Share_Service
             return UserProfileResultResp;
         }
 
-
         public GeneralUpdateResponse UpdatePetProfile(PetProfileUpdateRequest PetObj)
         {
             GeneralUpdateResponse PetProfileResultResp;
@@ -392,6 +391,48 @@ namespace Pet2Share_Service
                 else
                 {
                     PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while deleting your post. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PostResultResp;
+        }
+
+        public GeneralUpdateResponse AddPhotoPost(AddPhotoPostRequest PostReq)
+        {
+            GeneralUpdateResponse PostResultResp;
+
+            try
+            {
+                var Result = PostManager.AddPost(PostReq.PostTypeId, PostReq.Description, PostReq.PostedBy, PostReq.IsPostByPet);
+
+                //Upload photo for the post section
+                if(Result.Id > 0)
+                {
+                    if (string.IsNullOrEmpty(PostReq.FileName))
+                    {
+                        return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "File name cannot be empty") }, ErrorMsg = null };
+                    }
+
+                    string FileExtension = Path.GetExtension(PostReq.FileName);
+                    Pet2Share_API.Utility.ImageType FileType;
+                    if (!Enum.TryParse(FileExtension.TrimStart('.'), out FileType))
+                    {
+                        return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Only Jpg and Png file can be uploaded") }, ErrorMsg = null };
+                    }
+
+                    PostManager.UploadPostPicture(ReadFully(PostReq.PicObj), PostReq.FileName, FileType, Result.Id);
+                }
+
+                if (Result.Id > 0)
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "", Result.Id) }), ErrorMsg = null };
+                }
+                else
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while posting. Please try again!!") };
                 }
             }
             catch (Exception ex)
