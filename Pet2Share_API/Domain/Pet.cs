@@ -44,6 +44,8 @@ namespace Pet2Share_API.Domain
         public string About { get; set; }
         [DataMember]
         public string FavFood { get; set; }
+        [DataMember]
+        public bool IsVirtual { get; set; }
 
         #endregion
 

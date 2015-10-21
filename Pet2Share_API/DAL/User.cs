@@ -17,9 +17,9 @@ namespace Pet2Share_API.DAL
         public User()
         {
             this.People = new HashSet<Person>();
-            this.PetProfiles = new HashSet<PetProfile>();
             this.Connections = new HashSet<Connection>();
             this.Connections1 = new HashSet<Connection>();
+            this.PetProfiles = new HashSet<PetProfile>();
         }
     
         public int Id { get; set; }
@@ -39,10 +39,10 @@ namespace Pet2Share_API.DAL
     
         public virtual ICollection<Person> People { get; set; }
         public virtual Person Person { get; set; }
-        public virtual ICollection<PetProfile> PetProfiles { get; set; }
         public virtual SocialMediaSource SocialMediaSource { get; set; }
         public virtual UserType UserType { get; set; }
         public virtual ICollection<Connection> Connections { get; set; }
         public virtual ICollection<Connection> Connections1 { get; set; }
+        public virtual ICollection<PetProfile> PetProfiles { get; set; }
     }
 }

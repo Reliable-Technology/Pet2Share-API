@@ -24,6 +24,7 @@ namespace Pet2Share_API.DAL
         public string CoverPicture { get; set; }
         public string About { get; set; }
         public string FavFood { get; set; }
+        public bool IsVirtual { get; set; }
         public System.DateTime DateAdded { get; set; }
         public System.DateTime DateModified { get; set; }
         public bool IsActive { get; set; }

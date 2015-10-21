@@ -31,17 +31,17 @@ namespace Pet2Share_API.DAL
         public virtual DbSet<Album> Albums { get; set; }
         public virtual DbSet<BreedType> BreedTypes { get; set; }
         public virtual DbSet<Person> People { get; set; }
-        public virtual DbSet<PetProfile> PetProfiles { get; set; }
-        public virtual DbSet<PetType> PetTypes { get; set; }
         public virtual DbSet<Post_Upload> Post_Uploads { get; set; }
         public virtual DbSet<PostLike> PostLikes { get; set; }
-        public virtual DbSet<PostType> PostTypes { get; set; }
         public virtual DbSet<SocialMediaSource> SocialMediaSources { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<PostComment> PostComments { get; set; }
-        public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Connection> Connections { get; set; }
+        public virtual DbSet<PetProfile> PetProfiles { get; set; }
+        public virtual DbSet<PetType> PetTypes { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<PostType> PostTypes { get; set; }
     
         public virtual int ChangeActivePetProfileById(Nullable<int> id, Nullable<bool> active)
         {
@@ -186,51 +186,6 @@ namespace Pet2Share_API.DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdateAddress", idParameter, addressLine1Parameter, addressLine2Parameter, cityParameter, stateParameter, countryParameter, isBillingAddressParameter, isShippingAddressParameter, zipCodeParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePetProfile(Nullable<int> id, string name, string familyName, Nullable<int> userId, Nullable<int> petTypeId, Nullable<System.DateTime> dOB, string profilePicture, string about, string coverPicture, string favFood)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(int));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            var familyNameParameter = familyName != null ?
-                new ObjectParameter("FamilyName", familyName) :
-                new ObjectParameter("FamilyName", typeof(string));
-    
-            var userIdParameter = userId.HasValue ?
-                new ObjectParameter("UserId", userId) :
-                new ObjectParameter("UserId", typeof(int));
-    
-            var petTypeIdParameter = petTypeId.HasValue ?
-                new ObjectParameter("PetTypeId", petTypeId) :
-                new ObjectParameter("PetTypeId", typeof(int));
-    
-            var dOBParameter = dOB.HasValue ?
-                new ObjectParameter("DOB", dOB) :
-                new ObjectParameter("DOB", typeof(System.DateTime));
-    
-            var profilePictureParameter = profilePicture != null ?
-                new ObjectParameter("ProfilePicture", profilePicture) :
-                new ObjectParameter("ProfilePicture", typeof(string));
-    
-            var aboutParameter = about != null ?
-                new ObjectParameter("About", about) :
-                new ObjectParameter("About", typeof(string));
-    
-            var coverPictureParameter = coverPicture != null ?
-                new ObjectParameter("CoverPicture", coverPicture) :
-                new ObjectParameter("CoverPicture", typeof(string));
-    
-            var favFoodParameter = favFood != null ?
-                new ObjectParameter("FavFood", favFood) :
-                new ObjectParameter("FavFood", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePetProfile", idParameter, nameParameter, familyNameParameter, userIdParameter, petTypeIdParameter, dOBParameter, profilePictureParameter, aboutParameter, coverPictureParameter, favFoodParameter);
-        }
-    
         public virtual ObjectResult<Nullable<decimal>> InsertUpdateUser(Nullable<int> id, string username, string password, Nullable<int> primaryPersonId, string email, string phone, Nullable<int> socialMediaSourceId, string socialMediaUsername)
         {
             var idParameter = id.HasValue ?
@@ -292,31 +247,6 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("IsActive", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPetProfileByUserId_Result>("GetPetProfileByUserId", userIdParameter, isActiveParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePost(Nullable<int> id, Nullable<int> postTypeId, string description, Nullable<int> postedBy, Nullable<bool> isPostByPet)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(int));
-    
-            var postTypeIdParameter = postTypeId.HasValue ?
-                new ObjectParameter("PostTypeId", postTypeId) :
-                new ObjectParameter("PostTypeId", typeof(int));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("Description", description) :
-                new ObjectParameter("Description", typeof(string));
-    
-            var postedByParameter = postedBy.HasValue ?
-                new ObjectParameter("PostedBy", postedBy) :
-                new ObjectParameter("PostedBy", typeof(int));
-    
-            var isPostByPetParameter = isPostByPet.HasValue ?
-                new ObjectParameter("IsPostByPet", isPostByPet) :
-                new ObjectParameter("IsPostByPet", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePost", idParameter, postTypeIdParameter, descriptionParameter, postedByParameter, isPostByPetParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> InsertUpdatePostComment(Nullable<int> id, Nullable<int> postId, Nullable<int> commentedBy, Nullable<bool> isCommentedByPet, string comment)
@@ -496,6 +426,80 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("OtherUserId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("ConnectionStatus", myUserIdParameter, otherUserIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePost(Nullable<int> id, Nullable<int> postTypeId, string description, string postURL, Nullable<int> postedBy, Nullable<bool> isPostByPet)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var postTypeIdParameter = postTypeId.HasValue ?
+                new ObjectParameter("PostTypeId", postTypeId) :
+                new ObjectParameter("PostTypeId", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var postURLParameter = postURL != null ?
+                new ObjectParameter("PostURL", postURL) :
+                new ObjectParameter("PostURL", typeof(string));
+    
+            var postedByParameter = postedBy.HasValue ?
+                new ObjectParameter("PostedBy", postedBy) :
+                new ObjectParameter("PostedBy", typeof(int));
+    
+            var isPostByPetParameter = isPostByPet.HasValue ?
+                new ObjectParameter("IsPostByPet", isPostByPet) :
+                new ObjectParameter("IsPostByPet", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePost", idParameter, postTypeIdParameter, descriptionParameter, postURLParameter, postedByParameter, isPostByPetParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePetProfile(Nullable<int> id, string name, string familyName, Nullable<int> userId, Nullable<int> petTypeId, Nullable<System.DateTime> dOB, string profilePicture, string about, string coverPicture, string favFood)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var familyNameParameter = familyName != null ?
+                new ObjectParameter("FamilyName", familyName) :
+                new ObjectParameter("FamilyName", typeof(string));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var petTypeIdParameter = petTypeId.HasValue ?
+                new ObjectParameter("PetTypeId", petTypeId) :
+                new ObjectParameter("PetTypeId", typeof(int));
+    
+            var dOBParameter = dOB.HasValue ?
+                new ObjectParameter("DOB", dOB) :
+                new ObjectParameter("DOB", typeof(System.DateTime));
+    
+            var profilePictureParameter = profilePicture != null ?
+                new ObjectParameter("ProfilePicture", profilePicture) :
+                new ObjectParameter("ProfilePicture", typeof(string));
+    
+            var aboutParameter = about != null ?
+                new ObjectParameter("About", about) :
+                new ObjectParameter("About", typeof(string));
+    
+            var coverPictureParameter = coverPicture != null ?
+                new ObjectParameter("CoverPicture", coverPicture) :
+                new ObjectParameter("CoverPicture", typeof(string));
+    
+            var favFoodParameter = favFood != null ?
+                new ObjectParameter("FavFood", favFood) :
+                new ObjectParameter("FavFood", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePetProfile", idParameter, nameParameter, familyNameParameter, userIdParameter, petTypeIdParameter, dOBParameter, profilePictureParameter, aboutParameter, coverPictureParameter, favFoodParameter);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pet2Share_API.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,19 +12,72 @@ namespace Pet2Share_API.Domain
     public class PostType : DomainBase
     {
         #region members
+
         [DataMember]
         public string Name { get; set; }
-
+        
         #endregion
 
-        public PostType(string name)
+        #region Constructors
+
+        public PostType(int id)
         {
+            PostType postType = PostType.GetById(id);
+            this.Name = postType.Name;
+            this.DateAdded = postType.DateAdded;
+            this.DateModified = postType.DateModified;
+            this.IsActive = postType.IsActive;
+            this.IsDeleted = postType.IsDeleted;
+        }
+
+        public PostType(PostType postType)
+        {
+            this.Name = postType.Name;
+            this.DateAdded = postType.DateAdded;
+            this.DateModified = postType.DateModified;
+            this.IsActive = postType.IsActive;
+            this.IsDeleted = postType.IsDeleted;
+        }
+
+        public PostType(DAL.PostType postType)
+        {
+            this.Name = postType.Name;
+            this.DateAdded = postType.DateAdded;
+            this.DateModified = postType.DateModified;
+            this.IsActive = postType.IsActive;
+            this.IsDeleted = postType.IsDeleted;
+        }
+
+        private PostType(string name)
+        {
+            this.Id = 0;
             this.Name = name;
             this.DateAdded = DateTime.Now;
             this.DateModified = DateTime.Now;
             this.IsActive = true;
             this.IsDeleted = false;
         }
+
+        #endregion
+
+        #region Methods
+
+        public static PostType GetById(int id)
+        {
+            DAL.PostType postTypeObj;
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                postTypeObj = context.PostTypes.Where(pt => pt.ID == id).FirstOrDefault();
+            }
+            if (postTypeObj != null)
+            {
+                PostType postType = new PostType(postTypeObj);
+                return postType;
+            }
+            return null;
+        }
+
+        #endregion
     }
 
     [DataContract]
@@ -179,11 +233,21 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public int PostTypeId { get; set; }
         [DataMember]
+        public PostType PType 
+        { 
+            get
+            {
+                return new PostType(this.PostTypeId);
+            }
+        }
+        [DataMember]
         public string Description { get; set; }
         [DataMember]
         public int PostedBy { get; set; }
         [DataMember]
         public bool IsPostByPet { get; set; }
+        [DataMember]
+        public string PostURL { get; set; }
         [DataMember]
         public int PostLikeCount { get; set; }
         [DataMember]
@@ -192,6 +256,8 @@ namespace Pet2Share_API.Domain
         public int PostCommentCount { get; set; }
         [DataMember]
         public List<Comment> Comments { get; set; }
+        [DataMember]
+        public bool IsPublic { get; set; }
         [DataMember]
         public SmallUser SUser { get; set; }
         [DataMember]
@@ -206,19 +272,22 @@ namespace Pet2Share_API.Domain
             this.Id = 0;
             this.Description = "Please post something!";
             this.PostTypeId = 1;
+            this.PostURL = "";
             this.PostLikeCount = 0;
             this.PostLikedBy = new List<int>();
             this.PostCommentCount = 0;
             this.Comments = new List<Comment>();
+            this.IsPublic = true;
             this.DateAdded = DateTime.Now;
             this.DateModified = DateTime.Now;
             this.IsActive = true;
             this.IsDeleted = false;
         }
 
-        public Post(string description, int postedBy, bool isPostByPet) : base()
+        public Post(string description, int postedBy, bool isPostByPet, string postURL = "") : base()
         {
             this.Description = description;
+            this.PostURL = postURL;
             this.PostedBy = postedBy;
             this.IsPostByPet = isPostByPet;
         }
@@ -229,11 +298,13 @@ namespace Pet2Share_API.Domain
             this.Id = post.Id;
             this.PostTypeId = post.PostTypeId;
             this.Description = post.Description;
+            this.PostURL = post.PostURL;
             this.PostedBy = post.PostedBy;
             this.IsPostByPet = post.IsPostByPet;
             this.PostLikeCount = post.PostLikeCount;
             this.PostLikedBy = post.PostLikedBy;
             this.PostCommentCount = post.PostCommentCount;
+            this.IsPublic = post.IsPublic;
             this.DateAdded = post.DateAdded;
             this.DateModified = post.DateModified;
             this.IsActive = post.IsActive;
@@ -252,11 +323,13 @@ namespace Pet2Share_API.Domain
             this.Id = post.Id;
             this.PostTypeId = post.PostTypeId;
             this.Description = post.Description;
+            this.PostURL = post.PostURL;
             this.PostedBy = post.PostedBy;
             this.IsPostByPet = post.IsPostByPet;
             this.PostLikeCount = post.PostLikeCount;
             this.PostLikedBy = post.PostLikedBy;
             this.PostCommentCount = post.PostCommentCount;
+            this.IsPublic = this.IsPublic;
             this.DateAdded = post.DateAdded;
             this.DateModified = post.DateModified;
             this.IsActive = post.IsActive;
@@ -275,6 +348,17 @@ namespace Pet2Share_API.Domain
             this.Id = post.Id;
             this.PostTypeId = post.PostTypeId;
             this.Description = post.Description;
+
+            if (!string.IsNullOrEmpty(post.PostURL))
+            {
+                if (post.PostURL.Contains("http://"))
+                    this.PostURL = post.PostURL;
+                else
+                    this.PostURL = ConfigMember.ImageURL + post.PostURL;
+            }
+            else
+                this.PostURL = null;
+
             this.PostedBy = post.PostedBy;
             this.IsPostByPet = post.IsPostByPet;
             this.PostLikeCount = post.PostLikeCount;
@@ -289,6 +373,7 @@ namespace Pet2Share_API.Domain
                 }
             }
             this.PostCommentCount = post.PostCommentCount;
+            this.IsPublic = post.IsPublic;
             this.DateAdded = post.DateAdded;
             this.DateModified = post.DateModified;
             this.IsActive = post.IsActive;
@@ -302,10 +387,11 @@ namespace Pet2Share_API.Domain
                 this.SUser = new SmallUser(post.PostedBy);
         }
 
-        public Post(string description, int postedById, bool isPostByPet, int postTypeId) : base()
+        public Post(string description, int postedById, bool isPostByPet, int postTypeId, string postURL  = "") : base()
         {
             this.PostTypeId = postTypeId;
             this.Description = description;
+            this.PostURL = postURL;
             this.PostedBy = postedById;
             this.IsPostByPet = isPostByPet;
             if (isPostByPet)
@@ -362,7 +448,7 @@ namespace Pet2Share_API.Domain
             {
                 using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
                 {
-                    result = Convert.ToInt32(context.InsertUpdatePost(this.Id, this.PostTypeId, this.Description, this.PostedBy, this.IsPostByPet).FirstOrDefault());
+                    result = Convert.ToInt32(context.InsertUpdatePost(this.Id, this.PostTypeId, this.Description, this.PostURL, this.PostedBy, this.IsPostByPet).FirstOrDefault());
                     if (result > 0)
                         this.Id = result;
                 }
@@ -378,7 +464,7 @@ namespace Pet2Share_API.Domain
             {
                 using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
                 {
-                    result = Convert.ToInt32(context.InsertUpdatePost(post.Id, post.PostTypeId, post.Description, post.PostedBy, post.IsPostByPet).FirstOrDefault());
+                    result = Convert.ToInt32(context.InsertUpdatePost(post.Id, post.PostTypeId, post.Description, post.PostURL, post.PostedBy, post.IsPostByPet).FirstOrDefault());
                     if (result > 0)
                         post.Id = result;
                 }

@@ -107,6 +107,44 @@ namespace Pet2Share_API.Service
             return post;
         }
 
+        public static Post AddPost(int postTypeId, string description, int postedById, bool isPostedByPet, string postURL)
+        {
+            Post post = new Post(description, postedById, isPostedByPet, postTypeId, postURL);
+            post.Save();
+            return post;
+        }
+
+        public static BoolExt UploadPostPicture(Byte[] binaryImage, string filename, ImageType imageType, int postId)
+        {
+            string savePath = "";
+            string relativePath = "";
+            string fullFileName = "";
+
+            Post post = new Post(postId);
+
+            if (post.IsPostByPet == false)
+            {
+                relativePath = "/" + post.PostedBy + "/Post/" + post.Id;
+            }
+            else
+            {
+                Pet pet = new Pet(post.PostedBy);
+                relativePath = "/" + pet.UserId + "/" + post.PostedBy + "/Post/" + post.Id;
+            }
+
+            
+            fullFileName = post.PostedBy.ToString() + "_" + post.Id.ToString() + filename;// +"." + imageType.ToString();
+
+            savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
+
+            post.PostURL = relativePath + "/" + fullFileName;
+            post.Save();
+
+            BoolExt result = new BoolExt(true, ConfigMember.ImageURL + post.PostURL);
+
+            return result;
+        }
+
         public static Post UpdatePost(Post post)
         {
             post.Save();
