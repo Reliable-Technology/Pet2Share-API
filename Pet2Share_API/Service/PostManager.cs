@@ -82,12 +82,21 @@ namespace Pet2Share_API.Service
                     if (postEndCount != 0)
                     {
                         if (forCounter >= postStartCount && forCounter < postEndCount)
-                            postList.Add(new Post(dalPost));
+                        {
+                            Post post = new Post(dalPost);
+                            post.Comments = GetComments(post.Id, 3);
+                            postList.Add(post);
+
+                        }
                         else if (forCounter >= postEndCount)
                             break;
                     }
                     else
-                        postList.Add(new Post(dalPost));
+                    {
+                        Post post = new Post(dalPost);
+                        post.Comments = GetComments(post.Id, 3);
+                        postList.Add(post);
+                    }
                     forCounter++;
                 }
             }
