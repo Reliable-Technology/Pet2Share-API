@@ -76,6 +76,39 @@ namespace Pet2Share_API.Service
                 return new BoolExt(false, "Update Failed, Please check application logs for more details");
         }
 
+        public static BoolExt AddVirtualProfile(User user)
+        {
+            Pet pet = new Pet();
+
+            pet.Name = user.P.FirstName + "'s Pet";
+            pet.FamilyName = user.P.LastName;
+
+            pet.UserId = user.Id;
+            pet.PetTypeId = 1;
+            pet.DOB = null;
+            pet.ProfilePicture = GetRandomProfilePicture();
+            pet.CoverPicture = GetRandomCoverPicture();
+            pet.About = "I am the pet of " + user.P.FirstName + "the most loving person in the world";
+            pet.FavFood = "";
+            pet.IsVirtual = true;
+
+            int result = pet.Save();
+            if (result > 0)
+                return new BoolExt(true, "");
+            else
+                return new BoolExt(false, "Update Failed, Please check application logs for more details");
+        }
+
+        public static string GetRandomProfilePicture()
+        {
+            return "";
+        }
+
+        public static string GetRandomCoverPicture()
+        {
+            return "";
+        }
+
         public BoolExt UpdateProfile()
         {
             return new BoolExt(false);

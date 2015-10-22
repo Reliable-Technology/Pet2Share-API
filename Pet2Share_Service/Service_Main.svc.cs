@@ -400,33 +400,43 @@ namespace Pet2Share_Service
             return PostResultResp;
         }
 
-        public GeneralUpdateResponse AddPhotoPost(AddPhotoPostRequest PostReq)
+        public GeneralUpdateResponse AddPhotoPost(Stream PicObj, string FileName, string Description, string PostedBy, string IsPostByPet)
         {
+            //return new GeneralUpdateResponse();
             GeneralUpdateResponse PostResultResp;
 
             try
             {
-                var Result = PostManager.AddPost(PostReq.PostTypeId, PostReq.Description, PostReq.PostedBy, PostReq.IsPostByPet);
+                int postedById;
+                bool isPostByPet;
 
-                //Upload photo for the post section
-                if(Result.Id > 0)
+                Pet2Share_API.Domain.Post Result = null;
+
+                if (int.TryParse(PostedBy, out postedById) && bool.TryParse(IsPostByPet, out isPostByPet))
                 {
-                    if (string.IsNullOrEmpty(PostReq.FileName))
-                    {
-                        return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "File name cannot be empty") }, ErrorMsg = null };
-                    }
 
-                    string FileExtension = Path.GetExtension(PostReq.FileName);
-                    Pet2Share_API.Utility.ImageType FileType;
-                    if (!Enum.TryParse(FileExtension.TrimStart('.'), out FileType))
-                    {
-                        return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Only Jpg and Png file can be uploaded") }, ErrorMsg = null };
-                    }
+                    Result = PostManager.AddPost(2, Description, postedById, isPostByPet);
 
-                    PostManager.UploadPostPicture(ReadFully(PostReq.PicObj), PostReq.FileName, FileType, Result.Id);
+                    //Upload photo for the post section
+                    if (Result.Id > 0)
+                    {
+                        if (string.IsNullOrEmpty(FileName))
+                        {
+                            return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "File name cannot be empty") }, ErrorMsg = null };
+                        }
+
+                        string FileExtension = Path.GetExtension(FileName);
+                        Pet2Share_API.Utility.ImageType FileType;
+                        if (!Enum.TryParse(FileExtension.TrimStart('.'), out FileType))
+                        {
+                            return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Only Jpg and Png file can be uploaded") }, ErrorMsg = null };
+                        }
+
+                        PostManager.UploadPostPicture(ReadFully(PicObj), FileName, FileType, Result.Id);
+                    }
                 }
 
-                if (Result.Id > 0)
+                if (Result != null)
                 {
                     PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "", Result.Id) }), ErrorMsg = null };
                 }
