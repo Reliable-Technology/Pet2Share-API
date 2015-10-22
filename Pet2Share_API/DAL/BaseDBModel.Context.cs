@@ -457,7 +457,7 @@ namespace Pet2Share_API.DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePost", idParameter, postTypeIdParameter, descriptionParameter, postURLParameter, postedByParameter, isPostByPetParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePetProfile(Nullable<int> id, string name, string familyName, Nullable<int> userId, Nullable<int> petTypeId, Nullable<System.DateTime> dOB, string profilePicture, string about, string coverPicture, string favFood)
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePetProfile(Nullable<int> id, string name, string familyName, Nullable<int> userId, Nullable<int> petTypeId, Nullable<System.DateTime> dOB, string profilePicture, string about, string coverPicture, string favFood, Nullable<bool> isVirtual)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("Id", id) :
@@ -499,7 +499,11 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("FavFood", favFood) :
                 new ObjectParameter("FavFood", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePetProfile", idParameter, nameParameter, familyNameParameter, userIdParameter, petTypeIdParameter, dOBParameter, profilePictureParameter, aboutParameter, coverPictureParameter, favFoodParameter);
+            var isVirtualParameter = isVirtual.HasValue ?
+                new ObjectParameter("IsVirtual", isVirtual) :
+                new ObjectParameter("IsVirtual", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePetProfile", idParameter, nameParameter, familyNameParameter, userIdParameter, petTypeIdParameter, dOBParameter, profilePictureParameter, aboutParameter, coverPictureParameter, favFoodParameter, isVirtualParameter);
         }
     }
 }

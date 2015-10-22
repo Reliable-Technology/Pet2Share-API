@@ -517,6 +517,7 @@
           <Parameter Name="About" Type="varchar" Mode="In" />
           <Parameter Name="CoverPicture" Type="varchar" Mode="In" />
           <Parameter Name="FavFood" Type="varchar" Mode="In" />
+          <Parameter Name="IsVirtual" Type="bit" Mode="In" />
         </Function>
         <Function Name="InsertUpdatePost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -849,6 +850,7 @@
             <Parameter Name="About" Mode="In" Type="String" />
             <Parameter Name="CoverPicture" Mode="In" Type="String" />
             <Parameter Name="FavFood" Mode="In" Type="String" />
+            <Parameter Name="IsVirtual" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
