@@ -85,7 +85,7 @@ namespace Pet2Share_API.Service
 
             pet.UserId = user.Id;
             pet.PetTypeId = 1;
-            pet.DOB = null;
+            pet.DOB = DateTime.Now.AddYears(-5);
             pet.ProfilePicture = GetRandomProfilePicture();
             pet.CoverPicture = GetRandomCoverPicture();
             pet.About = "I am the pet of " + user.P.FirstName + "the most loving person in the world";
