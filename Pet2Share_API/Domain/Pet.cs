@@ -250,7 +250,7 @@ namespace Pet2Share_API.Domain
 
         #region constructors
 
-        private SmallPet() 
+        internal SmallPet() 
         {
             this.Id = 0;
             this.Name = "Guest";

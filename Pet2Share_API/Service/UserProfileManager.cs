@@ -205,7 +205,7 @@ namespace Pet2Share_API.Service
 
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                int? result = context.ConnectionStatus(myUserId, otherUserId).FirstOrDefault();
+                int? result = context.ConnectionStatus(myUserId, otherUserId, false).FirstOrDefault();
                 if (result != null)
                     connType = (ConnectionType)result.Value;
             }

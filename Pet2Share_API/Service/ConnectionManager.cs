@@ -30,6 +30,20 @@ namespace Pet2Share_API.Service
             return result;
         }
 
+        public static int GetMyConnectionCount(Pet pet)
+        {
+            int result;
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                //TODO: Correct it so that you dont return the complete set of object
+                result = (from dalConnection in context.PetConnections
+                          where dalConnection.IPetId == pet.Id || dalConnection.APetId == pet.Id
+                          select dalConnection.Id).Count();
+                //result = context.GetMyConnection(user.Id).ToList().Count;
+            }
+            return result;
+        }
+
         public static SmallUser[] GetMyConnection(User user)
         {
             List<SmallUser> sUserList = new List<SmallUser>();
@@ -97,7 +111,19 @@ namespace Pet2Share_API.Service
             bool? result;
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.ApproveConnection(accepter.Id, requester.Id).FirstOrDefault();
+                result = context.ApproveConnection(accepter.Id, requester.Id, false).FirstOrDefault();
+            }
+            if (result.HasValue && result == true)
+                return new BoolExt(true, "");
+            return new BoolExt(false, "");
+        }
+
+        public static BoolExt ApproveConnection(Pet accepter, Pet requester)
+        {
+            bool? result;
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.ApproveConnection(accepter.Id, requester.Id, true).FirstOrDefault();
             }
             if (result.HasValue && result == true)
                 return new BoolExt(true, "");
@@ -109,7 +135,19 @@ namespace Pet2Share_API.Service
             bool? result;
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                result = context.DeleteConnection(accepter.Id, requester.Id).FirstOrDefault();
+                result = context.DeleteConnection(accepter.Id, requester.Id, false).FirstOrDefault();
+            }
+            if (result.HasValue && result == true)
+                return new BoolExt(true, "");
+            return new BoolExt(false, "");
+        }
+
+        public static BoolExt DeleteConnection(Pet accepter, Pet requester)
+        {
+            bool? result;
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.DeleteConnection(accepter.Id, requester.Id, true).FirstOrDefault();
             }
             if (result.HasValue && result == true)
                 return new BoolExt(true, "");
@@ -135,6 +173,26 @@ namespace Pet2Share_API.Service
                 }
             }
             return sUserList.ToArray();
+        }
+
+        public static SmallPet[] SearchPet(string searchString, int petCount = 0, int pageNumber = 1)
+        {
+            List<SmallPet> sPetList = new List<SmallPet>();
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                List<DAL.SearchPet_Result> connectionList = context.SearchPet(searchString).ToList<DAL.SearchPet_Result>();
+                foreach (DAL.SearchPet_Result result in connectionList)
+                {
+                    SmallPet sPet = new SmallPet();
+                    sPet.Id = result.Id;
+                    sPet.Name = result.Name;
+                    sPet.FamilyName = result.FamilyName;
+                    sPet.ProfilePictureURL = result.ProfilePicture;
+
+                    sPetList.Add(sPet);
+                }
+            }
+            return sPetList.ToArray();
         }
     }
 }

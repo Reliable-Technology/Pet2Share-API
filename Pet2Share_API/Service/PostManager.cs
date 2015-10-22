@@ -103,6 +103,11 @@ namespace Pet2Share_API.Service
             return postList;
         }
 
+        public static List<Post> GetMyFeed(int id, bool isRequesterPet = true)
+        {
+            return null;
+        }
+
         public static Post AddPost(Post post)
         {
             post.Save();

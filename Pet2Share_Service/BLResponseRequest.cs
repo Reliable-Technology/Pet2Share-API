@@ -252,6 +252,13 @@ namespace Pet2Share_Service
         //TODO: Need to add more fields later
     }
 
+    [DataContract]
+    public class VirtualPetInsertRequest : RequestObject
+    {
+        [DataMember]
+        public int Id { get; set; }
+    }
+
 
     [DataContract]
     public class UploadPicRequest : RequestObject

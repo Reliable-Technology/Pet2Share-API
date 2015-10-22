@@ -173,6 +173,30 @@ namespace Pet2Share_Service
             return PetProfileResultResp;
         }
 
+        public GeneralUpdateResponse InsertVirtualPetProfile(VirtualPetInsertRequest UserId)
+        {
+            GeneralUpdateResponse PetProfileResultResp;
+
+            try
+            {
+                Pet2Share_API.Domain.User u = new Pet2Share_API.Domain.User(UserId.Id);
+                var Result = PetProfileManager.AddVirtualProfile(u);
+                if (Result.IsSuccessful)
+                {
+                    PetProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { Result }), ErrorMsg = null };
+                }
+                else
+                {
+                    PetProfileResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error adding pet to your profile. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PetProfileResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PetProfileResultResp;
+        }
+
         //public GeneralUpdateResponse UploadUserPic(Stream PicObj, string UserId, string PetId, string UploadType, string FileName)
         //{
 
