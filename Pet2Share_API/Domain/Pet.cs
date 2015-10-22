@@ -55,6 +55,7 @@ namespace Pet2Share_API.Domain
         {
             this.Id = 0;
             this.Name = "Pet Guest";
+            this.IsVirtual = false;
             this.DateAdded = DateTime.Now;
             this.DateModified = DateTime.Now;
             this.IsActive = true;
@@ -173,7 +174,8 @@ namespace Pet2Share_API.Domain
             {
                 using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
                 {
-                    result = Convert.ToInt32(context.InsertUpdatePetProfile(this.Id, this.Name, this.FamilyName, this.UserId, this.PetTypeId, this.DOB, this.ProfilePicture, this.About, this.CoverPicture, this.FavFood).FirstOrDefault());
+                    //The logic to update Virtual Pet or insert a new one is written in stored procedure
+                    result = Convert.ToInt32(context.InsertUpdatePetProfile(this.Id, this.Name, this.FamilyName, this.UserId, this.PetTypeId, this.DOB, this.ProfilePicture, this.About, this.CoverPicture, this.FavFood, this.IsVirtual).FirstOrDefault());
                     if (result > 0)
                         this.Id = result;
                 }
@@ -189,7 +191,7 @@ namespace Pet2Share_API.Domain
             {
                 using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
                 {
-                    result = Convert.ToInt32(context.InsertUpdatePetProfile(pet.Id, pet.Name, pet.FamilyName, pet.UserId, pet.PetTypeId, pet.DOB, pet.ProfilePicture, pet.About, pet.CoverPicture, pet.FavFood).FirstOrDefault());
+                    result = Convert.ToInt32(context.InsertUpdatePetProfile(pet.Id, pet.Name, pet.FamilyName, pet.UserId, pet.PetTypeId, pet.DOB, pet.ProfilePicture, pet.About, pet.CoverPicture, pet.FavFood, pet.IsVirtual).FirstOrDefault());
                     if (result > 0)
                         pet.Id = result;
                 }
