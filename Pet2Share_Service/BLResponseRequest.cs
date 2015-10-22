@@ -295,6 +295,8 @@ namespace Pet2Share_Service
         [DataMember]
         public bool IsPostByPet { get; set; }
 
+        [DataMember]
+        public bool IsPublic { get; set; }
     }
 
     [DataContract]

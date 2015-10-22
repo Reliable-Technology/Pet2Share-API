@@ -355,35 +355,6 @@ namespace Pet2Share_API.DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchUser_Result>("SearchUser", searchStringParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePost(Nullable<int> id, Nullable<int> postTypeId, string description, string postURL, Nullable<int> postedBy, Nullable<bool> isPostByPet)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(int));
-    
-            var postTypeIdParameter = postTypeId.HasValue ?
-                new ObjectParameter("PostTypeId", postTypeId) :
-                new ObjectParameter("PostTypeId", typeof(int));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("Description", description) :
-                new ObjectParameter("Description", typeof(string));
-    
-            var postURLParameter = postURL != null ?
-                new ObjectParameter("PostURL", postURL) :
-                new ObjectParameter("PostURL", typeof(string));
-    
-            var postedByParameter = postedBy.HasValue ?
-                new ObjectParameter("PostedBy", postedBy) :
-                new ObjectParameter("PostedBy", typeof(int));
-    
-            var isPostByPetParameter = isPostByPet.HasValue ?
-                new ObjectParameter("IsPostByPet", isPostByPet) :
-                new ObjectParameter("IsPostByPet", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePost", idParameter, postTypeIdParameter, descriptionParameter, postURLParameter, postedByParameter, isPostByPetParameter);
-        }
-    
         public virtual ObjectResult<Nullable<decimal>> InsertUpdatePetProfile(Nullable<int> id, string name, string familyName, Nullable<int> userId, Nullable<int> petTypeId, Nullable<System.DateTime> dOB, string profilePicture, string about, string coverPicture, string favFood, Nullable<bool> isVirtual)
         {
             var idParameter = id.HasValue ?
@@ -574,6 +545,39 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("IsRequesterPet", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyFeed_Result>("GetMyFeed", idParameter, isRequesterPetParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePost(Nullable<int> id, Nullable<int> postTypeId, string description, string postURL, Nullable<int> postedBy, Nullable<bool> isPostByPet, Nullable<bool> isPublic)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var postTypeIdParameter = postTypeId.HasValue ?
+                new ObjectParameter("PostTypeId", postTypeId) :
+                new ObjectParameter("PostTypeId", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var postURLParameter = postURL != null ?
+                new ObjectParameter("PostURL", postURL) :
+                new ObjectParameter("PostURL", typeof(string));
+    
+            var postedByParameter = postedBy.HasValue ?
+                new ObjectParameter("PostedBy", postedBy) :
+                new ObjectParameter("PostedBy", typeof(int));
+    
+            var isPostByPetParameter = isPostByPet.HasValue ?
+                new ObjectParameter("IsPostByPet", isPostByPet) :
+                new ObjectParameter("IsPostByPet", typeof(bool));
+    
+            var isPublicParameter = isPublic.HasValue ?
+                new ObjectParameter("IsPublic", isPublic) :
+                new ObjectParameter("IsPublic", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePost", idParameter, postTypeIdParameter, descriptionParameter, postURLParameter, postedByParameter, isPostByPetParameter, isPublicParameter);
         }
     }
 }

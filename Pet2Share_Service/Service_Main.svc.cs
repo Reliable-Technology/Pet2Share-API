@@ -359,7 +359,7 @@ namespace Pet2Share_Service
             try
             {
 
-                var Result = PostManager.AddPost(PostReq.PostTypeId, PostReq.Description, PostReq.PostedBy, PostReq.IsPostByPet);
+                var Result = PostManager.AddPost(PostReq.PostTypeId, PostReq.Description, PostReq.PostedBy, PostReq.IsPostByPet, PostReq.IsPublic);
                 if (Result.Id > 0)
                 {
                     PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "", Result.Id) }), ErrorMsg = null };

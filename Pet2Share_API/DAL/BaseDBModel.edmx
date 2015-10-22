@@ -557,6 +557,7 @@
           <Parameter Name="PostURL" Type="varchar" Mode="In" />
           <Parameter Name="PostedBy" Type="int" Mode="In" />
           <Parameter Name="IsPostByPet" Type="bit" Mode="In" />
+          <Parameter Name="IsPublic" Type="bit" Mode="In" />
         </Function>
         <Function Name="InsertUpdatePostComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -843,14 +844,6 @@
             <End Role="Post" EntitySet="Posts" />
             <End Role="PostLike" EntitySet="PostLikes" />
           </AssociationSet>
-          <FunctionImport Name="InsertUpdatePost" ReturnType="Collection(Decimal)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
-            <Parameter Name="PostTypeId" Mode="In" Type="Int32" />
-            <Parameter Name="Description" Mode="In" Type="String" />
-            <Parameter Name="PostURL" Mode="In" Type="String" />
-            <Parameter Name="PostedBy" Mode="In" Type="Int32" />
-            <Parameter Name="IsPostByPet" Mode="In" Type="Boolean" />
-          </FunctionImport>
           <FunctionImport Name="InsertUpdatePetProfile" ReturnType="Collection(Decimal)">
             <Parameter Name="Id" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
@@ -908,6 +901,15 @@
           <FunctionImport Name="GetMyFeed" ReturnType="Collection(Pet2ShareModel.GetMyFeed_Result)">
             <Parameter Name="Id" Mode="In" Type="Int32" />
             <Parameter Name="IsRequesterPet" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUpdatePost" ReturnType="Collection(Decimal)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="PostTypeId" Mode="In" Type="Int32" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="PostURL" Mode="In" Type="String" />
+            <Parameter Name="PostedBy" Mode="In" Type="Int32" />
+            <Parameter Name="IsPostByPet" Mode="In" Type="Boolean" />
+            <Parameter Name="IsPublic" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
@@ -1895,7 +1897,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="InsertUpdatePost" FunctionName="Pet2ShareModel.Store.InsertUpdatePost" />
           <FunctionImportMapping FunctionImportName="InsertUpdatePetProfile" FunctionName="Pet2ShareModel.Store.InsertUpdatePetProfile" />
           <FunctionImportMapping FunctionImportName="ApproveConnection" FunctionName="Pet2ShareModel.Store.ApproveConnection" />
           <FunctionImportMapping FunctionImportName="ConnectionStatus" FunctionName="Pet2ShareModel.Store.ConnectionStatus" />
@@ -2039,6 +2040,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertUpdatePost" FunctionName="Pet2ShareModel.Store.InsertUpdatePost" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -175,16 +175,16 @@ namespace Pet2Share_API.Service
             return post;
         }
 
-        public static Post AddPost(int postTypeId, string description, int postedById, bool isPostedByPet)
+        public static Post AddPost(int postTypeId, string description, int postedById, bool isPostedByPet, bool isPublic = true)
         {
-            Post post = new Post(description, postedById, isPostedByPet, postTypeId);
+            Post post = new Post(description, postedById, isPostedByPet, postTypeId, string.Empty, isPublic);
             post.Save();
             return post;
         }
 
-        public static Post AddPost(int postTypeId, string description, int postedById, bool isPostedByPet, string postURL)
+        public static Post AddPost(int postTypeId, string description, int postedById, bool isPostedByPet, string postURL, bool isPublic = true)
         {
-            Post post = new Post(description, postedById, isPostedByPet, postTypeId, postURL);
+            Post post = new Post(description, postedById, isPostedByPet, postTypeId, postURL, isPublic);
             post.Save();
             return post;
         }
