@@ -562,5 +562,18 @@ namespace Pet2Share_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchPet_Result>("SearchPet", searchStringParameter);
         }
+    
+        public virtual ObjectResult<GetMyFeed_Result> GetMyFeed(Nullable<int> id, Nullable<bool> isRequesterPet)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var isRequesterPetParameter = isRequesterPet.HasValue ?
+                new ObjectParameter("IsRequesterPet", isRequesterPet) :
+                new ObjectParameter("IsRequesterPet", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyFeed_Result>("GetMyFeed", idParameter, isRequesterPetParameter);
+        }
     }
 }

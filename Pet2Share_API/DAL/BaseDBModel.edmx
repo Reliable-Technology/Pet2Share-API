@@ -485,6 +485,10 @@
         <Function Name="GetMyConnection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetMyFeed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="IsRequesterPet" Type="bit" Mode="In" />
+        </Function>
         <Function Name="GetMyPetConnection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
@@ -899,7 +903,11 @@
           </FunctionImport>
           <EntitySet Name="PetConnections" EntityType="Pet2ShareModel.PetConnection" />
           <FunctionImport Name="SearchPet" ReturnType="Collection(Pet2ShareModel.SearchPet_Result)">
-            <Parameter Name="SearchString" Mode="In" Type="String" />
+          <Parameter Name="SearchString" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetMyFeed" ReturnType="Collection(Pet2ShareModel.GetMyFeed_Result)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="IsRequesterPet" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
@@ -1519,6 +1527,22 @@
           <Property Type="Boolean" Name="IsActive" Nullable="false" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="GetMyFeed_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="PostTypeId" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="PostURL" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="PostedBy" Nullable="false" />
+          <Property Type="Boolean" Name="IsPostByPet" Nullable="false" />
+          <Property Type="Int32" Name="PostLikeCount" Nullable="false" />
+          <Property Type="String" Name="PostLikedBy" Nullable="true" />
+          <Property Type="Int32" Name="PostCommentCount" Nullable="false" />
+          <Property Type="Boolean" Name="IsPublic" Nullable="false" />
+          <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="23" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1988,6 +2012,26 @@
                 <ScalarProperty Name="About" ColumnName="About" />
                 <ScalarProperty Name="FavFood" ColumnName="FavFood" />
                 <ScalarProperty Name="IsVirtual" ColumnName="IsVirtual" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMyFeed" FunctionName="Pet2ShareModel.Store.GetMyFeed">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Pet2ShareModel.GetMyFeed_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PostURL" ColumnName="PostURL" />
+                <ScalarProperty Name="PostedBy" ColumnName="PostedBy" />
+                <ScalarProperty Name="IsPostByPet" ColumnName="IsPostByPet" />
+                <ScalarProperty Name="PostLikeCount" ColumnName="PostLikeCount" />
+                <ScalarProperty Name="PostLikedBy" ColumnName="PostLikedBy" />
+                <ScalarProperty Name="PostCommentCount" ColumnName="PostCommentCount" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />

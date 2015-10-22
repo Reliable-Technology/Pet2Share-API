@@ -103,9 +103,70 @@ namespace Pet2Share_API.Service
             return postList;
         }
 
-        public static List<Post> GetMyFeed(int id, bool isRequesterPet = true)
+        public static List<Post> GetMyFeed(int id, bool isRequesterPet = true, int postCount = 0, int pageNumber = 1)
         {
-            return null;
+            List<Post> postList = new List<Post>();
+
+            int postStartCount = postCount * (pageNumber - 1);
+            int postEndCount = postCount * (pageNumber);
+            int forCounter = 0;
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                List<DAL.GetMyFeed_Result> results = context.GetMyFeed(id, isRequesterPet).ToList();
+                foreach (DAL.GetMyFeed_Result result in results)
+                {
+                    if (postEndCount != 0)
+                    {
+                        if (forCounter >= postStartCount && forCounter < postEndCount)
+                        {
+
+                            DAL.Post dalPost = new DAL.Post();
+                            dalPost.Id = result.Id;
+                            dalPost.PostTypeId = result.PostTypeId;
+                            dalPost.Description = result.Description;
+                            dalPost.PostURL = result.PostURL;
+                            dalPost.PostedBy = result.PostedBy;
+                            dalPost.IsPostByPet = result.IsPostByPet;
+                            dalPost.PostLikeCount = result.PostLikeCount;
+                            dalPost.PostLikedBy = result.PostLikedBy;
+                            dalPost.PostCommentCount = result.PostCommentCount;
+                            dalPost.IsPublic = result.IsPublic;
+                            dalPost.DateAdded = result.DateAdded;
+                            dalPost.DateModified = result.DateModified;
+                            dalPost.IsActive = result.IsActive;
+                            dalPost.IsDeleted = result.IsDeleted;
+
+                            postList.Add(new Post(dalPost));
+                        }
+                        else if (forCounter >= postEndCount)
+                            break;
+                    }
+                    else
+                    {
+                        DAL.Post dalPost = new DAL.Post();
+                        dalPost.Id = result.Id;
+                        dalPost.PostTypeId = result.PostTypeId;
+                        dalPost.Description = result.Description;
+                        dalPost.PostURL = result.PostURL;
+                        dalPost.PostedBy = result.PostedBy;
+                        dalPost.IsPostByPet = result.IsPostByPet;
+                        dalPost.PostLikeCount = result.PostLikeCount;
+                        dalPost.PostLikedBy = result.PostLikedBy;
+                        dalPost.PostCommentCount = result.PostCommentCount;
+                        dalPost.IsPublic = result.IsPublic;
+                        dalPost.DateAdded = result.DateAdded;
+                        dalPost.DateModified = result.DateModified;
+                        dalPost.IsActive = result.IsActive;
+                        dalPost.IsDeleted = result.IsDeleted;
+
+                        postList.Add(new Post(dalPost));
+                    }
+                    forCounter++;
+                }
+            }
+
+            return postList;
         }
 
         public static Post AddPost(Post post)

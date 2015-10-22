@@ -407,4 +407,21 @@ namespace Pet2Share_Service
 
     }
 
+    
+    [DataContract]
+    public class GetFeedsRequest : RequestObject
+    {
+        [DataMember]
+        public int ProfileId  { get; set; }
+
+        [DataMember]
+        public bool IsRequesterPet { get; set; }
+
+        [DataMember]
+        public int PostCount { get; set; }
+
+        [DataMember]
+        public int PageNumber { get; set; }
+
+    }
 }

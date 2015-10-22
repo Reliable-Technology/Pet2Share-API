@@ -92,7 +92,9 @@ namespace Pet2Share_Service
         [WebInvoke(UriTemplate = "GetPostsByPet", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         GetPostsResponse GetPostsByPet(GetPostsRequest PostReq);
 
-
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetMyFeed", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GetPostsResponse GetMyFeed(GetFeedsRequest PostReq);
     }
 
 }

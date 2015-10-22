@@ -83,22 +83,13 @@
     <Compile Include="DAL\GetAvailableConnection_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\GetAvailableConnection_Result1.cs">
-      <DependentUpon>BaseDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\GetAvailableConnection_Result2.cs">
-      <DependentUpon>BaseDBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DAL\GetAvailablePetConnection_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\GetMyConnection_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\GetMyConnection_Result1.cs">
-      <DependentUpon>BaseDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\GetMyConnection_Result2.cs">
+    <Compile Include="DAL\GetMyFeed_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\GetMyPetConnection_Result.cs">

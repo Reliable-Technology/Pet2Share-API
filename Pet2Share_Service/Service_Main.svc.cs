@@ -644,8 +644,29 @@ namespace Pet2Share_Service
             return PostResultResp;
         }
 
+        public GetPostsResponse GetMyFeed(GetFeedsRequest PostReq)
+        {
+            GetPostsResponse PostResultResp;
 
+            try
+            {
 
+                var Result = PostManager.GetMyFeed(PostReq.ProfileId, PostReq.IsRequesterPet, PostReq.PostCount, PostReq.PageNumber);
+                //if (Result.count)
+                {
+                    PostResultResp = new GetPostsResponse { Total = Result.Count(), Results = Result.ToArray(), ErrorMsg = null };
+                }
+                //else
+                //{
+                //    CommentResultResp = new GetCommentResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while getting your comment. Please try again!!") };
+                //}
+            }
+            catch (Exception ex)
+            {
+                PostResultResp = new GetPostsResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PostResultResp;
+        }
 
         public static byte[] ReadFully(Stream input)
         {
