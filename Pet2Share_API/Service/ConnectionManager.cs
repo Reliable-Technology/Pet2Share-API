@@ -65,9 +65,44 @@ namespace Pet2Share_API.Service
             return sUserList.ToArray();
         }
 
+        public static SmallPet[] GetMyPetConnection(Pet pet)
+        {
+            List<SmallPet> sPetList = new List<SmallPet>();
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                List<DAL.GetMyPetConnection_Result> connectionList = context.GetMyPetConnection(pet.Id).ToList<DAL.GetMyPetConnection_Result>();
+                foreach (DAL.GetMyPetConnection_Result result in connectionList)
+                {
+                    SmallPet sPet = new SmallPet();
+                    sPet.Id = result.Id;
+                    sPet.Name = result.Name;
+                    sPet.FamilyName = result.FamilyName;
+                    sPet.ProfilePictureURL = result.ProfilePicture;
+
+                    sPetList.Add(sPet);
+                }
+            }
+            return sPetList.ToArray();
+        }
+
         public static SmallPet[] GetConnectionSuggestion(Pet pet)
         {
-            return null;
+            List<SmallPet> sPetList = new List<SmallPet>();
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                List<DAL.GetAvailablePetConnection_Result> connectionList = context.GetAvailablePetConnection(pet.Id).ToList<DAL.GetAvailablePetConnection_Result>();
+                foreach (DAL.GetAvailablePetConnection_Result result in connectionList)
+                {
+                    SmallPet sPet = new SmallPet();
+                    sPet.Id = result.Id;
+                    sPet.Name = result.Name;
+                    sPet.FamilyName = result.FamilyName;
+                    sPet.ProfilePictureURL = result.ProfilePicture;
+
+                    sPetList.Add(sPet);
+                }
+            }
+            return sPetList.ToArray();
         }
 
         public static SmallUser[] GetConnectionSuggestion(User user)
@@ -100,6 +135,21 @@ namespace Pet2Share_API.Service
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
                 result = context.InsertUpdateConnection(0, requester.Id, accepter.Id).FirstOrDefault();              
+            }
+            if (result.HasValue && result > 0)
+                return new BoolExt(true, "");
+            return new BoolExt(false, "");
+        }
+
+        /// <summary>Method to send friend request</summary>
+        /// <param name="requester">The person sending request</param>
+        /// <param name="accepter">The person who has to accept this request</param>
+        public static BoolExt AskToConnect(Pet requester, Pet accepter)
+        {
+            int? result;
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.InsertUpdatePetConnection(0, requester.Id, accepter.Id).FirstOrDefault();
             }
             if (result.HasValue && result > 0)
                 return new BoolExt(true, "");
