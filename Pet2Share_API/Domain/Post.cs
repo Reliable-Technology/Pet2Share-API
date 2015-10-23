@@ -398,6 +398,7 @@ namespace Pet2Share_API.Domain
             this.PostURL = postURL;
             this.PostedBy = postedById;
             this.IsPostByPet = isPostByPet;
+            this.IsPublic = isPublic;
             if (isPostByPet)
             {
                 this.SPet = new SmallPet(postedById);
