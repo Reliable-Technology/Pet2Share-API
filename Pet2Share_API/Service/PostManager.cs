@@ -136,8 +136,9 @@ namespace Pet2Share_API.Service
                             dalPost.DateModified = result.DateModified;
                             dalPost.IsActive = result.IsActive;
                             dalPost.IsDeleted = result.IsDeleted;
-
-                            postList.Add(new Post(dalPost));
+                            Post post = new Post(dalPost);
+                            post.Comments = GetComments(post.Id, 3);
+                            postList.Add(post);
                         }
                         else if (forCounter >= postEndCount)
                             break;
@@ -159,8 +160,9 @@ namespace Pet2Share_API.Service
                         dalPost.DateModified = result.DateModified;
                         dalPost.IsActive = result.IsActive;
                         dalPost.IsDeleted = result.IsDeleted;
-
-                        postList.Add(new Post(dalPost));
+                        Post post = new Post(dalPost);
+                        post.Comments = GetComments(post.Id, 3);
+                        postList.Add(post);
                     }
                     forCounter++;
                 }
