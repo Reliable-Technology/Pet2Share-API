@@ -71,9 +71,9 @@ namespace Pet2Share_API.Service
 
             int result = pet.Save();
             if (result > 0)
-                return new BoolExt(true, "");
+                return new BoolExt(true, "", result);
             else
-                return new BoolExt(false, "Update Failed, Please check application logs for more details");
+                return new BoolExt(false, "Update Failed, Please check application logs for more details", result);
         }
 
         public static BoolExt AddVirtualProfile(User user)
@@ -94,9 +94,9 @@ namespace Pet2Share_API.Service
 
             int result = pet.Save();
             if (result > 0)
-                return new BoolExt(true, "");
+                return new BoolExt(true, "", result);
             else
-                return new BoolExt(false, "Update Failed, Please check application logs for more details");
+                return new BoolExt(false, "Update Failed, Please check application logs for more details", result);
         }
 
         public static string GetRandomProfilePicture()
@@ -136,9 +136,9 @@ namespace Pet2Share_API.Service
 
             int result = pet.Save();
             if (result == petId)
-                return new BoolExt(true, "");
+                return new BoolExt(true, "", result);
             else
-                return new BoolExt(false, "Update Failed, Please check application logs for more details");
+                return new BoolExt(false, "Update Failed, Please check application logs for more details", result);
 
         }
 
