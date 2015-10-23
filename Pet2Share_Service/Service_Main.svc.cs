@@ -424,7 +424,7 @@ namespace Pet2Share_Service
             return PostResultResp;
         }
 
-        public GeneralUpdateResponse AddPhotoPost(Stream PicObj, string FileName, string Description, string PostedBy, string IsPostByPet)
+        public GeneralUpdateResponse AddPhotoPost(Stream PicObj, string FileName, string Description, string PostedBy, string IsPostByPet, string IsPublic)
         {
             //return new GeneralUpdateResponse();
             GeneralUpdateResponse PostResultResp;
@@ -433,13 +433,14 @@ namespace Pet2Share_Service
             {
                 int postedById;
                 bool isPostByPet;
+                bool isPublic;
 
                 Pet2Share_API.Domain.Post Result = null;
 
-                if (int.TryParse(PostedBy, out postedById) && bool.TryParse(IsPostByPet, out isPostByPet))
+                if (int.TryParse(PostedBy, out postedById) && bool.TryParse(IsPostByPet, out isPostByPet) && bool.TryParse(IsPublic, out isPublic))
                 {
 
-                    Result = PostManager.AddPost(2, Description, postedById, isPostByPet);
+                    Result = PostManager.AddPost(4, Description, postedById, isPostByPet, isPublic);
 
                     //Upload photo for the post section
                     if (Result.Id > 0)

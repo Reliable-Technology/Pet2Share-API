@@ -65,8 +65,8 @@ namespace Pet2Share_Service
         GeneralUpdateResponse DeletePost(DeletePostRequest PostReq);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "AddPhotoPost?FileName={FileName}&Description={Description}&PostedBy={PostedBy}&IsPostByPet={IsPostByPet}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        GeneralUpdateResponse AddPhotoPost(Stream PicObj, string FileName, string Description, string PostedBy, string IsPostByPet);
+        [WebInvoke(UriTemplate = "AddPhotoPost?FileName={FileName}&Description={Description}&PostedBy={PostedBy}&IsPostByPet={IsPostByPet}&IsPublic={IsPublic}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse AddPhotoPost(Stream PicObj, string FileName, string Description, string PostedBy, string IsPostByPet, string IsPublic);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "AddComment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
