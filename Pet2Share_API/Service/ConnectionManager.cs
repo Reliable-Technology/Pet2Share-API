@@ -13,7 +13,22 @@ namespace Pet2Share_API.Service
     {
         public static SmallPet[] GetMyConnections(Pet pet)
         {
-            return null;
+            List<SmallPet> sPetList = new List<SmallPet>();
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                List<DAL.GetMyPetConnection_Result> connectionList = context.GetMyPetConnection(pet.Id).ToList<DAL.GetMyPetConnection_Result>();
+                foreach (DAL.GetMyPetConnection_Result result in connectionList)
+                {
+                    SmallPet sPet = new SmallPet();
+                    sPet.Id = result.Id;
+                    sPet.Name = result.Name;
+                    sPet.FamilyName = result.FamilyName;
+                    sPet.ProfilePictureURL = result.ProfilePicture;
+
+                    sPetList.Add(sPet);
+                }
+            }
+            return sPetList.ToArray();
         }
 
         public static int GetMyConnectionCount(User user)
