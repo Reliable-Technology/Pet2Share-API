@@ -53,6 +53,9 @@ namespace Pet2Share_API.Service
 
             User u = new User(username, password, pers, email, alternateEmail, socialMediaSourceId != null ? socialMediaSourceId.Value : 1, socialMediaId, uType);
 
+            //TODO: Also add a virtual pet simultaneously
+            
+
             return RegisterNewUser(u);
         }
 

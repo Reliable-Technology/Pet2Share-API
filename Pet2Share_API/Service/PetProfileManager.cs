@@ -71,9 +71,42 @@ namespace Pet2Share_API.Service
 
             int result = pet.Save();
             if (result > 0)
-                return new BoolExt(true, "");
+                return new BoolExt(true, "", result);
             else
-                return new BoolExt(false, "Update Failed, Please check application logs for more details");
+                return new BoolExt(false, "Update Failed, Please check application logs for more details", result);
+        }
+
+        public static BoolExt AddVirtualProfile(User user)
+        {
+            Pet pet = new Pet();
+
+            pet.Name = user.P.FirstName + "'s Pet";
+            pet.FamilyName = user.P.LastName;
+
+            pet.UserId = user.Id;
+            pet.PetTypeId = 1;
+            pet.DOB = DateTime.Now.AddYears(-5);
+            pet.ProfilePicture = GetRandomProfilePicture();
+            pet.CoverPicture = GetRandomCoverPicture();
+            pet.About = "I am the pet of " + user.P.FirstName + "the most loving person in the world";
+            pet.FavFood = "";
+            pet.IsVirtual = true;
+
+            int result = pet.Save();
+            if (result > 0)
+                return new BoolExt(true, "", result);
+            else
+                return new BoolExt(false, "Update Failed, Please check application logs for more details", result);
+        }
+
+        public static string GetRandomProfilePicture()
+        {
+            return "";
+        }
+
+        public static string GetRandomCoverPicture()
+        {
+            return "";
         }
 
         public BoolExt UpdateProfile()
@@ -103,9 +136,9 @@ namespace Pet2Share_API.Service
 
             int result = pet.Save();
             if (result == petId)
-                return new BoolExt(true, "");
+                return new BoolExt(true, "", result);
             else
-                return new BoolExt(false, "Update Failed, Please check application logs for more details");
+                return new BoolExt(false, "Update Failed, Please check application logs for more details", result);
 
         }
 
@@ -187,6 +220,28 @@ namespace Pet2Share_API.Service
             BoolExt result = new BoolExt(true, ConfigMember.ImageURL + pet.ProfilePicture);
 
             return result;
+        }
+
+        /// <summary>
+        /// This method is used if you are logged into one account and check the profile of other user
+        /// </summary>
+        /// <param name="myUserId">Logged in user Id</param>
+        /// <param name="otherUserId">User Id the of profile the is accessed by the user</param>
+        /// <param name="connType">This outputs the type of connection between the two users</param>
+        /// <returns>Returns the profile of queried user</returns>
+        public static Pet GetOtherPetProfile(int myPetId, int otherPetId, out ConnectionType connType)
+        {
+            connType = ConnectionType.Connected;
+            Pet pet = new Pet(otherPetId);
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                int? result = context.ConnectionStatus(myPetId, otherPetId, true).FirstOrDefault();
+                if (result != null)
+                    connType = (ConnectionType)result.Value;
+            }
+
+            return pet;
         }
     }
 }

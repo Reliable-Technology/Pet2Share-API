@@ -36,6 +36,10 @@ namespace Pet2Share_Service
         GeneralUpdateResponse InsertPetProfile(PetProfileInsertRequest PetObj);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "InsertVirtualPetProfile", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse InsertVirtualPetProfile(VirtualPetInsertRequest UserId);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "UpdatePetProfile", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         GeneralUpdateResponse UpdatePetProfile(PetProfileUpdateRequest PetObj);
 
@@ -61,6 +65,10 @@ namespace Pet2Share_Service
         GeneralUpdateResponse DeletePost(DeletePostRequest PostReq);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "AddPhotoPost?FileName={FileName}&Description={Description}&PostedBy={PostedBy}&IsPostByPet={IsPostByPet}&IsPublic={IsPublic}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse AddPhotoPost(Stream PicObj, string FileName, string Description, string PostedBy, string IsPostByPet, string IsPublic);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "AddComment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         GeneralUpdateResponse AddComment(AddCommentRequest PostReq);
 
@@ -84,7 +92,9 @@ namespace Pet2Share_Service
         [WebInvoke(UriTemplate = "GetPostsByPet", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         GetPostsResponse GetPostsByPet(GetPostsRequest PostReq);
 
-
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetMyFeed", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GetPostsResponse GetMyFeed(GetFeedsRequest PostReq);
     }
 
 }

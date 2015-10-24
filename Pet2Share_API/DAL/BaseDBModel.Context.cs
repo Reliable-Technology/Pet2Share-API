@@ -42,6 +42,7 @@ namespace Pet2Share_API.DAL
         public virtual DbSet<PetType> PetTypes { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<PostType> PostTypes { get; set; }
+        public virtual DbSet<PetConnection> PetConnections { get; set; }
     
         public virtual int ChangeActivePetProfileById(Nullable<int> id, Nullable<bool> active)
         {
@@ -345,67 +346,6 @@ namespace Pet2Share_API.DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePostCommentById", idParameter);
         }
     
-        public virtual ObjectResult<Nullable<bool>> ApproveConnection(Nullable<int> aUserId, Nullable<int> iUserId)
-        {
-            var aUserIdParameter = aUserId.HasValue ?
-                new ObjectParameter("AUserId", aUserId) :
-                new ObjectParameter("AUserId", typeof(int));
-    
-            var iUserIdParameter = iUserId.HasValue ?
-                new ObjectParameter("IUserId", iUserId) :
-                new ObjectParameter("IUserId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("ApproveConnection", aUserIdParameter, iUserIdParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<bool>> DeleteConnection(Nullable<int> iUserId, Nullable<int> aUserId)
-        {
-            var iUserIdParameter = iUserId.HasValue ?
-                new ObjectParameter("IUserId", iUserId) :
-                new ObjectParameter("IUserId", typeof(int));
-    
-            var aUserIdParameter = aUserId.HasValue ?
-                new ObjectParameter("AUserId", aUserId) :
-                new ObjectParameter("AUserId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("DeleteConnection", iUserIdParameter, aUserIdParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> InsertUpdateConnection(Nullable<int> id, Nullable<int> iUserId, Nullable<int> aUserId)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(int));
-    
-            var iUserIdParameter = iUserId.HasValue ?
-                new ObjectParameter("IUserId", iUserId) :
-                new ObjectParameter("IUserId", typeof(int));
-    
-            var aUserIdParameter = aUserId.HasValue ?
-                new ObjectParameter("AUserId", aUserId) :
-                new ObjectParameter("AUserId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InsertUpdateConnection", idParameter, iUserIdParameter, aUserIdParameter);
-        }
-    
-        public virtual ObjectResult<GetAvailableConnection_Result> GetAvailableConnection(Nullable<int> userId)
-        {
-            var userIdParameter = userId.HasValue ?
-                new ObjectParameter("UserId", userId) :
-                new ObjectParameter("UserId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAvailableConnection_Result>("GetAvailableConnection", userIdParameter);
-        }
-    
-        public virtual ObjectResult<GetMyConnection_Result> GetMyConnection(Nullable<int> userId)
-        {
-            var userIdParameter = userId.HasValue ?
-                new ObjectParameter("UserId", userId) :
-                new ObjectParameter("UserId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyConnection_Result>("GetMyConnection", userIdParameter);
-        }
-    
         public virtual ObjectResult<SearchUser_Result> SearchUser(string searchString)
         {
             var searchStringParameter = searchString != null ?
@@ -415,49 +355,7 @@ namespace Pet2Share_API.DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchUser_Result>("SearchUser", searchStringParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> ConnectionStatus(Nullable<int> myUserId, Nullable<int> otherUserId)
-        {
-            var myUserIdParameter = myUserId.HasValue ?
-                new ObjectParameter("MyUserId", myUserId) :
-                new ObjectParameter("MyUserId", typeof(int));
-    
-            var otherUserIdParameter = otherUserId.HasValue ?
-                new ObjectParameter("OtherUserId", otherUserId) :
-                new ObjectParameter("OtherUserId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("ConnectionStatus", myUserIdParameter, otherUserIdParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePost(Nullable<int> id, Nullable<int> postTypeId, string description, string postURL, Nullable<int> postedBy, Nullable<bool> isPostByPet)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(int));
-    
-            var postTypeIdParameter = postTypeId.HasValue ?
-                new ObjectParameter("PostTypeId", postTypeId) :
-                new ObjectParameter("PostTypeId", typeof(int));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("Description", description) :
-                new ObjectParameter("Description", typeof(string));
-    
-            var postURLParameter = postURL != null ?
-                new ObjectParameter("PostURL", postURL) :
-                new ObjectParameter("PostURL", typeof(string));
-    
-            var postedByParameter = postedBy.HasValue ?
-                new ObjectParameter("PostedBy", postedBy) :
-                new ObjectParameter("PostedBy", typeof(int));
-    
-            var isPostByPetParameter = isPostByPet.HasValue ?
-                new ObjectParameter("IsPostByPet", isPostByPet) :
-                new ObjectParameter("IsPostByPet", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePost", idParameter, postTypeIdParameter, descriptionParameter, postURLParameter, postedByParameter, isPostByPetParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePetProfile(Nullable<int> id, string name, string familyName, Nullable<int> userId, Nullable<int> petTypeId, Nullable<System.DateTime> dOB, string profilePicture, string about, string coverPicture, string favFood)
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePetProfile(Nullable<int> id, string name, string familyName, Nullable<int> userId, Nullable<int> petTypeId, Nullable<System.DateTime> dOB, string profilePicture, string about, string coverPicture, string favFood, Nullable<bool> isVirtual)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("Id", id) :
@@ -499,7 +397,187 @@ namespace Pet2Share_API.DAL
                 new ObjectParameter("FavFood", favFood) :
                 new ObjectParameter("FavFood", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePetProfile", idParameter, nameParameter, familyNameParameter, userIdParameter, petTypeIdParameter, dOBParameter, profilePictureParameter, aboutParameter, coverPictureParameter, favFoodParameter);
+            var isVirtualParameter = isVirtual.HasValue ?
+                new ObjectParameter("IsVirtual", isVirtual) :
+                new ObjectParameter("IsVirtual", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePetProfile", idParameter, nameParameter, familyNameParameter, userIdParameter, petTypeIdParameter, dOBParameter, profilePictureParameter, aboutParameter, coverPictureParameter, favFoodParameter, isVirtualParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> ApproveConnection(Nullable<int> aId, Nullable<int> iId, Nullable<bool> isPet)
+        {
+            var aIdParameter = aId.HasValue ?
+                new ObjectParameter("AId", aId) :
+                new ObjectParameter("AId", typeof(int));
+    
+            var iIdParameter = iId.HasValue ?
+                new ObjectParameter("IId", iId) :
+                new ObjectParameter("IId", typeof(int));
+    
+            var isPetParameter = isPet.HasValue ?
+                new ObjectParameter("IsPet", isPet) :
+                new ObjectParameter("IsPet", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("ApproveConnection", aIdParameter, iIdParameter, isPetParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> ConnectionStatus(Nullable<int> myId, Nullable<int> otherId, Nullable<bool> isPet)
+        {
+            var myIdParameter = myId.HasValue ?
+                new ObjectParameter("MyId", myId) :
+                new ObjectParameter("MyId", typeof(int));
+    
+            var otherIdParameter = otherId.HasValue ?
+                new ObjectParameter("OtherId", otherId) :
+                new ObjectParameter("OtherId", typeof(int));
+    
+            var isPetParameter = isPet.HasValue ?
+                new ObjectParameter("IsPet", isPet) :
+                new ObjectParameter("IsPet", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("ConnectionStatus", myIdParameter, otherIdParameter, isPetParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> DeleteConnection(Nullable<int> iId, Nullable<int> aId, Nullable<bool> isPet)
+        {
+            var iIdParameter = iId.HasValue ?
+                new ObjectParameter("IId", iId) :
+                new ObjectParameter("IId", typeof(int));
+    
+            var aIdParameter = aId.HasValue ?
+                new ObjectParameter("AId", aId) :
+                new ObjectParameter("AId", typeof(int));
+    
+            var isPetParameter = isPet.HasValue ?
+                new ObjectParameter("IsPet", isPet) :
+                new ObjectParameter("IsPet", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("DeleteConnection", iIdParameter, aIdParameter, isPetParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> InsertUpdateConnection(Nullable<int> id, Nullable<int> iUserId, Nullable<int> aUserId)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var iUserIdParameter = iUserId.HasValue ?
+                new ObjectParameter("IUserId", iUserId) :
+                new ObjectParameter("IUserId", typeof(int));
+    
+            var aUserIdParameter = aUserId.HasValue ?
+                new ObjectParameter("AUserId", aUserId) :
+                new ObjectParameter("AUserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InsertUpdateConnection", idParameter, iUserIdParameter, aUserIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> InsertUpdatePetConnection(Nullable<int> id, Nullable<int> iPetId, Nullable<int> aPetId)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var iPetIdParameter = iPetId.HasValue ?
+                new ObjectParameter("IPetId", iPetId) :
+                new ObjectParameter("IPetId", typeof(int));
+    
+            var aPetIdParameter = aPetId.HasValue ?
+                new ObjectParameter("APetId", aPetId) :
+                new ObjectParameter("APetId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InsertUpdatePetConnection", idParameter, iPetIdParameter, aPetIdParameter);
+        }
+    
+        public virtual ObjectResult<GetAvailableConnection_Result> GetAvailableConnection(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAvailableConnection_Result>("GetAvailableConnection", idParameter);
+        }
+    
+        public virtual ObjectResult<GetAvailablePetConnection_Result> GetAvailablePetConnection(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAvailablePetConnection_Result>("GetAvailablePetConnection", idParameter);
+        }
+    
+        public virtual ObjectResult<GetMyConnection_Result> GetMyConnection(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyConnection_Result>("GetMyConnection", idParameter);
+        }
+    
+        public virtual ObjectResult<GetMyPetConnection_Result> GetMyPetConnection(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyPetConnection_Result>("GetMyPetConnection", idParameter);
+        }
+    
+        public virtual ObjectResult<SearchPet_Result> SearchPet(string searchString)
+        {
+            var searchStringParameter = searchString != null ?
+                new ObjectParameter("SearchString", searchString) :
+                new ObjectParameter("SearchString", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchPet_Result>("SearchPet", searchStringParameter);
+        }
+    
+        public virtual ObjectResult<GetMyFeed_Result> GetMyFeed(Nullable<int> id, Nullable<bool> isRequesterPet)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var isRequesterPetParameter = isRequesterPet.HasValue ?
+                new ObjectParameter("IsRequesterPet", isRequesterPet) :
+                new ObjectParameter("IsRequesterPet", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyFeed_Result>("GetMyFeed", idParameter, isRequesterPetParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> InsertUpdatePost(Nullable<int> id, Nullable<int> postTypeId, string description, string postURL, Nullable<int> postedBy, Nullable<bool> isPostByPet, Nullable<bool> isPublic)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var postTypeIdParameter = postTypeId.HasValue ?
+                new ObjectParameter("PostTypeId", postTypeId) :
+                new ObjectParameter("PostTypeId", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var postURLParameter = postURL != null ?
+                new ObjectParameter("PostURL", postURL) :
+                new ObjectParameter("PostURL", typeof(string));
+    
+            var postedByParameter = postedBy.HasValue ?
+                new ObjectParameter("PostedBy", postedBy) :
+                new ObjectParameter("PostedBy", typeof(int));
+    
+            var isPostByPetParameter = isPostByPet.HasValue ?
+                new ObjectParameter("IsPostByPet", isPostByPet) :
+                new ObjectParameter("IsPostByPet", typeof(bool));
+    
+            var isPublicParameter = isPublic.HasValue ?
+                new ObjectParameter("IsPublic", isPublic) :
+                new ObjectParameter("IsPublic", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePost", idParameter, postTypeIdParameter, descriptionParameter, postURLParameter, postedByParameter, isPostByPetParameter, isPublicParameter);
         }
     }
 }

@@ -122,7 +122,7 @@ namespace Pet2Share_Service
         public string PhoneNumber { get; set; }
 
         [DataMember]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [DataMember]
         public string SecondaryPhone { get; set; }
@@ -252,6 +252,13 @@ namespace Pet2Share_Service
         //TODO: Need to add more fields later
     }
 
+    [DataContract]
+    public class VirtualPetInsertRequest : RequestObject
+    {
+        [DataMember]
+        public int Id { get; set; }
+    }
+
 
     [DataContract]
     public class UploadPicRequest : RequestObject
@@ -288,6 +295,8 @@ namespace Pet2Share_Service
         [DataMember]
         public bool IsPostByPet { get; set; }
 
+        [DataMember]
+        public bool IsPublic { get; set; }
     }
 
     [DataContract]
@@ -400,4 +409,21 @@ namespace Pet2Share_Service
 
     }
 
+    
+    [DataContract]
+    public class GetFeedsRequest : RequestObject
+    {
+        [DataMember]
+        public int ProfileId  { get; set; }
+
+        [DataMember]
+        public bool IsRequesterPet { get; set; }
+
+        [DataMember]
+        public int PostCount { get; set; }
+
+        [DataMember]
+        public int PageNumber { get; set; }
+
+    }
 }

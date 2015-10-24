@@ -391,13 +391,14 @@ namespace Pet2Share_API.Domain
                 this.SUser = new SmallUser(post.PostedBy);
         }
 
-        public Post(string description, int postedById, bool isPostByPet, int postTypeId, string postURL  = "") : base()
+        public Post(string description, int postedById, bool isPostByPet, int postTypeId, string postURL  = "", bool isPublic = true) : base()
         {
             this.PostTypeId = postTypeId;
             this.Description = description;
             this.PostURL = postURL;
             this.PostedBy = postedById;
             this.IsPostByPet = isPostByPet;
+            this.IsPublic = isPublic;
             if (isPostByPet)
             {
                 this.SPet = new SmallPet(postedById);
@@ -452,7 +453,7 @@ namespace Pet2Share_API.Domain
             {
                 using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
                 {
-                    result = Convert.ToInt32(context.InsertUpdatePost(this.Id, this.PostTypeId, this.Description, this.PostURL, this.PostedBy, this.IsPostByPet).FirstOrDefault());
+                    result = Convert.ToInt32(context.InsertUpdatePost(this.Id, this.PostTypeId, this.Description, this.PostURL, this.PostedBy, this.IsPostByPet, this.IsPublic).FirstOrDefault());
                     if (result > 0)
                         this.Id = result;
                 }
@@ -468,7 +469,7 @@ namespace Pet2Share_API.Domain
             {
                 using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
                 {
-                    result = Convert.ToInt32(context.InsertUpdatePost(post.Id, post.PostTypeId, post.Description, post.PostURL, post.PostedBy, post.IsPostByPet).FirstOrDefault());
+                    result = Convert.ToInt32(context.InsertUpdatePost(post.Id, post.PostTypeId, post.Description, post.PostURL, post.PostedBy, post.IsPostByPet, post.IsPublic).FirstOrDefault());
                     if (result > 0)
                         post.Id = result;
                 }

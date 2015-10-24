@@ -173,6 +173,30 @@ namespace Pet2Share_Service
             return PetProfileResultResp;
         }
 
+        public GeneralUpdateResponse InsertVirtualPetProfile(VirtualPetInsertRequest UserId)
+        {
+            GeneralUpdateResponse PetProfileResultResp;
+
+            try
+            {
+                Pet2Share_API.Domain.User u = new Pet2Share_API.Domain.User(UserId.Id);
+                var Result = PetProfileManager.AddVirtualProfile(u);
+                if (Result.IsSuccessful)
+                {
+                    PetProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { Result }), ErrorMsg = null };
+                }
+                else
+                {
+                    PetProfileResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error adding pet to your profile. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PetProfileResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PetProfileResultResp;
+        }
+
         //public GeneralUpdateResponse UploadUserPic(Stream PicObj, string UserId, string PetId, string UploadType, string FileName)
         //{
 
@@ -335,7 +359,7 @@ namespace Pet2Share_Service
             try
             {
 
-                var Result = PostManager.AddPost(PostReq.PostTypeId, PostReq.Description, PostReq.PostedBy, PostReq.IsPostByPet);
+                var Result = PostManager.AddPost(PostReq.PostTypeId, PostReq.Description, PostReq.PostedBy, PostReq.IsPostByPet, PostReq.IsPublic);
                 if (Result.Id > 0)
                 {
                     PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "", Result.Id) }), ErrorMsg = null };
@@ -400,33 +424,44 @@ namespace Pet2Share_Service
             return PostResultResp;
         }
 
-        public GeneralUpdateResponse AddPhotoPost(AddPhotoPostRequest PostReq)
+        public GeneralUpdateResponse AddPhotoPost(Stream PicObj, string FileName, string Description, string PostedBy, string IsPostByPet, string IsPublic)
         {
+            //return new GeneralUpdateResponse();
             GeneralUpdateResponse PostResultResp;
 
             try
             {
-                var Result = PostManager.AddPost(PostReq.PostTypeId, PostReq.Description, PostReq.PostedBy, PostReq.IsPostByPet);
+                int postedById;
+                bool isPostByPet;
+                bool isPublic;
 
-                //Upload photo for the post section
-                if(Result.Id > 0)
+                Pet2Share_API.Domain.Post Result = null;
+
+                if (int.TryParse(PostedBy, out postedById) && bool.TryParse(IsPostByPet, out isPostByPet) && bool.TryParse(IsPublic, out isPublic))
                 {
-                    if (string.IsNullOrEmpty(PostReq.FileName))
-                    {
-                        return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "File name cannot be empty") }, ErrorMsg = null };
-                    }
 
-                    string FileExtension = Path.GetExtension(PostReq.FileName);
-                    Pet2Share_API.Utility.ImageType FileType;
-                    if (!Enum.TryParse(FileExtension.TrimStart('.'), out FileType))
-                    {
-                        return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Only Jpg and Png file can be uploaded") }, ErrorMsg = null };
-                    }
+                    Result = PostManager.AddPost(4, Description, postedById, isPostByPet, isPublic);
 
-                    PostManager.UploadPostPicture(ReadFully(PostReq.PicObj), PostReq.FileName, FileType, Result.Id);
+                    //Upload photo for the post section
+                    if (Result.Id > 0)
+                    {
+                        if (string.IsNullOrEmpty(FileName))
+                        {
+                            return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "File name cannot be empty") }, ErrorMsg = null };
+                        }
+
+                        string FileExtension = Path.GetExtension(FileName);
+                        Pet2Share_API.Utility.ImageType FileType;
+                        if (!Enum.TryParse(FileExtension.TrimStart('.'), out FileType))
+                        {
+                            return new GeneralUpdateResponse { Total = 0, Results = new Pet2Share_API.Utility.BoolExt[] { new BoolExt(false, "Only Jpg and Png file can be uploaded") }, ErrorMsg = null };
+                        }
+
+                        PostManager.UploadPostPicture(ReadFully(PicObj), FileName, FileType, Result.Id);
+                    }
                 }
 
-                if (Result.Id > 0)
+                if (Result != null)
                 {
                     PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "", Result.Id) }), ErrorMsg = null };
                 }
@@ -610,8 +645,29 @@ namespace Pet2Share_Service
             return PostResultResp;
         }
 
+        public GetPostsResponse GetMyFeed(GetFeedsRequest PostReq)
+        {
+            GetPostsResponse PostResultResp;
 
+            try
+            {
 
+                var Result = PostManager.GetMyFeed(PostReq.ProfileId, PostReq.IsRequesterPet, PostReq.PostCount, PostReq.PageNumber);
+                //if (Result.count)
+                {
+                    PostResultResp = new GetPostsResponse { Total = Result.Count(), Results = Result.ToArray(), ErrorMsg = null };
+                }
+                //else
+                //{
+                //    CommentResultResp = new GetCommentResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while getting your comment. Please try again!!") };
+                //}
+            }
+            catch (Exception ex)
+            {
+                PostResultResp = new GetPostsResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PostResultResp;
+        }
 
         public static byte[] ReadFully(Stream input)
         {
@@ -628,8 +684,4 @@ namespace Pet2Share_Service
         }
 
     }
-
-
-
-
 }
