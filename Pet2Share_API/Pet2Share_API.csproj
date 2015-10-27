@@ -86,6 +86,9 @@
     <Compile Include="DAL\GetAvailablePetConnection_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetConnectRequests_Result.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetMyConnection_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
@@ -96,6 +99,9 @@
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\GetPersonById_Result.cs">
+      <DependentUpon>BaseDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GetPetConnectRequests_Result.cs">
       <DependentUpon>BaseDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\GetPetProfileById_Result.cs">

@@ -58,16 +58,24 @@ namespace Pet2Share_Service
             try
             {
 
-                var Result = AccountManagement.RegisterNewUser(userObj.UserName, userObj.Password, userObj.FirstName, userObj.LastName, userObj.UserName, null);
-
-                if (Result != null && Result.Id > 0)
+                if (AccountManagement.IsExistingUser(userObj.UserName))
                 {
-                    Result.Password = null;
-                    RegisterResultResp = new RegisterResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { Result }), ErrorMsg = null };
+                    RegisterResultResp = new RegisterResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "Username already taken. Please use another username.") };
                 }
                 else
                 {
-                    RegisterResultResp = new RegisterResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while signing you up. Please try again!!") };
+
+                    var Result = AccountManagement.RegisterNewUser(userObj.UserName, userObj.Password, userObj.FirstName, userObj.LastName, userObj.UserName, null);
+
+                    if (Result != null && Result.Id > 0)
+                    {
+                        Result.Password = null;
+                        RegisterResultResp = new RegisterResponse { Total = 1, Results = (new Pet2Share_API.Domain.User[] { Result }), ErrorMsg = null };
+                    }
+                    else
+                    {
+                        RegisterResultResp = new RegisterResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while signing you up. Please try again!!") };
+                    }
                 }
             }
             catch (Exception ex)
