@@ -168,7 +168,7 @@ namespace Pet2Share_API.Service
                 }
             }
 
-            return postList;
+            return postList.OrderByDescending(p => p.DateAdded).ToList();
         }
 
         public static Post AddPost(Post post)
