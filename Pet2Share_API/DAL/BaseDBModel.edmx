@@ -482,6 +482,9 @@
         <Function Name="GetAvailablePetConnection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetConnectRequests" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetMyConnection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
@@ -494,6 +497,10 @@
         </Function>
         <Function Name="GetPersonById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetPetConnectRequests" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="IsPet" Type="bit" Mode="In" />
         </Function>
         <Function Name="GetPetProfileById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -910,6 +917,13 @@
             <Parameter Name="PostedBy" Mode="In" Type="Int32" />
             <Parameter Name="IsPostByPet" Mode="In" Type="Boolean" />
             <Parameter Name="IsPublic" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="GetConnectRequests" ReturnType="Collection(Pet2ShareModel.GetConnectRequests_Result)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetPetConnectRequests" ReturnType="Collection(Pet2ShareModel.GetPetConnectRequests_Result)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="IsPet" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
@@ -1545,6 +1559,39 @@
           <Property Type="Boolean" Name="IsActive" Nullable="false" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="GetConnectRequests_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" />
+          <Property Type="Binary" Name="Password" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="PrimaryPersonId" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="AlternateEmail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="SocialMediaSourceId" Nullable="true" />
+          <Property Type="String" Name="SocialMediaUsername" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="UserTypeId" Nullable="true" />
+          <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="23" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetPetConnectRequests_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FamilyName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="UserId" Nullable="true" />
+          <Property Type="Int32" Name="PetTypeId" Nullable="true" />
+          <Property Type="DateTime" Name="DOB" Nullable="true" />
+          <Property Type="String" Name="ProfilePicture" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CoverPicture" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="About" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="FavFood" Nullable="true" MaxLength="500" />
+          <Property Type="Boolean" Name="IsVirtual" Nullable="false" />
+          <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="23" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2041,6 +2088,47 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertUpdatePost" FunctionName="Pet2ShareModel.Store.InsertUpdatePost" />
+          <FunctionImportMapping FunctionImportName="GetConnectRequests" FunctionName="Pet2ShareModel.Store.GetConnectRequests">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Pet2ShareModel.GetConnectRequests_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PrimaryPersonId" ColumnName="PrimaryPersonId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AlternateEmail" ColumnName="AlternateEmail" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="SocialMediaSourceId" ColumnName="SocialMediaSourceId" />
+                <ScalarProperty Name="SocialMediaUsername" ColumnName="SocialMediaUsername" />
+                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetPetConnectRequests" FunctionName="Pet2ShareModel.Store.GetPetConnectRequests">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Pet2ShareModel.GetPetConnectRequests_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FamilyName" ColumnName="FamilyName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PetTypeId" ColumnName="PetTypeId" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
+                <ScalarProperty Name="CoverPicture" ColumnName="CoverPicture" />
+                <ScalarProperty Name="About" ColumnName="About" />
+                <ScalarProperty Name="FavFood" ColumnName="FavFood" />
+                <ScalarProperty Name="IsVirtual" ColumnName="IsVirtual" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -579,5 +579,27 @@ namespace Pet2Share_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePost", idParameter, postTypeIdParameter, descriptionParameter, postURLParameter, postedByParameter, isPostByPetParameter, isPublicParameter);
         }
+    
+        public virtual ObjectResult<GetConnectRequests_Result> GetConnectRequests(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetConnectRequests_Result>("GetConnectRequests", idParameter);
+        }
+    
+        public virtual ObjectResult<GetPetConnectRequests_Result> GetPetConnectRequests(Nullable<int> id, Nullable<bool> isPet)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var isPetParameter = isPet.HasValue ?
+                new ObjectParameter("IsPet", isPet) :
+                new ObjectParameter("IsPet", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPetConnectRequests_Result>("GetPetConnectRequests", idParameter, isPetParameter);
+        }
     }
 }

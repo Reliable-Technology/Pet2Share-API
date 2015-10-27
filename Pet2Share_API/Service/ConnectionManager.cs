@@ -291,7 +291,7 @@ namespace Pet2Share_API.Service
             List<SmallPet> sPetList = new List<SmallPet>();
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                List<DAL.GetPetConnectRequests_Result> connectionList = context.GetPetConnectRequests(myUserId).ToList<DAL.GetPetConnectRequests_Result>();
+                List<DAL.GetPetConnectRequests_Result> connectionList = context.GetPetConnectRequests(myId, amIPet).ToList<DAL.GetPetConnectRequests_Result>();
                 foreach (DAL.GetPetConnectRequests_Result result in connectionList)
                 {
                     SmallPet sPet = new SmallPet();
