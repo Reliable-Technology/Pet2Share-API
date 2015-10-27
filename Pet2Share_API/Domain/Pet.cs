@@ -75,6 +75,7 @@ namespace Pet2Share_API.Domain
             this.CoverPicture = pet.CoverPicture;
             this.About = pet.About;
             this.FavFood = pet.FavFood;
+            this.IsVirtual = pet.IsVirtual;
             this.DateAdded = pet.DateAdded;
             this.DateModified = pet.DateModified;
             this.IsActive = pet.IsActive;
@@ -93,6 +94,7 @@ namespace Pet2Share_API.Domain
             this.CoverPicture = pet.CoverPicture;
             this.About = pet.About;
             this.FavFood = pet.FavFood;
+            this.IsVirtual = pet.IsVirtual;
             this.DateAdded = pet.DateAdded;
             this.DateModified = pet.DateModified;
             this.IsActive = pet.IsActive;
@@ -111,6 +113,7 @@ namespace Pet2Share_API.Domain
             this.CoverPicture = pet.CoverPicture;
             this.About = pet.About;
             this.FavFood = pet.FavFood;
+            this.IsVirtual = pet.IsVirtual;
             this.DateAdded = pet.DateAdded;
             this.DateModified = pet.DateModified;
             this.IsActive = pet.IsActive;
