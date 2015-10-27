@@ -167,7 +167,7 @@ namespace Pet2Share_Service
                 var Result = PetProfileManager.AddProfile(PetObj.Name, PetObj.FamilyName, PetObj.UserId, PetObj.PetTypeId, PetObj.DOB, "", "", PetObj.About, PetObj.FavFood);
                 if (Result.IsSuccessful)
                 {
-                    PetProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { Result }), ErrorMsg = null };
+                    PetProfileResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { new BoolExt(true, "Pet added successfully!") }), ErrorMsg = null };
                 }
                 else
                 {
