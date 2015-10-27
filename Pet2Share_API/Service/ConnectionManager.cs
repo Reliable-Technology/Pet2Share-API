@@ -9,6 +9,11 @@ using Pet2Share_API.Utility;
 
 namespace Pet2Share_API.Service
 {
+    public class Connection
+    {
+
+    }
+
     public class ConnectionManager
     {
         public static SmallPet[] GetMyConnections(Pet pet)
@@ -247,6 +252,47 @@ namespace Pet2Share_API.Service
             {
                 List<DAL.SearchPet_Result> connectionList = context.SearchPet(searchString).ToList<DAL.SearchPet_Result>();
                 foreach (DAL.SearchPet_Result result in connectionList)
+                {
+                    SmallPet sPet = new SmallPet();
+                    sPet.Id = result.Id;
+                    sPet.Name = result.Name;
+                    sPet.FamilyName = result.FamilyName;
+                    sPet.ProfilePictureURL = result.ProfilePicture;
+
+                    sPetList.Add(sPet);
+                }
+            }
+            return sPetList.ToArray();
+        }
+
+        public static SmallUser[] GetConnectRequests(int myUserId)
+        {
+            List<SmallUser> sUserList = new List<SmallUser>();
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                List<DAL.GetConnectRequests_Result> connectionList = context.GetConnectRequests(myUserId).ToList<DAL.GetConnectRequests_Result>();
+                foreach (DAL.GetConnectRequests_Result result in connectionList)
+                {
+                    Person p = new Person(result.PrimaryPersonId);
+                    SmallUser sUser = new SmallUser();
+                    sUser.Id = result.Id;
+                    sUser.Name = p.FirstName + " " + p.LastName;
+                    sUser.Username = result.Username;
+                    sUser.ProfilePictureURL = p.ProfilePictureURL;
+
+                    sUserList.Add(sUser);
+                }
+            }
+            return sUserList.ToArray();
+        }
+
+        public static SmallPet[] GetPetConnectRequests(int myId, bool amIPet)
+        {
+            List<SmallPet> sPetList = new List<SmallPet>();
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                List<DAL.GetPetConnectRequests_Result> connectionList = context.GetPetConnectRequests(myUserId).ToList<DAL.GetPetConnectRequests_Result>();
+                foreach (DAL.GetPetConnectRequests_Result result in connectionList)
                 {
                     SmallPet sPet = new SmallPet();
                     sPet.Id = result.Id;
