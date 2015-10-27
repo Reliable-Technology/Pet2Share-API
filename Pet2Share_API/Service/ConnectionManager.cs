@@ -14,7 +14,7 @@ namespace Pet2Share_API.Service
     /// </summary>
     public class Connection
     {
-        public bool HasPets { get; set; }
+        public bool IsPet { get; set; }
         public object Requester { get; set; }
         public object Accepter { get; set; }
     }
@@ -311,46 +311,68 @@ namespace Pet2Share_API.Service
             return sPetList.ToArray();
         }
 
-        public static Connection[] GetPetConnectRequestsGeneralised(int myId, bool amIPet)
+        public static Connection[] GetConnectRequestsGeneralised(int myId, bool amIPet)
         {
             List<Connection> connList = new List<Connection>();
             List<DAL.Connection> userConnList = new List<DAL.Connection>();
             List<DAL.PetConnection> petConnList = new List<DAL.PetConnection>();
+
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                if(amIPet == true)                
-                    petConnList = context.PetConnections.Where(pc => pc.APetId == myId && !pc.IsApproved && pc.IsActive && !pc.IsDeleted).ToList();
-                else
+
+                if (!amIPet)
+                {
                     userConnList = context.Connections.Where(uc => uc.AUserId == myId && !uc.IsApproved && uc.IsActive && !uc.IsDeleted).ToList();
-            }
 
-            if (amIPet == true)
-            {
-                foreach(DAL.PetConnection petConn in petConnList)
-                {
-                    SmallPet initPet = new SmallPet(petConn.IPetId);
-                    SmallPet acptPet = new SmallPet(petConn.APetId);
+                    foreach (DAL.Connection userConn in userConnList)
+                    {
+                        SmallUser initUser = new SmallUser(userConn.IUserId);
+                        SmallUser acptUser = new SmallUser(userConn.AUserId);
 
-                    Connection conn = new Connection();
-                    conn.Requester = initPet;
-                    conn.Accepter = acptPet;
-                    conn.HasPets = true;
-                    connList.Add(conn);
+                        Connection conn = new Connection();
+                        conn.Requester = initUser;
+                        conn.Accepter = acptUser;
+                        conn.IsPet = false;
+                        connList.Add(conn);
+                    }
+
+                    List<DAL.GetPetProfileByUserId_Result> petResults = context.GetPetProfileByUserId(myId, 1).ToList();
+
+                    foreach (DAL.GetPetProfileByUserId_Result petResult in petResults)
+                    {
+                        petConnList = context.PetConnections.Where(pc => pc.APetId == petResult.Id && !pc.IsApproved && pc.IsActive && !pc.IsDeleted).ToList();
+
+                        foreach (DAL.PetConnection petConn in petConnList)
+                        {
+                            SmallPet initPet = new SmallPet(petConn.IPetId);
+                            SmallPet acptPet = new SmallPet(petConn.APetId);
+
+                            Connection conn = new Connection();
+                            conn.Requester = initPet;
+                            conn.Accepter = acptPet;
+                            conn.IsPet = true;
+                            connList.Add(conn);
+                        }
+                    }
                 }
-            }
-            else
-            {
-                foreach (DAL.Connection userConn in userConnList)
+                else
                 {
-                    SmallPet initUser = new SmallPet(userConn.IUserId);
-                    SmallPet acptUser = new SmallPet(userConn.AUserId);
+                    petConnList = context.PetConnections.Where(pc => pc.APetId == myId && !pc.IsApproved && pc.IsActive && !pc.IsDeleted).ToList();
 
-                    Connection conn = new Connection();
-                    conn.Requester = initUser;
-                    conn.Accepter = acptUser;
-                    conn.HasPets = false;
-                    connList.Add(conn);
+                    foreach (DAL.PetConnection petConn in petConnList)
+                    {
+                        SmallPet initPet = new SmallPet(petConn.IPetId);
+                        SmallPet acptPet = new SmallPet(petConn.APetId);
+
+                        Connection conn = new Connection();
+                        conn.Requester = initPet;
+                        conn.Accepter = acptPet;
+                        conn.IsPet = true;
+                        connList.Add(conn);
+                    }
                 }
+
+                
             }
             return connList.ToArray();
         }
