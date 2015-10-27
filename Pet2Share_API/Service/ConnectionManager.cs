@@ -9,9 +9,14 @@ using Pet2Share_API.Utility;
 
 namespace Pet2Share_API.Service
 {
+    /// <summary>
+    /// The connection class either has small pets or small users
+    /// </summary>
     public class Connection
     {
-
+        public bool HasPets { get; set; }
+        public object Requester { get; set; }
+        public object Accepter { get; set; }
     }
 
     public class ConnectionManager
@@ -304,6 +309,50 @@ namespace Pet2Share_API.Service
                 }
             }
             return sPetList.ToArray();
+        }
+
+        public static Connection[] GetPetConnectRequestsGeneralised(int myId, bool amIPet)
+        {
+            List<Connection> connList = new List<Connection>();
+            List<DAL.Connection> userConnList = new List<DAL.Connection>();
+            List<DAL.PetConnection> petConnList = new List<DAL.PetConnection>();
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                if(amIPet == true)                
+                    petConnList = context.PetConnections.Where(pc => pc.APetId == myId && !pc.IsApproved && pc.IsActive && !pc.IsDeleted).ToList();
+                else
+                    userConnList = context.Connections.Where(uc => uc.AUserId == myId && !uc.IsApproved && uc.IsActive && !uc.IsDeleted).ToList();
+            }
+
+            if (amIPet == true)
+            {
+                foreach(DAL.PetConnection petConn in petConnList)
+                {
+                    SmallPet initPet = new SmallPet(petConn.IPetId);
+                    SmallPet acptPet = new SmallPet(petConn.APetId);
+
+                    Connection conn = new Connection();
+                    conn.Requester = initPet;
+                    conn.Accepter = acptPet;
+                    conn.HasPets = true;
+                    connList.Add(conn);
+                }
+            }
+            else
+            {
+                foreach (DAL.Connection userConn in userConnList)
+                {
+                    SmallPet initUser = new SmallPet(userConn.IUserId);
+                    SmallPet acptUser = new SmallPet(userConn.AUserId);
+
+                    Connection conn = new Connection();
+                    conn.Requester = initUser;
+                    conn.Accepter = acptUser;
+                    conn.HasPets = false;
+                    connList.Add(conn);
+                }
+            }
+            return connList.ToArray();
         }
     }
 }
