@@ -16,7 +16,7 @@ namespace Pet2Share_API.Service
 
         public PostManager()
         {
-            
+
         }
 
         public PostManager(int postId)
@@ -26,17 +26,21 @@ namespace Pet2Share_API.Service
 
         #region PostSection
 
-        public static List<Post> GetPostsByUser(int userId, int postCount = 0, int pageNumber = 1)
+        public static List<Post> GetPostsByUser(int userId, int postCount = 0, int pageNumber = 1, bool? privatePosts = null)
         {
             List<Post> postList = new List<Post>();
 
             int postStartCount = postCount * (pageNumber - 1);
             int postEndCount = postCount * (pageNumber);
             int forCounter = 0;
-            
+
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                DAL.Post[] dalPosts = context.Posts.Where(p => p.PostedBy == userId && p.IsPostByPet == false).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
+                DAL.Post[] dalPosts;
+                if (privatePosts == null)
+                    dalPosts = context.Posts.Where(p => p.PostedBy == userId && p.IsPostByPet == false).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
+                else
+                    dalPosts = context.Posts.Where(p => p.PostedBy == userId && p.IsPostByPet == false && p.IsPublic != privatePosts).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
 
                 foreach (DAL.Post dalPost in dalPosts)
                 {
@@ -65,7 +69,7 @@ namespace Pet2Share_API.Service
             return postList;
         }
 
-        public static List<Post> GetPostsByPet(int petId, int postCount = 0, int pageNumber = 1)
+        public static List<Post> GetPostsByPet(int petId, int postCount = 0, int pageNumber = 1, bool? privatePosts = null)
         {
             List<Post> postList = new List<Post>();
 
@@ -75,7 +79,11 @@ namespace Pet2Share_API.Service
 
             using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
-                DAL.Post[] dalPosts = context.Posts.Where(p => p.PostedBy == petId && p.IsPostByPet == true).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
+                DAL.Post[] dalPosts;
+                if (privatePosts == null)
+                    dalPosts = context.Posts.Where(p => p.PostedBy == petId && p.IsPostByPet == true).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
+                else
+                    dalPosts = context.Posts.Where(p => p.PostedBy == petId && p.IsPostByPet == true && p.IsPublic != privatePosts).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
 
                 foreach (DAL.Post dalPost in dalPosts)
                 {
@@ -209,7 +217,7 @@ namespace Pet2Share_API.Service
                 relativePath = "/" + pet.UserId + "/" + post.PostedBy + "/Post/" + post.Id;
             }
 
-            
+
             fullFileName = post.PostedBy.ToString() + "_" + post.Id.ToString() + filename;// +"." + imageType.ToString();
 
             savePath = ImageProcessor.Upload(binaryImage, imageType, fullFileName, relativePath);
@@ -275,7 +283,7 @@ namespace Pet2Share_API.Service
         public static List<Comment> GetComments(int postId, int commentCount = 0) //Sending commentCount = 0 to fetch all the comments;
         {
             List<Comment> listComments = new List<Comment>();
-            using(DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
             {
                 DAL.PostComment[] dalComments;
 
@@ -292,7 +300,7 @@ namespace Pet2Share_API.Service
                     dalComments = new DAL.PostComment[] { };
                 }
 
-                foreach(DAL.PostComment dalComment in dalComments)
+                foreach (DAL.PostComment dalComment in dalComments)
                 {
                     listComments.Add(new Comment(dalComment));
                 }
