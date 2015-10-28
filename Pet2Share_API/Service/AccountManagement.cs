@@ -69,7 +69,10 @@ namespace Pet2Share_API.Service
         {
             int result = u.Save();
             if (result > 0)
+            {
                 u.Id = result;
+                u.IsAuthenticated = true;
+            }
             else
                 return null;
             return u;
