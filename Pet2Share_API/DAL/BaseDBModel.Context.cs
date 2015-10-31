@@ -336,38 +336,6 @@ public partial class Pet2ShareEntities : DbContext
     }
 
 
-    public virtual ObjectResult<Nullable<decimal>> InsertUpdatePostComment(Nullable<int> id, Nullable<int> postId, Nullable<int> commentedBy, Nullable<bool> isCommentedByPet, string comment)
-    {
-
-        var idParameter = id.HasValue ?
-            new ObjectParameter("Id", id) :
-            new ObjectParameter("Id", typeof(int));
-
-
-        var postIdParameter = postId.HasValue ?
-            new ObjectParameter("PostId", postId) :
-            new ObjectParameter("PostId", typeof(int));
-
-
-        var commentedByParameter = commentedBy.HasValue ?
-            new ObjectParameter("CommentedBy", commentedBy) :
-            new ObjectParameter("CommentedBy", typeof(int));
-
-
-        var isCommentedByPetParameter = isCommentedByPet.HasValue ?
-            new ObjectParameter("IsCommentedByPet", isCommentedByPet) :
-            new ObjectParameter("IsCommentedByPet", typeof(bool));
-
-
-        var commentParameter = comment != null ?
-            new ObjectParameter("Comment", comment) :
-            new ObjectParameter("Comment", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePostComment", idParameter, postIdParameter, commentedByParameter, isCommentedByPetParameter, commentParameter);
-    }
-
-
     public virtual int DeletePostById(Nullable<int> id)
     {
 
@@ -720,48 +688,6 @@ public partial class Pet2ShareEntities : DbContext
     }
 
 
-    public virtual ObjectResult<Nullable<decimal>> InsertUpdatePost(Nullable<int> id, Nullable<int> postTypeId, string description, string postURL, Nullable<int> postedBy, Nullable<bool> isPostByPet, Nullable<bool> isPublic)
-    {
-
-        var idParameter = id.HasValue ?
-            new ObjectParameter("Id", id) :
-            new ObjectParameter("Id", typeof(int));
-
-
-        var postTypeIdParameter = postTypeId.HasValue ?
-            new ObjectParameter("PostTypeId", postTypeId) :
-            new ObjectParameter("PostTypeId", typeof(int));
-
-
-        var descriptionParameter = description != null ?
-            new ObjectParameter("Description", description) :
-            new ObjectParameter("Description", typeof(string));
-
-
-        var postURLParameter = postURL != null ?
-            new ObjectParameter("PostURL", postURL) :
-            new ObjectParameter("PostURL", typeof(string));
-
-
-        var postedByParameter = postedBy.HasValue ?
-            new ObjectParameter("PostedBy", postedBy) :
-            new ObjectParameter("PostedBy", typeof(int));
-
-
-        var isPostByPetParameter = isPostByPet.HasValue ?
-            new ObjectParameter("IsPostByPet", isPostByPet) :
-            new ObjectParameter("IsPostByPet", typeof(bool));
-
-
-        var isPublicParameter = isPublic.HasValue ?
-            new ObjectParameter("IsPublic", isPublic) :
-            new ObjectParameter("IsPublic", typeof(bool));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePost", idParameter, postTypeIdParameter, descriptionParameter, postURLParameter, postedByParameter, isPostByPetParameter, isPublicParameter);
-    }
-
-
     public virtual ObjectResult<GetConnectRequests_Result> GetConnectRequests(Nullable<int> id)
     {
 
@@ -827,6 +753,80 @@ public partial class Pet2ShareEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUserComment", idParameter, userIdParameter);
+    }
+
+
+    public virtual ObjectResult<Nullable<decimal>> InsertUpdatePostComment(Nullable<int> id, Nullable<int> postId, Nullable<int> commentedBy, Nullable<bool> isCommentedByPet, string comment)
+    {
+
+        var idParameter = id.HasValue ?
+            new ObjectParameter("Id", id) :
+            new ObjectParameter("Id", typeof(int));
+
+
+        var postIdParameter = postId.HasValue ?
+            new ObjectParameter("PostId", postId) :
+            new ObjectParameter("PostId", typeof(int));
+
+
+        var commentedByParameter = commentedBy.HasValue ?
+            new ObjectParameter("CommentedBy", commentedBy) :
+            new ObjectParameter("CommentedBy", typeof(int));
+
+
+        var isCommentedByPetParameter = isCommentedByPet.HasValue ?
+            new ObjectParameter("IsCommentedByPet", isCommentedByPet) :
+            new ObjectParameter("IsCommentedByPet", typeof(bool));
+
+
+        var commentParameter = comment != null ?
+            new ObjectParameter("Comment", comment) :
+            new ObjectParameter("Comment", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePostComment", idParameter, postIdParameter, commentedByParameter, isCommentedByPetParameter, commentParameter);
+    }
+
+
+    public virtual ObjectResult<Nullable<decimal>> InsertUpdatePost(Nullable<int> id, Nullable<int> postTypeId, string description, string postURL, Nullable<int> postedBy, Nullable<bool> isPostByPet, Nullable<bool> isPublic)
+    {
+
+        var idParameter = id.HasValue ?
+            new ObjectParameter("Id", id) :
+            new ObjectParameter("Id", typeof(int));
+
+
+        var postTypeIdParameter = postTypeId.HasValue ?
+            new ObjectParameter("PostTypeId", postTypeId) :
+            new ObjectParameter("PostTypeId", typeof(int));
+
+
+        var descriptionParameter = description != null ?
+            new ObjectParameter("Description", description) :
+            new ObjectParameter("Description", typeof(string));
+
+
+        var postURLParameter = postURL != null ?
+            new ObjectParameter("PostURL", postURL) :
+            new ObjectParameter("PostURL", typeof(string));
+
+
+        var postedByParameter = postedBy.HasValue ?
+            new ObjectParameter("PostedBy", postedBy) :
+            new ObjectParameter("PostedBy", typeof(int));
+
+
+        var isPostByPetParameter = isPostByPet.HasValue ?
+            new ObjectParameter("IsPostByPet", isPostByPet) :
+            new ObjectParameter("IsPostByPet", typeof(bool));
+
+
+        var isPublicParameter = isPublic.HasValue ?
+            new ObjectParameter("IsPublic", isPublic) :
+            new ObjectParameter("IsPublic", typeof(bool));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("InsertUpdatePost", idParameter, postTypeIdParameter, descriptionParameter, postURLParameter, postedByParameter, isPostByPetParameter, isPublicParameter);
     }
 
 }

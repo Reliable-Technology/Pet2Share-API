@@ -131,7 +131,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PostTypeId" Type="int" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="PostURL" Type="varchar" MaxLength="200" />
           <Property Name="PostedBy" Type="int" Nullable="false" />
           <Property Name="IsPostByPet" Type="bit" Nullable="false" />
@@ -166,7 +166,7 @@
           <Property Name="PostId" Type="int" Nullable="false" />
           <Property Name="CommentedBy" Type="int" Nullable="false" />
           <Property Name="IsCommentedByPet" Type="bit" Nullable="false" />
-          <Property Name="Comment" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="DateAdded" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -569,7 +569,7 @@
         <Function Name="InsertUpdatePost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
           <Parameter Name="PostTypeId" Type="int" Mode="In" />
-          <Parameter Name="Description" Type="varchar" Mode="In" />
+          <Parameter Name="Description" Type="nvarchar" Mode="In" />
           <Parameter Name="PostURL" Type="varchar" Mode="In" />
           <Parameter Name="PostedBy" Type="int" Mode="In" />
           <Parameter Name="IsPostByPet" Type="bit" Mode="In" />
@@ -580,7 +580,7 @@
           <Parameter Name="PostId" Type="int" Mode="In" />
           <Parameter Name="CommentedBy" Type="int" Mode="In" />
           <Parameter Name="IsCommentedByPet" Type="bit" Mode="In" />
-          <Parameter Name="Comment" Type="varchar" Mode="In" />
+          <Parameter Name="Comment" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="InsertUpdateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -792,13 +792,6 @@
             <Parameter Name="UserId" Mode="In" Type="Int32" />
             <Parameter Name="IsActive" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="InsertUpdatePostComment" ReturnType="Collection(Decimal)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
-            <Parameter Name="PostId" Mode="In" Type="Int32" />
-            <Parameter Name="CommentedBy" Mode="In" Type="Int32" />
-            <Parameter Name="IsCommentedByPet" Mode="In" Type="Boolean" />
-            <Parameter Name="Comment" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="PostComments" EntityType="Pet2ShareModel.PostComment" />
           <FunctionImport Name="DeletePostById">
           <Parameter Name="Id" Mode="In" Type="Int32" />
@@ -918,15 +911,6 @@
             <Parameter Name="Id" Mode="In" Type="Int32" />
             <Parameter Name="IsRequesterPet" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="InsertUpdatePost" ReturnType="Collection(Decimal)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
-            <Parameter Name="PostTypeId" Mode="In" Type="Int32" />
-            <Parameter Name="Description" Mode="In" Type="String" />
-            <Parameter Name="PostURL" Mode="In" Type="String" />
-            <Parameter Name="PostedBy" Mode="In" Type="Int32" />
-            <Parameter Name="IsPostByPet" Mode="In" Type="Boolean" />
-            <Parameter Name="IsPublic" Mode="In" Type="Boolean" />
-          </FunctionImport>
           <FunctionImport Name="GetConnectRequests" ReturnType="Collection(Pet2ShareModel.GetConnectRequests_Result)">
           <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -942,6 +926,22 @@
           <FunctionImport Name="DeleteUserComment">
             <Parameter Name="Id" Mode="In" Type="Int32" />
             <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUpdatePostComment" ReturnType="Collection(Decimal)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="PostId" Mode="In" Type="Int32" />
+            <Parameter Name="CommentedBy" Mode="In" Type="Int32" />
+            <Parameter Name="IsCommentedByPet" Mode="In" Type="Boolean" />
+            <Parameter Name="Comment" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUpdatePost" ReturnType="Collection(Decimal)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="PostTypeId" Mode="In" Type="Int32" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="PostURL" Mode="In" Type="String" />
+            <Parameter Name="PostedBy" Mode="In" Type="Int32" />
+            <Parameter Name="IsPostByPet" Mode="In" Type="Boolean" />
+            <Parameter Name="IsPublic" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
@@ -1264,7 +1264,7 @@
           <Property Name="PostId" Type="Int32" Nullable="false" />
           <Property Name="CommentedBy" Type="Int32" Nullable="false" />
           <Property Name="IsCommentedByPet" Type="Boolean" Nullable="false" />
-          <Property Name="Comment" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -1397,7 +1397,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PostTypeId" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="PostURL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="PostedBy" Type="Int32" Nullable="false" />
           <Property Name="IsPostByPet" Type="Boolean" Nullable="false" />
@@ -1845,7 +1845,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InsertUpdatePostComment" FunctionName="Pet2ShareModel.Store.InsertUpdatePostComment" />
           <EntitySetMapping Name="PostComments">
             <EntityTypeMapping TypeName="Pet2ShareModel.PostComment">
               <MappingFragment StoreEntitySet="PostComment">
@@ -2105,7 +2104,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InsertUpdatePost" FunctionName="Pet2ShareModel.Store.InsertUpdatePost" />
           <FunctionImportMapping FunctionImportName="GetConnectRequests" FunctionName="Pet2ShareModel.Store.GetConnectRequests">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Pet2ShareModel.GetConnectRequests_Result">
@@ -2149,6 +2147,8 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DeletePost" FunctionName="Pet2ShareModel.Store.DeletePost" />
           <FunctionImportMapping FunctionImportName="DeleteUserComment" FunctionName="Pet2ShareModel.Store.DeleteUserComment" />
+          <FunctionImportMapping FunctionImportName="InsertUpdatePostComment" FunctionName="Pet2ShareModel.Store.InsertUpdatePostComment" />
+          <FunctionImportMapping FunctionImportName="InsertUpdatePost" FunctionName="Pet2ShareModel.Store.InsertUpdatePost" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
