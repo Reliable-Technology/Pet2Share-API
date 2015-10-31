@@ -432,7 +432,7 @@ namespace Pet2Share_Service
             return PostResultResp;
         }
 
-        GeneralUpdateResponse DeletePostByPoster(DeletePostByPosterRequest PostReq)
+        public GeneralUpdateResponse DeletePostByPoster(DeletePostByPosterRequest PostReq)
         {
             GeneralUpdateResponse PostResultResp;
 
@@ -605,7 +605,7 @@ namespace Pet2Share_Service
             return PostResultResp;
         }
 
-        GeneralUpdateResponse DeleteCommentByUser(DeleteCommentByUserRequest PostReq)
+        public GeneralUpdateResponse DeleteCommentByUser(DeleteCommentByUserRequest PostReq)
         {
             GeneralUpdateResponse PostResultResp;
 
