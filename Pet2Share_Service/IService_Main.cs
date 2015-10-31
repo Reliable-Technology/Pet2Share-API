@@ -65,6 +65,10 @@ namespace Pet2Share_Service
         GeneralUpdateResponse DeletePost(DeletePostRequest PostReq);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "DeletePostByPoster", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse DeletePostByPoster(DeletePostByPosterRequest PostReq);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "AddPhotoPost?FileName={FileName}&Description={Description}&PostedBy={PostedBy}&IsPostByPet={IsPostByPet}&IsPublic={IsPublic}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         GeneralUpdateResponse AddPhotoPost(Stream PicObj, string FileName, string Description, string PostedBy, string IsPostByPet, string IsPublic);
 
@@ -79,6 +83,10 @@ namespace Pet2Share_Service
         [OperationContract]
         [WebInvoke(UriTemplate = "DeleteComment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         GeneralUpdateResponse DeleteComment(DeleteCommentRequest PostReq);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "DeleteCommentByUser", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        GeneralUpdateResponse DeleteCommentByUser(DeleteCommentByUserRequest PostReq);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "GetComments", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]

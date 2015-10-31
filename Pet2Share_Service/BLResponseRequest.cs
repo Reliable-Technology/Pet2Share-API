@@ -317,6 +317,17 @@ namespace Pet2Share_Service
     }
 
     [DataContract]
+    public class DeletePostByPosterRequest : RequestObject
+    {
+        [DataMember]
+        public int PostId { get; set; }
+        [DataMember]
+        public int PostedById { get; set; }
+        [DataMember]
+        public bool IsPostedByPet { get; set; }
+    }
+
+    [DataContract]
     public class AddPhotoPostRequest : AddPostRequest
     {
         [DataMember]
@@ -368,6 +379,16 @@ namespace Pet2Share_Service
     {
         [DataMember]
         public int CommentId { get; set; }
+
+    }
+
+    [DataContract]
+    public class DeleteCommentByUserRequest : RequestObject
+    {
+        [DataMember]
+        public int CommentId { get; set; }
+        [DataMember]
+        public int UserId { get; set; }
 
     }
 

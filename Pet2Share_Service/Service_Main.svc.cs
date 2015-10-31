@@ -432,6 +432,30 @@ namespace Pet2Share_Service
             return PostResultResp;
         }
 
+        GeneralUpdateResponse DeletePostByPoster(DeletePostByPosterRequest PostReq)
+        {
+            GeneralUpdateResponse PostResultResp;
+
+            try
+            {
+
+                var Result = PostManager.DeletePost(PostReq.PostId, PostReq.PostedById, PostReq.IsPostedByPet);
+                if (Result.IsSuccessful)
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { Result }), ErrorMsg = null };
+                }
+                else
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while deleting your post. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PostResultResp;
+        }
+
         public GeneralUpdateResponse AddPhotoPost(Stream PicObj, string FileName, string Description, string PostedBy, string IsPostByPet, string IsPublic)
         {
             //return new GeneralUpdateResponse();
@@ -565,6 +589,30 @@ namespace Pet2Share_Service
             {
 
                 var Result = PostManager.DeleteComment(PostReq.CommentId);
+                if (Result.IsSuccessful)
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { Result }), ErrorMsg = null };
+                }
+                else
+                {
+                    PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(1, "There was some error while deleting your comment. Please try again!!") };
+                }
+            }
+            catch (Exception ex)
+            {
+                PostResultResp = new GeneralUpdateResponse { Total = 0, Results = null, ErrorMsg = new CLErrorMessage(3, ex.InnerException + "--" + ex.StackTrace) };
+            }
+            return PostResultResp;
+        }
+
+        GeneralUpdateResponse DeleteCommentByUser(DeleteCommentByUserRequest PostReq)
+        {
+            GeneralUpdateResponse PostResultResp;
+
+            try
+            {
+
+                var Result = PostManager.DeleteComment(PostReq.CommentId, PostReq.UserId);
                 if (Result.IsSuccessful)
                 {
                     PostResultResp = new GeneralUpdateResponse { Total = 1, Results = (new Pet2Share_API.Utility.BoolExt[] { Result }), ErrorMsg = null };
