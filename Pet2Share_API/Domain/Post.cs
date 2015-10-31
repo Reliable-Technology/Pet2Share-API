@@ -123,6 +123,10 @@ namespace Pet2Share_API.Domain
             this.IsCommentedByPet = dalComment.IsCommentedByPet;
             this.CommentDescription = dalComment.Comment;
             this.SUser = new SmallUser(CommentedBy);
+            this.DateAdded = dalComment.DateAdded;
+            this.DateModified = dalComment.DateModified;
+            this.IsActive = dalComment.IsActive;
+            this.IsDeleted = dalComment.IsDeleted;
         }
 
         public Comment(int postId, int commenterId, bool isCommentedByPet, string comment) : base()
