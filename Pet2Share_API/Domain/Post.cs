@@ -84,6 +84,9 @@ namespace Pet2Share_API.Domain
     public class Comment : DomainBase
     {
         #region members
+
+        string _commentDescription;
+
         [DataMember]
         public int PostId { get; set; }
         [DataMember]
@@ -91,7 +94,11 @@ namespace Pet2Share_API.Domain
         [DataMember]
         public bool IsCommentedByPet { get; set; }
         [DataMember]
-        public string CommentDescription { get; set; }
+        public string CommentDescription
+        {
+            get { return Uri.UnescapeDataString(_commentDescription); }
+            set { _commentDescription = Uri.UnescapeDataString(value); }
+        }
         [DataMember]
         public SmallUser SUser { get; set; }
 
@@ -244,6 +251,8 @@ namespace Pet2Share_API.Domain
     public class Post : DomainBase
     {
         #region members
+        string _description;
+
         [DataMember]
         public int PostTypeId { get; set; }
         [DataMember]
@@ -259,7 +268,11 @@ namespace Pet2Share_API.Domain
             }
         }
         [DataMember]
-        public string Description { get; set; }
+        public string Description
+        {
+            get { return Uri.UnescapeDataString(_description); }
+            set { _description = Uri.UnescapeDataString(value); }
+        }
         [DataMember]
         public int PostedBy { get; set; }
         [DataMember]
