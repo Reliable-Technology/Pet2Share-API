@@ -209,6 +209,20 @@ namespace Pet2Share_API.Domain
             return result > 0 ? true : false;
         }
 
+        internal static bool Delete(int id, int userId)
+        {
+            int result = -1;
+            if (id <= 0) return false;
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.DeleteUserComment(id, userId);
+                if (result > 0)
+                    id = result;
+            }
+            return result > 0 ? true : false;
+        }
+
         internal static bool DeleteById(int id)
         {
             int result = -1;
@@ -489,6 +503,20 @@ namespace Pet2Share_API.Domain
                     this.Id = result;
             }
             return result > 0 ? true : false ;
+        }
+
+        internal static bool Delete(int id, int postedBy, bool isPostedByPet)
+        {
+            int result = -1;
+            if (id <= 0) return false;
+
+            using (DAL.Pet2ShareEntities context = new DAL.Pet2ShareEntities())
+            {
+                result = context.DeletePost(id, postedBy, isPostedByPet);
+                if (result > 0)
+                    id = result;
+            }
+            return result > 0 ? true : false;
         }
 
         internal static bool DeleteById(int id)

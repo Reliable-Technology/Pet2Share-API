@@ -15,6 +15,9 @@ namespace ConsoleTester
     {
         static void Main(string[] args)
         {
+
+            Connection[] testConn = ConnectionManager.GetConnectRequestsGeneralised(9, false);
+
             List<Post> postList = PostManager.GetPostsByUser(9, 2, 2);
 
             AccountManagement.Login("nish@gmail.com", "test");

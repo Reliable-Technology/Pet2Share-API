@@ -464,6 +464,11 @@
         <Function Name="DeletePetProfileById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
+        <Function Name="DeletePost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="PostedBy" Type="int" Mode="In" />
+          <Parameter Name="IsPostByPet" Type="bit" Mode="In" />
+        </Function>
         <Function Name="DeletePostById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
@@ -472,6 +477,10 @@
         </Function>
         <Function Name="DeleteUserById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteUserComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
         </Function>
         <Function Name="GetAddressById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -919,11 +928,20 @@
             <Parameter Name="IsPublic" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="GetConnectRequests" ReturnType="Collection(Pet2ShareModel.GetConnectRequests_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPetConnectRequests" ReturnType="Collection(Pet2ShareModel.GetPetConnectRequests_Result)">
             <Parameter Name="Id" Mode="In" Type="Int32" />
             <Parameter Name="IsPet" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="DeletePost">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="PostedBy" Mode="In" Type="Int32" />
+            <Parameter Name="IsPostByPet" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteUserComment">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAddressById_Result">
@@ -2129,6 +2147,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DeletePost" FunctionName="Pet2ShareModel.Store.DeletePost" />
+          <FunctionImportMapping FunctionImportName="DeleteUserComment" FunctionName="Pet2ShareModel.Store.DeleteUserComment" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

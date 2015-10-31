@@ -38,9 +38,9 @@ namespace Pet2Share_API.Service
             {
                 DAL.Post[] dalPosts;
                 if (privatePosts == null)
-                    dalPosts = context.Posts.Where(p => p.PostedBy == userId && p.IsPostByPet == false).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
+                    dalPosts = context.Posts.Where(p => p.PostedBy == userId && p.IsPostByPet == false && p.IsDeleted == false).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
                 else
-                    dalPosts = context.Posts.Where(p => p.PostedBy == userId && p.IsPostByPet == false && p.IsPublic != privatePosts).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
+                    dalPosts = context.Posts.Where(p => p.PostedBy == userId && p.IsPostByPet == false && p.IsPublic != privatePosts && p.IsDeleted == false).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
 
                 foreach (DAL.Post dalPost in dalPosts)
                 {
@@ -81,9 +81,9 @@ namespace Pet2Share_API.Service
             {
                 DAL.Post[] dalPosts;
                 if (privatePosts == null)
-                    dalPosts = context.Posts.Where(p => p.PostedBy == petId && p.IsPostByPet == true).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
+                    dalPosts = context.Posts.Where(p => p.PostedBy == petId && p.IsPostByPet == true && p.IsDeleted == false).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
                 else
-                    dalPosts = context.Posts.Where(p => p.PostedBy == petId && p.IsPostByPet == true && p.IsPublic != privatePosts).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
+                    dalPosts = context.Posts.Where(p => p.PostedBy == petId && p.IsPostByPet == true && p.IsPublic != privatePosts && p.IsDeleted == false).OrderByDescending(post => post.DateAdded).ToArray<DAL.Post>();
 
                 foreach (DAL.Post dalPost in dalPosts)
                 {
@@ -254,6 +254,16 @@ namespace Pet2Share_API.Service
                 return new BoolExt(isDeleted, "Delete failed, please contact system admin!");
         }
 
+        public static BoolExt DeletePost(int postId, int postedById, bool isPostByPet)
+        {
+            bool isDeleted = Post.Delete(postId, postedById, isPostByPet);
+
+            if (isDeleted)
+                return new BoolExt(isDeleted, "");
+            else
+                return new BoolExt(isDeleted, "Delete failed, please contact system admin!");
+        }
+
         #endregion
 
         #region LikeSection
@@ -289,11 +299,11 @@ namespace Pet2Share_API.Service
 
                 if (commentCount == 0)
                 {
-                    dalComments = context.PostComments.Where(pc => pc.PostId == postId).OrderByDescending(c => c.DateAdded).ToArray<DAL.PostComment>();
+                    dalComments = context.PostComments.Where(pc => pc.PostId == postId && pc.IsDeleted == false).OrderByDescending(c => c.DateAdded).ToArray<DAL.PostComment>();
                 }
                 else if (commentCount > 0)
                 {
-                    dalComments = context.PostComments.Where(pc => pc.PostId == postId).OrderByDescending(c => c.DateAdded).Take(commentCount).ToArray<DAL.PostComment>();
+                    dalComments = context.PostComments.Where(pc => pc.PostId == postId && pc.IsDeleted == false).OrderByDescending(c => c.DateAdded).Take(commentCount).ToArray<DAL.PostComment>();
                 }
                 else
                 {
@@ -324,6 +334,16 @@ namespace Pet2Share_API.Service
         public static BoolExt DeleteComment(int commentId)
         {
             bool isCommentDeleted = Comment.DeleteById(commentId);
+
+            if (isCommentDeleted)
+                return new BoolExt(isCommentDeleted, "");
+            else
+                return new BoolExt(isCommentDeleted, "Failed to delete comment");
+        }
+
+        public static BoolExt DeleteComment(int commentId, int userId)
+        {
+            bool isCommentDeleted = Comment.Delete(commentId, userId);
 
             if (isCommentDeleted)
                 return new BoolExt(isCommentDeleted, "");
